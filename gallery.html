@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery — RamG Production</title>
+  <meta name="description" content="Portfolio gallery — weddings, portraits, destination and fine art photography by RamG Production." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  
+  <div class="bg-wallpaper">
+    <div class="bg-wallpaper__inner"></div>
+  </div>
+
+  <!-- CUSTOM ARROW CURSOR -->
+  <div class="cursor__arrow" aria-hidden="true">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 3L10.07 19.97L13.58 13.58L19.97 10.07L3 3Z" fill="#957531" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav scrolled" id="nav">
+    <button class="nav__burger" id="burgerBtn" aria-label="Toggle Menu">
+      <span class="nav__burger-text">Menu</span>
+      <span class="nav__burger-lines">
+        <span></span><span></span><span></span>
+      </span>
+    </button>
+  </nav>
+
+  <!-- PREMIUM HAMBURGER OVERLAY MENU -->
+  <div class="nav__overlay" id="overlayMenu" aria-hidden="true">
+    <div class="nav__overlay-bg"></div>
+    
+    <div class="nav__overlay-content">
+      <div class="nav__overlay-header">
+        <a href="index.html" class="nav__logo">
+          <span class="nav__logo-icon">rg</span>
+          <span class="nav__logo-text">RamG &nbsp; Production</span>
+        </a>
+        <button class="nav__overlay-close" id="overlayCloseBtn" aria-label="Close Menu">
+          <span>Close</span>
+          <span style="font-size:16px;">&times;</span>
+        </button>
+      </div>
+
+      <div class="nav__overlay-body">
+        <nav class="nav__overlay-nav">
+          <ul class="nav__overlay-list">
+            <li class="nav__overlay-item">
+              <a href="index.html" class="nav__overlay-link">
+                <span class="nav__overlay-num">01</span>
+                <span class="nav__overlay-label">Home</span>
+              </a>
+            </li>
+            <li class="nav__overlay-item">
+              <a href="about.html" class="nav__overlay-link">
+                <span class="nav__overlay-num">02</span>
+                <span class="nav__overlay-label">About</span>
+              </a>
+            </li>
+            <li class="nav__overlay-item">
+              <a href="gallery.html" class="nav__overlay-link">
+                <span class="nav__overlay-num">03</span>
+                <span class="nav__overlay-label">Gallery</span>
+              </a>
+            </li>
+            <li class="nav__overlay-item">
+              <a href="contact.html" class="nav__overlay-link">
+                <span class="nav__overlay-num">04</span>
+                <span class="nav__overlay-label">Contact</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="nav__overlay-info">
+          <div class="nav__overlay-info-block">
+            <p class="nav__overlay-info-title">Location</p>
+            <p class="nav__overlay-info-text">London &mdash; UK &mdash; Worldwide</p>
+          </div>
+          <div class="nav__overlay-info-block">
+            <p class="nav__overlay-info-title">Inquiries</p>
+            <a href="mailto:ramgproduction@gmail.com" class="nav__overlay-info-link">ramgproduction@gmail.com</a>
+          </div>
+          <div class="nav__overlay-info-block">
+            <p class="nav__overlay-info-title">Follow Us</p>
+            <div class="nav__overlay-socials">
+              <a href="https://www.instagram.com/soozanapvan" target="_blank" rel="noopener">Instagram &rarr;</a>
+              <a href="https://www.facebook.com/SoozanaPvanPhotographyForgetMeNot" target="_blank" rel="noopener">Facebook &rarr;</a>
+            </div>
+          </div>
+          <p class="nav__overlay-quote">&ldquo;Capturing light, stillness, and human emotion.&rdquo;</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="page-wrapper">
+    <section class="gallery-page">
+      
+      <!-- HEADER -->
+      <header class="gallery-page__header reveal">
+        <p class="section-label">Curated Visual Archive</p>
+        <h1 class="section-title"><em>Portfolio</em> Gallery</h1>
+        <div class="gold-line"></div>
+      </header>
+
+      <!-- HERO CREATIVE COLLAGE SHOWCASE -->
+      <div class="gallery-hero-collage reveal">
+        <div class="collage-item collage-item--left" data-category="destinations" data-title="Highland Reverie">
+          <img src="assets/images/excellents/slide3.webp" alt="Highland Reverie" loading="eager" />
+          <span class="collage-badge">Highland Reverie</span>
+        </div>
+        <div class="collage-item collage-item--main" data-category="weddings" data-title="The First Glance">
+          <img src="assets/images/excellents/slide2.webp" alt="The First Glance" loading="eager" />
+          <span class="collage-badge">Featured Showcase</span>
+        </div>
+        <div class="collage-item collage-item--right" data-category="editorial" data-title="Golden Hour Romance">
+          <img src="assets/images/excellents/slide4.webp" alt="Golden Hour Romance" loading="eager" />
+          <span class="collage-badge">Golden Romance</span>
+        </div>
+      </div>
+
+      <!-- CATEGORY FILTER TABS -->
+      <div class="gallery-filters reveal">
+        <button class="filter-btn active" data-filter="all">All Works</button>
+        <button class="filter-btn" data-filter="weddings">Weddings</button>
+        <button class="filter-btn" data-filter="portraits">Portraits</button>
+        <button class="filter-btn" data-filter="destinations">Destinations</button>
+        <button class="filter-btn" data-filter="editorial">Editorial</button>
+      </div>
+
+      <!-- UNCROPPED MASONRY COLLAGE GRID -->
+      <div class="gallery-masonry-wrapper">
+        <div class="gallery-masonry" id="galleryMasonry">
+          
+          <div class="gallery-card gallery-card--tilt-left reveal" data-category="weddings" data-title="The First Glance">
+            <img src="assets/images/excellents/slide2.webp" alt="The First Glance" loading="lazy" />
+            <div class="gallery-card__expand">&#10530;</div>
+          </div>
+
+          <div class="gallery-card reveal" data-category="portraits" data-title="Elegance in Motion">
+            <img src="assets/images/r_DSC00241_full.webp" alt="Elegance in Motion" loading="lazy" />
+            <div class="gallery-card__expand">&#10530;</div>
+          </div>
+
+          <div class="gallery-card gallery-card--tilt-right reveal" data-category="destinations" data-title="Highland Reverie">
+            <img src="assets/images/excellents/slide3.webp" alt="Highland Reverie" loading="lazy" />
+            <div class="gallery-card__expand">&#10530;</div>
+          </div>
+
+          <div class="gallery-card reveal" data-category="editorial" data-title="Vogue Whispers">
+            <img src="assets/images/excellents/slide4.webp" alt="Vogue Whispers" loading="lazy" />
+            <div class="gallery-card__expand">&#10530;</div>
+          </div>
+
+          <div class="gallery-card gallery-card--tilt-left reveal" data-category="weddings" data-title="Golden Hour Romance">
+            <img src="assets/images/excellents/slide5.webp" alt="Golden Hour Romance" loading="lazy" />
+            <div class="gallery-card__expand">&#10530;</div>
+          </div>
+
+          <div class="gallery-card reveal" data-category="destinations" data-title="Alpine Serenade">
+            <img src="assets/images/excellents/slide6.webp" alt="Alpine Serenade" loading="lazy" />
+            <div class="gallery-card__expand">&#10530;</div>
+          </div>
+
+          <div class="gallery-card gallery-card--tilt-right reveal" data-category="portraits" data-title="Gilded Shadows">
+            <img src="assets/images/r_DSC00241_full.webp" alt="Gilded Shadows" loading="lazy" />
+            <div class="gallery-card__expand">&#10530;</div>
+          </div>
+
+          <div class="gallery-card reveal" data-category="editorial" data-title="Fine Art Ceremony">
+            <img src="assets/images/excellents/slide2.webp" alt="Fine Art Ceremony" loading="lazy" />
+            <div class="gallery-card__expand">&#10530;</div>
+          </div>
+
+          <div class="gallery-card gallery-card--tilt-left reveal" data-category="weddings" data-title="Sacred Vows">
+            <img src="assets/images/excellents/slide3.webp" alt="Sacred Vows" loading="lazy" />
+            <div class="gallery-card__expand">&#10530;</div>
+          </div>
+
+          <div class="gallery-card reveal" data-category="portraits" data-title="Subtle Intimacy">
+            <img src="assets/images/excellents/slide4.webp" alt="Subtle Intimacy" loading="lazy" />
+            <div class="gallery-card__expand">&#10530;</div>
+          </div>
+
+          <div class="gallery-card gallery-card--tilt-right reveal" data-category="destinations" data-title="Golden Serenade">
+            <img src="assets/images/excellents/slide5.webp" alt="Golden Serenade" loading="lazy" />
+            <div class="gallery-card__expand">&#10530;</div>
+          </div>
+
+          <div class="gallery-card reveal" data-category="editorial" data-title="Monochrome Grace">
+            <img src="assets/images/excellents/slide6.webp" alt="Monochrome Grace" loading="lazy" />
+            <div class="gallery-card__expand">&#10530;</div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FULL-SCREEN LIGHTBOX MODAL -->
+  <div class="lightbox-modal" id="galleryLightbox">
+    <button class="lightbox-close" aria-label="Close Lightbox">&times;</button>
+    <button class="lightbox-nav lightbox-nav--prev" aria-label="Previous Image">&#8249;</button>
+    <button class="lightbox-nav lightbox-nav--next" aria-label="Next Image">&#8250;</button>
+    
+    <div class="lightbox-content">
+      <img src="" alt="" class="lightbox-img" />
+      <div class="lightbox-caption">
+        <h3 class="lightbox-title"></h3>
+        <p class="lightbox-sub"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <blockquote class="footer__quote">
+      <p id="quote-text">&ldquo;I think... if it is true that there are as many minds as there are heads, then there are as many kinds of love as there are hearts.&rdquo;</p>
+      <cite id="quote-author">&mdash; Leo Tolstoy</cite>
+    </blockquote>
+    <div class="footer__social">
+      <a href="https://www.instagram.com/soozanapvan" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="social-icon"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+      </a>
+      <span class="footer__social-dot"></span>
+      <a href="https://www.facebook.com/SoozanaPvanPhotographyForgetMeNot" target="_blank" rel="noopener" aria-label="Facebook">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="social-icon"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+      </a>
+    </div>
+    <p class="footer__copy">&copy; 2025 RamG Production</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

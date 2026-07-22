@@ -1,0 +1,12 @@
+.DS_Store
+Thumbs.db
+*.tmp
+.vscode/
+.idea/
+
+# Raw uncompressed camera source files (site uses optimized WebP assets)
+assets/images/DSC*.JPG
+assets/images/DSC*.jpg
+assets/images/r_*.JPG
+assets/images/excellents/*.JPG
+assets/images/excellents/*.jpg
