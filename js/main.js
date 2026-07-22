@@ -272,7 +272,10 @@ function startWebsiteEntrance() {
       exploreBtn.addEventListener('click', (e) => {
         e.preventDefault();
         
-        if (heroVideo) heroVideo.play().catch(() => {});
+        if (heroVideo) {
+          heroVideo.currentTime = 0;
+          heroVideo.play().catch(() => {});
+        }
 
         const clickTl = gsap.timeline({
           onComplete: () => {
