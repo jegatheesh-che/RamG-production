@@ -880,9 +880,10 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   bottom: -80px;
   left: -30px;
   background: var(--clr-bg);
-  padding: 16px 24px;
+  padding: 20px 32px;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
   border: 1px solid var(--clr-border);
+  border-radius: 8px;
   z-index: 10;
   display: flex;
   align-items: center;
@@ -890,7 +891,7 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
 }
 
 .video-badge img {
-  width: 180px;
+  width: 260px;
   height: auto;
   display: block;
 }
@@ -1067,11 +1068,11 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
     bottom: auto; left: auto;
     margin: -24px auto 0;
     width: fit-content;
-    border-radius: 8px;
-    padding: 10px 20px;
+    border-radius: 12px;
+    padding: 14px 28px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.1);
   }
-  .video-badge img { width: 120px; }
+  .video-badge img { width: 200px; }
   .round-badge {
     top: -20px;
     right: -10px;
