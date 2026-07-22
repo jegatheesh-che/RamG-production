@@ -563,9 +563,9 @@ button { cursor: pointer; border: none; background: none; }
   filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.85));
 }
 
-/* MOBILE CENTER EXPLORE WEBSITE BUTTON — MINIMAL WHITE DESIGN */
+/* CENTER EXPLORE WEBSITE BUTTON — MINIMAL WHITE DESIGN (PC & MOBILE) */
 .split-explore-btn {
-  display: none;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
