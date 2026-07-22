@@ -264,20 +264,30 @@ function startWebsiteEntrance() {
       document.addEventListener('scroll', playVideo, { once: true, passive: true });
     }
 
-    // One-Way Scroll Reveal Animation (No brightness dimming, vibrant video from start)
+    // One-Way Responsive Scroll Reveal Animation
     const revealAnim = gsap.timeline({ paused: true });
+    const isMobileViewport = window.innerWidth <= 768;
     
-    revealAnim.to('.split-panel-left', { yPercent: -100, ease: "none" }, 0)
-              .to('.split-panel-right', { yPercent: 100, ease: "none" }, 0)
-              .to('.split-center-logo', { opacity: 0, scale: 0.85, ease: "power1.out" }, 0)
-              .to('.split-scroll-indicator', { opacity: 0, y: 25, ease: "power1.out" }, 0);
+    if (isMobileViewport) {
+      // Mobile: Top panel slides UP (-100%), Bottom panel slides DOWN (+100%)
+      revealAnim.to('.split-panel-left', { yPercent: -100, ease: "none" }, 0)
+                .to('.split-panel-right', { yPercent: 100, ease: "none" }, 0)
+                .to('.split-center-logo', { opacity: 0, scale: 0.8, ease: "power1.out" }, 0)
+                .to('.split-scroll-indicator', { opacity: 0, y: 20, ease: "power1.out" }, 0);
+    } else {
+      // Desktop: Left panel slides UP (-100%), Right panel slides DOWN (+100%)
+      revealAnim.to('.split-panel-left', { yPercent: -100, ease: "none" }, 0)
+                .to('.split-panel-right', { yPercent: 100, ease: "none" }, 0)
+                .to('.split-center-logo', { opacity: 0, scale: 0.85, ease: "power1.out" }, 0)
+                .to('.split-scroll-indicator', { opacity: 0, y: 25, ease: "power1.out" }, 0);
+    }
 
     let maxProgress = 0;
 
     ScrollTrigger.create({
         trigger: ".split-hero-pin",
         start: "top top",
-        end: "+=150%",
+        end: isMobileViewport ? "+=80%" : "+=150%",
         pin: true,
         onUpdate: (self) => {
             // Keep video playing seamlessly
@@ -289,7 +299,7 @@ function startWebsiteEntrance() {
             if (self.progress > maxProgress) {
                 maxProgress = self.progress;
                 // Smoothly scrub the paused timeline forward
-                gsap.to(revealAnim, { progress: maxProgress, duration: 0.5, overwrite: "auto" });
+                gsap.to(revealAnim, { progress: maxProgress, duration: 0.4, overwrite: "auto" });
             }
 
             if (maxProgress > 0.95) {
@@ -297,8 +307,16 @@ function startWebsiteEntrance() {
                     window.sliderPaused = false;
                     if (window.startHeroAuto) window.startHeroAuto();
                 }
+                const leftPanel = document.querySelector('.split-panel-left');
+                const rightPanel = document.querySelector('.split-panel-right');
+                if (leftPanel) leftPanel.style.pointerEvents = 'none';
+                if (rightPanel) rightPanel.style.pointerEvents = 'none';
             } else {
                 window.sliderPaused = true;
+                const leftPanel = document.querySelector('.split-panel-left');
+                const rightPanel = document.querySelector('.split-panel-right');
+                if (leftPanel) leftPanel.style.pointerEvents = 'auto';
+                if (rightPanel) rightPanel.style.pointerEvents = 'auto';
             }
         }
     });

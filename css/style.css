@@ -597,6 +597,7 @@ button { cursor: pointer; border: none; background: none; }
   top: 0;
   width: 50vw;
   height: 100vh;
+  height: 100dvh;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -632,6 +633,49 @@ button { cursor: pointer; border: none; background: none; }
 .split-panel-right {
   right: 0;
   justify-content: center;
+}
+
+/* MOBILE RESPONSIVE SPLIT REVEAL STACKING */
+@media (max-width: 768px) {
+  .split-hero-pin {
+    height: 100dvh !important;
+    min-height: -webkit-fill-available;
+  }
+  
+  .split-panel {
+    width: 100vw !important;
+    height: 50dvh !important;
+  }
+  
+  .split-panel-left {
+    top: 0 !important;
+    left: 0 !important;
+    right: auto !important;
+  }
+  
+  .split-panel-right {
+    top: 50dvh !important;
+    left: 0 !important;
+    right: auto !important;
+  }
+
+  .split-panel-img {
+    object-position: center 30% !important;
+  }
+  
+  .split-center-logo-img {
+    height: clamp(52px, 14vw, 85px) !important;
+    max-width: 220px !important;
+  }
+  
+  .split-scroll-indicator {
+    bottom: clamp(20px, 4vh, 32px) !important;
+  }
+  
+  .split-scroll-text {
+    font-size: 9.5px !important;
+    letter-spacing: 2.5px !important;
+  }
 }
 
 .split-panel-right .split-panel-content {
@@ -1100,11 +1144,11 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
 /* ===== MOBILE — APP-LIKE EXPERIENCE ===== */
 @media (max-width: 768px) {
 
-  /* --- Split Screen Reveal (BIGGER MOBILE FONT) --- */
-  .split-hero-pin { height: 100svh; }
-  .split-panel { width: 50vw; height: 100svh; }
-  .split-panel-left { padding-right: 1.5vw; }
-  .split-panel-right { padding-left: 1.5vw; }
+  /* --- Split Screen Reveal (VERTICAL STACKED MOBILE PANELS) --- */
+  .split-hero-pin { height: 100dvh !important; min-height: -webkit-fill-available; }
+  .split-panel { width: 100vw !important; height: 50dvh !important; }
+  .split-panel-left { top: 0 !important; left: 0 !important; right: auto !important; padding: 0 !important; }
+  .split-panel-right { top: 50dvh !important; left: 0 !important; right: auto !important; padding: 0 !important; }
   .split-title { font-size: clamp(3.5rem, 13vw, 6.5rem) !important; font-weight: 400; }
   .split-title--script { font-size: clamp(3.2rem, 12vw, 6rem) !important; }
 
@@ -2257,6 +2301,23 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   .contact-minimal-name {
     font-size: 11px;
     letter-spacing: 1px;
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-minimal-grid {
+    flex-direction: column !important;
+    gap: 28px !important;
+  }
+  .contact-minimal-icon {
+    width: 52px !important;
+    height: 52px !important;
+  }
+  .contact-minimal-name {
+    font-size: 11px !important;
+    letter-spacing: 1px !important;
+    word-break: break-all !important;
+    text-align: center !important;
   }
 }
 
