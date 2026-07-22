@@ -1,8 +1,8 @@
 /* ================================================
-   RAMG PRODUCTION — WHITE / LIGHT THEME
+   RAMG PRODUCTION — LUXURY EDITORIAL THEME
    ================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Raleway:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Pinyon+Script&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 /* ===== CUSTOM BRAND FONTS ===== */
 @font-face {
@@ -33,9 +33,10 @@
   --clr-white:      #1a1814;
   --clr-muted:      #3b3632;
   --clr-border:     #e0dbd4;
-  --font-serif:     'Quince', 'Cormorant Garamond', Georgia, serif;
-  --font-script:    'Hugh is Life', 'Cormorant Garamond', cursive, serif;
-  --font-sans:      'Raleway', sans-serif;
+  --font-serif:     'Cormorant Garamond', 'Playfair Display', 'Quince', Georgia, serif;
+  --font-script:    'Pinyon Script', 'Hugh is Life', cursive, serif;
+  --font-sans:      'Plus Jakarta Sans', 'Raleway', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-cinematic: 'Cinzel', serif;
   --nav-h:          80px;
   --ease-gold:      cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --ease-expo:      cubic-bezier(0.16, 1, 0.3, 1);
@@ -81,7 +82,7 @@ button { cursor: pointer; border: none; background: none; }
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
   height: var(--nav-h); display: flex; align-items: center;
-  justify-content: flex-end; padding: 0 48px;
+  justify-content: space-between; padding: 0 48px;
   background: transparent;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
@@ -95,9 +96,62 @@ button { cursor: pointer; border: none; background: none; }
   background: transparent;
   border-bottom: none;
 }
+
+/* TOP LEFT BRAND LOGO — NO BACKGROUND / NO SHADOW */
+.nav__brand-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  pointer-events: auto;
+  transition: transform 0.35s var(--ease-gold);
+}
+
+.nav__brand-logo:hover {
+  transform: translateY(-2px) scale(1.04);
+}
+
+.nav__brand-logo-img {
+  height: 52px;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+.nav__brand-logo:hover .nav__brand-logo-img {
+  filter: none !important;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    padding: 0 20px;
+  }
+  .nav__brand-logo-img {
+    height: 42px;
+    max-width: 170px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav {
+    padding: 0 16px;
+  }
+  .nav__brand-logo-img {
+    height: 36px;
+    max-width: 140px;
+  }
+}
+
 .nav__logo { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.1; }
 .nav__logo-icon { font-family: var(--font-serif); font-size: 26px; font-weight: 500; font-style: italic; color: var(--clr-gold); letter-spacing: 2px; text-shadow: 0 1px 4px rgba(255, 255, 255, 0.8); }
 .nav__logo-text { font-size: 7.5px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--clr-muted); margin-top: 2px; text-shadow: 0 1px 4px rgba(255, 255, 255, 0.8); }
+.nav__overlay-logo-img { height: 44px; width: auto; object-fit: contain; margin-bottom: 4px; }
 
 /* PREMIUM HAMBURGER BUTTON — PROMINENT & BOLD */
 .nav__burger {
@@ -478,6 +532,66 @@ button { cursor: pointer; border: none; background: none; }
   z-index: 1;
 }
 
+/* SPLIT SCREEN CENTER LOGO OVERLAY */
+.split-center-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 25;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  max-width: 90vw;
+  will-change: transform, opacity;
+}
+
+.split-center-logo-img {
+  height: clamp(65px, 9vw, 120px);
+  width: auto;
+  max-width: 380px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.85));
+}
+
+/* SPLIT SCREEN SCROLL INDICATOR SIGN */
+.split-scroll-indicator {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 25;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.split-scroll-text {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+}
+
+.split-scroll-arrow {
+  color: var(--clr-gold-light);
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.9));
+  animation: split-scroll-bounce 2s infinite var(--ease-gold);
+}
+
+@keyframes split-scroll-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
 .split-panel {
   position: absolute;
   top: 0;
@@ -487,34 +601,49 @@ button { cursor: pointer; border: none; background: none; }
   align-items: center;
   overflow: hidden;
   z-index: 10;
-  background-color: var(--clr-bg);
+  background-color: #0b0a09;
+}
+
+.split-panel-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover !important;
+  object-position: center center;
+  z-index: 1;
+  filter: none !important;
 }
 
 .split-panel-left {
   left: 0;
-  justify-content: flex-end;
-  padding-right: 2vw;
-  background-color: #faf9f7; /* Matte white */
+  justify-content: center;
 }
 
 .split-panel-left .split-panel-content {
-  color: var(--clr-gold);
+  position: relative;
+  z-index: 3;
+  color: var(--clr-gold-light);
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.9), 0 2px 10px rgba(0, 0, 0, 0.95);
+  text-align: center;
 }
 
 .split-panel-right {
   right: 0;
-  justify-content: flex-start;
-  padding-left: 2vw;
-  background: linear-gradient(135deg, #8b6c31 0%, #bd9b52 25%, #fdf2d0 45%, #bd9b52 65%, #8b6c31 100%); /* Realistic metallic gold */
+  justify-content: center;
 }
 
 .split-panel-right .split-panel-content {
+  position: relative;
+  z-index: 3;
   color: #ffffff;
-  text-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.9), 0 2px 10px rgba(0, 0, 0, 0.95);
+  text-align: center;
 }
 
 .split-title {
-  font-family: 'Quince', var(--font-serif);
+  font-family: var(--font-serif);
   font-size: clamp(3.5rem, 10vw, 12rem);
   font-weight: 400;
   font-style: normal;
@@ -2056,6 +2185,79 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   .lightbox-nav--next { right: 12px; }
   .lightbox-title { font-size: 1.3rem; }
   .lightbox-sub { font-size: 0.65rem; }
+}
+
+/* MINIMAL CONTACT & SOCIAL CHANNELS — PREMIUM METALLIC DESIGN */
+.contact-minimal-section {
+  margin-top: 50px;
+  padding-top: 36px;
+  border-top: 1px solid rgba(149, 117, 49, 0.15);
+}
+
+.contact-minimal-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 56px;
+  flex-wrap: wrap;
+}
+
+.contact-minimal-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: var(--clr-muted, #3b3632);
+  transition: transform 0.35s var(--ease-gold), color 0.35s var(--ease-gold);
+}
+
+.contact-minimal-item:hover {
+  color: var(--clr-gold, #957531);
+  transform: translateY(-5px);
+}
+
+.contact-minimal-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  color: var(--clr-gold, #957531);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.35s var(--ease-gold);
+}
+
+.contact-minimal-item:hover .contact-minimal-icon {
+  color: var(--clr-gold-light, #bd9b52);
+  box-shadow: 0 10px 28px rgba(149, 117, 49, 0.22);
+  transform: translateY(-2px) scale(1.06);
+}
+
+.contact-minimal-name {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .contact-minimal-grid {
+    gap: 32px;
+  }
+  .contact-minimal-icon {
+    width: 50px;
+    height: 50px;
+  }
+  .contact-minimal-name {
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
 }
 
 
