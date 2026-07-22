@@ -1885,11 +1885,25 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
 /* ===== MOBILE APP-FRIENDLY RESPONSIVE OVERHAUL (About, Contact, Gallery) ===== */
 @media (max-width: 900px) {
   .about-editorial-wrapper, .contact-redesign-wrapper { padding: 20px 16px 64px; }
-  .hero__layout, .editorial-split-section, .contact-split-hero { grid-template-columns: 1fr; gap: 2rem; margin-bottom: 60px; }
-  .hero__image-wrapper { height: 48vh; border-radius: 16px; }
-  .editorial-image-wrapper, .contact-split-media { height: 320px; border-radius: 16px; }
-  .editorial-stats-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-  .contact-platforms-grid { grid-template-columns: 1fr; gap: 12px; }
+  
+  /* Force 1 column on all grid splits including .reverse specificity */
+  .hero__layout, 
+  .editorial-split-section, 
+  .editorial-split-section.reverse, 
+  .contact-split-hero { 
+    display: grid !important;
+    grid-template-columns: 1fr !important; 
+    gap: 2rem !important; 
+    margin-bottom: 60px !important; 
+    width: 100% !important;
+  }
+  
+  .hero__image-wrapper { height: 48vh; border-radius: 16px; width: 100% !important; }
+  .editorial-image-wrapper, .contact-split-media { height: 320px; border-radius: 16px; width: 100% !important; }
+  .editorial-text-col, .hero__text-col { width: 100% !important; box-sizing: border-box !important; }
+  
+  .editorial-stats-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; width: 100% !important; }
+  .contact-platforms-grid { grid-template-columns: 1fr; gap: 12px; width: 100% !important; }
   
   /* Gallery Horizontal App Story Showcase */
   .gallery-hero-collage {
@@ -1910,14 +1924,14 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   }
   .collage-item--left, .collage-item--right, .collage-item--main { height: 340px; }
 
-  /* Horizontal Scrollable Filter Tabs (Spotify / Instagram style) */
+  /* Horizontal Scrollable Filter Tabs */
   .gallery-filters {
     display: flex;
     justify-content: flex-start;
     overflow-x: auto;
     flex-wrap: nowrap;
     gap: 8px;
-    padding: 4px 2px 14px;
+    padding: 4px 16px 14px 2px;
     margin-bottom: 24px;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
@@ -1930,59 +1944,86 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
     border-radius: 20px;
   }
 
-  .gallery-masonry { column-count: 2; column-gap: 10px; }
+  .gallery-masonry { column-count: 2; column-gap: 10px; width: 100% !important; }
   .gallery-card { margin-bottom: 10px; border-radius: 10px; }
+  
+  /* Gallery Header Line Alignment */
+  .gallery-page__header { text-align: center; margin-bottom: 28px; }
+  .gallery-page__header .gold-line { margin: 16px auto !important; }
 }
 
 @media (max-width: 600px) {
-  .about-editorial-wrapper, .contact-redesign-wrapper, .gallery-page { padding: 16px 12px 50px; }
+  .about-editorial-wrapper, .contact-redesign-wrapper, .gallery-page { padding: 16px 12px 50px; width: 100% !important; box-sizing: border-box !important; }
   
   /* About Mobile App Polish */
   .hero__text-col, .editorial-text-col, .contact-text-box {
-    padding: 24px 18px;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    padding: 24px 18px !important;
+    border-radius: 16px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
   .hero__eyebrow { font-size: 0.68rem; letter-spacing: 2.5px; margin-bottom: 1rem; }
-  .hero__title { font-size: clamp(2.2rem, 8vw, 3.4rem); }
+  
+  /* Title Text Overlap Fix */
+  .hero__title-wrap { display: block; width: 100%; margin-bottom: 6px; }
+  .hero__title { font-size: clamp(2rem, 7.5vw, 3.2rem) !important; line-height: 1.2 !important; display: block; }
+  .hero__title.italic { 
+    display: block !important; 
+    padding-left: 0.2rem !important; 
+    margin-top: 0.2em !important; 
+    line-height: 1.3 !important; 
+  }
+  
   .hero__desc { font-size: 0.92rem; line-height: 1.7; margin-top: 1.2rem; }
   .hero__cta { margin-top: 1.4rem; font-size: 0.75rem; letter-spacing: 2px; }
   
-  .editorial-quote-box { padding: 12px 16px; border-radius: 8px; }
-  .editorial-quote-box p { font-size: 0.95rem; }
-  .editorial-stats-section { padding: 24px 16px; border-radius: 16px; margin-bottom: 60px; }
-  .stat-card__number { font-size: clamp(2.4rem, 8vw, 3.4rem); }
+  .editorial-quote-box { padding: 14px 16px; border-radius: 10px; margin-top: 1.4rem; }
+  .editorial-quote-box p { font-size: 0.92rem; line-height: 1.7; }
+  .editorial-stats-section { padding: 24px 16px; border-radius: 16px; margin-bottom: 50px; width: 100% !important; box-sizing: border-box !important; }
+  .stat-card__number { font-size: clamp(2.2rem, 8vw, 3.2rem); }
   .stat-card__label { font-size: 0.65rem; letter-spacing: 2px; }
 
   /* Contact Mobile App Polish */
   .contact-eyebrow-pill { padding: 6px 14px; font-size: 0.65rem; letter-spacing: 2px; margin-bottom: 16px; }
-  .contact-main-heading { font-size: clamp(2.2rem, 8vw, 3.2rem); margin-bottom: 14px; }
+  .contact-main-heading { font-size: clamp(2rem, 7.5vw, 3.2rem) !important; line-height: 1.2 !important; margin-bottom: 14px; }
+  .contact-main-heading em { display: inline-block; margin-top: 0.15em; }
   .contact-hero-bio { font-size: 0.92rem; line-height: 1.7; }
   
   /* Giant Email Banner App Button */
   .giant-email-banner {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 18px;
-    border-radius: 14px;
-    gap: 12px;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 18px 16px !important;
+    border-radius: 14px !important;
+    gap: 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  .giant-email-banner > div:first-child {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
   }
   .giant-email-banner:active { transform: scale(0.98); }
-  .giant-email__text { font-size: clamp(0.95rem, 4vw, 1.2rem); word-break: break-all; }
-  .giant-email__badge { font-size: 0.62rem; padding: 6px 12px; }
+  .giant-email__text { font-size: clamp(0.9rem, 4.2vw, 1.15rem) !important; word-break: break-all !important; text-align: center !important; }
+  .giant-email__badge { font-size: 0.62rem; padding: 6px 14px; }
   
-  .contact-split-media { height: 260px; border-radius: 14px; }
+  .contact-split-media { height: 260px; border-radius: 14px; width: 100% !important; }
   
   /* Contact Platform Cards iOS List Item style */
   .platform-card-item {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    min-height: auto;
-    padding: 16px 18px;
-    border-radius: 14px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    min-height: auto !important;
+    padding: 16px 18px !important;
+    border-radius: 14px !important;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
   .platform-card-item:active { transform: scale(0.98); }
   .platform-card-item > div:first-child { display: flex; align-items: center; gap: 14px; }
@@ -1994,8 +2035,8 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
 
   /* Gallery Mobile App Grid */
   .gallery-page__header { text-align: center; margin-bottom: 24px; }
-  .gallery-page__header .section-title { font-size: clamp(2rem, 7vw, 3rem); }
-  .gallery-masonry { column-count: 2; column-gap: 8px; }
+  .gallery-page__header .section-title { font-size: clamp(1.8rem, 6.5vw, 2.8rem); }
+  .gallery-masonry { column-count: 2; column-gap: 8px; width: 100% !important; }
   .gallery-card { margin-bottom: 8px; border-radius: 8px; }
   .gallery-card__expand { width: 30px; height: 30px; font-size: 0.9rem; top: 10px; right: 10px; opacity: 1; background: rgba(0,0,0,0.6); }
 
@@ -2007,4 +2048,5 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   .lightbox-title { font-size: 1.3rem; }
   .lightbox-sub { font-size: 0.65rem; }
 }
+
 
