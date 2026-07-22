@@ -985,8 +985,14 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   .hero__arrow--prev { left: 14px; }
   .hero__arrow--next { right: 14px; }
   .hero__dots { bottom: 18px; gap: 8px; }
-  .hero__slide-overlay { padding: 16px 20px; }
-  .hero__slide-brand { font-size: clamp(34px, 8.5vw, 56px) !important; }
+  .hero__slide-overlay { padding: 16px 12px; bottom: 60px; }
+  .hero__slide-brand { 
+    font-size: clamp(52px, 15vw, 84px) !important; 
+    text-align: center !important; 
+    letter-spacing: 2px !important;
+    line-height: 1 !important;
+    width: 100% !important;
+  }
 
   /* --- Intro Statement (card feel) --- */
   .home-intro {
