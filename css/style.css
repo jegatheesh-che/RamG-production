@@ -971,11 +971,13 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
 /* ===== MOBILE — APP-LIKE EXPERIENCE ===== */
 @media (max-width: 768px) {
 
-  /* --- Split Screen Reveal --- */
+  /* --- Split Screen Reveal (BIGGER MOBILE FONT) --- */
   .split-hero-pin { height: 100svh; }
   .split-panel { width: 50vw; height: 100svh; }
-  .split-title { font-size: clamp(2rem, 8vw, 4.5rem); }
-  .split-title--script { font-size: clamp(1.8rem, 7.5vw, 4rem); }
+  .split-panel-left { padding-right: 1.5vw; }
+  .split-panel-right { padding-left: 1.5vw; }
+  .split-title { font-size: clamp(3.5rem, 13vw, 6.5rem) !important; font-weight: 400; }
+  .split-title--script { font-size: clamp(3.2rem, 12vw, 6rem) !important; }
 
   /* --- Hero Slider (full-bleed mobile) --- */
   .hero--full { height: 100svh; }
@@ -984,7 +986,7 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   .hero__arrow--next { right: 14px; }
   .hero__dots { bottom: 18px; gap: 8px; }
   .hero__slide-overlay { padding: 16px 20px; }
-  .hero__slide-brand { font-size: clamp(24px, 6vw, 42px); }
+  .hero__slide-brand { font-size: clamp(34px, 8.5vw, 56px) !important; }
 
   /* --- Intro Statement (card feel) --- */
   .home-intro {
