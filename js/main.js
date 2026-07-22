@@ -253,14 +253,19 @@ function startWebsiteEntrance() {
     }, "<");
 
     const heroVideo = document.getElementById('hero-reveal-video');
-    if (heroVideo) heroVideo.pause(); // start paused until scroll
+    if (heroVideo) {
+      // Ensure video plays immediately on load for maximum opening impact
+      const playVideo = () => heroVideo.play().catch(() => {});
+      playVideo();
+      document.addEventListener('touchstart', playVideo, { once: true, passive: true });
+      document.addEventListener('scroll', playVideo, { once: true, passive: true });
+    }
 
-    // One-Way Scroll Reveal Animation
+    // One-Way Scroll Reveal Animation (No brightness dimming, vibrant video from start)
     const revealAnim = gsap.timeline({ paused: true });
     
     revealAnim.to('.split-panel-left', { yPercent: -100, ease: "none" }, 0)
-              .to('.split-panel-right', { yPercent: 100, ease: "none" }, 0)
-              .fromTo('.hero', { filter: 'brightness(0.5)' }, { filter: 'brightness(1)', duration: 0.5, ease: "none" }, 0);
+              .to('.split-panel-right', { yPercent: 100, ease: "none" }, 0);
 
     let maxProgress = 0;
 
@@ -270,6 +275,11 @@ function startWebsiteEntrance() {
         end: "+=150%",
         pin: true,
         onUpdate: (self) => {
+            // Keep video playing seamlessly
+            if (heroVideo && heroVideo.paused) {
+              heroVideo.play().catch(() => {});
+            }
+
             // Only move forward, never backward
             if (self.progress > maxProgress) {
                 maxProgress = self.progress;
@@ -278,34 +288,15 @@ function startWebsiteEntrance() {
             }
 
             if (maxProgress > 0.95) {
-                if (heroVideo) {
-                  heroVideo.play().catch(() => {});
-                }
                 if (window.sliderPaused) {
                     window.sliderPaused = false;
                     if (window.startHeroAuto) window.startHeroAuto();
                 }
             } else {
-                if (heroVideo) heroVideo.pause();
                 window.sliderPaused = true;
             }
-        },
-        onLeave: () => {
-            if (heroVideo) heroVideo.pause();
-        },
-        onLeaveBack: () => {
-            if (heroVideo && maxProgress <= 0.95) heroVideo.pause();
         }
     });
-
-    // Mobile: tap anywhere on split panel to trigger reveal (iOS video policy)
-    if (isMobile) {
-      splitHeroPin.addEventListener('touchstart', () => {
-        if (heroVideo && heroVideo.paused && maxProgress > 0.95) {
-          heroVideo.play().catch(() => {});
-        }
-      }, { passive: true, once: true });
-    }
   }
 
   // Hero title entrance if present (for other pages)
