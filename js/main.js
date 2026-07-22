@@ -343,13 +343,6 @@ function startWebsiteEntrance() {
             if (rightPanel) rightPanel.style.pointerEvents = 'none';
           }
         });
-
-        const targetOffset = window.innerHeight * 0.9;
-        if (window.lenis) {
-          lenis.scrollTo(targetOffset, { duration: 1.2 });
-        } else {
-          window.scrollTo({ top: targetOffset, behavior: 'smooth' });
-        }
       });
     }
   }

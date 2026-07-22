@@ -532,6 +532,13 @@ button { cursor: pointer; border: none; background: none; }
   z-index: 1;
 }
 
+.hero-reveal-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
 /* SPLIT SCREEN CENTER LOGO OVERLAY */
 .split-center-logo {
   position: absolute;
@@ -709,6 +716,14 @@ button { cursor: pointer; border: none; background: none; }
   
   .split-scroll-indicator {
     display: none !important;
+  }
+
+  .hero-reveal-video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    background: #0b0a09 !important;
   }
 }
 
