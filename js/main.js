@@ -3,8 +3,14 @@
    GSAP + Lenis + vanilla scroll reveal + cursor
    ================================================ */
 
-// --- Lenis smooth scroll (Standard Configuration) ---
-const lenis = new Lenis();
+// --- Lenis smooth scroll (Mobile-optimized) ---
+const isMobile = window.matchMedia('(max-width: 768px)').matches;
+const lenis = new Lenis({
+  lerp: isMobile ? 0.12 : 0.1,
+  smoothWheel: true,
+  touchMultiplier: 1.5,
+  touchInertiaMultiplier: 18
+});
 
 // --- GSAP ScrollTrigger sync ---
 gsap.registerPlugin(ScrollTrigger);
@@ -272,7 +278,9 @@ function startWebsiteEntrance() {
             }
 
             if (maxProgress > 0.95) {
-                if (heroVideo && self.progress < 0.99) heroVideo.play();
+                if (heroVideo) {
+                  heroVideo.play().catch(() => {});
+                }
                 if (window.sliderPaused) {
                     window.sliderPaused = false;
                     if (window.startHeroAuto) window.startHeroAuto();
@@ -289,6 +297,15 @@ function startWebsiteEntrance() {
             if (heroVideo && maxProgress <= 0.95) heroVideo.pause();
         }
     });
+
+    // Mobile: tap anywhere on split panel to trigger reveal (iOS video policy)
+    if (isMobile) {
+      splitHeroPin.addEventListener('touchstart', () => {
+        if (heroVideo && heroVideo.paused && maxProgress > 0.95) {
+          heroVideo.play().catch(() => {});
+        }
+      }, { passive: true, once: true });
+    }
   }
 
   // Hero title entrance if present (for other pages)
