@@ -556,6 +556,39 @@ button { cursor: pointer; border: none; background: none; }
   filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.85));
 }
 
+/* MOBILE CENTER EXPLORE WEBSITE BUTTON */
+.split-explore-btn {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 32px;
+  border-radius: 50px;
+  border: 1.5px solid var(--clr-gold-light, #bd9b52);
+  background: rgba(18, 18, 15, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(189, 155, 82, 0.35);
+  transition: all 0.35s var(--ease-gold);
+  pointer-events: auto !important;
+  z-index: 30;
+}
+
+.split-explore-btn:hover,
+.split-explore-btn:active {
+  background: var(--clr-gold, #957531);
+  border-color: var(--clr-gold);
+  color: #ffffff;
+  box-shadow: 0 14px 40px rgba(149, 117, 49, 0.5);
+  transform: scale(1.04);
+}
+
 /* SPLIT SCREEN SCROLL INDICATOR SIGN */
 .split-scroll-indicator {
   position: absolute;
@@ -664,17 +697,15 @@ button { cursor: pointer; border: none; background: none; }
   }
   
   .split-center-logo-img {
-    height: clamp(52px, 14vw, 85px) !important;
-    max-width: 220px !important;
+    display: none !important;
+  }
+  
+  .split-explore-btn {
+    display: flex !important;
   }
   
   .split-scroll-indicator {
-    bottom: clamp(20px, 4vh, 32px) !important;
-  }
-  
-  .split-scroll-text {
-    font-size: 9.5px !important;
-    letter-spacing: 2.5px !important;
+    display: none !important;
   }
 }
 

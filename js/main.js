@@ -320,6 +320,38 @@ function startWebsiteEntrance() {
             }
         }
     });
+
+    // Mobile Explore Website Button Click Handler
+    const exploreBtn = document.getElementById('splitExploreBtn');
+    if (exploreBtn) {
+      exploreBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        if (heroVideo) heroVideo.play().catch(() => {});
+
+        maxProgress = 1;
+        gsap.to(revealAnim, {
+          progress: 1,
+          duration: 0.9,
+          ease: "power2.inOut",
+          onComplete: () => {
+            window.sliderPaused = false;
+            if (window.startHeroAuto) window.startHeroAuto();
+            const leftPanel = document.querySelector('.split-panel-left');
+            const rightPanel = document.querySelector('.split-panel-right');
+            if (leftPanel) leftPanel.style.pointerEvents = 'none';
+            if (rightPanel) rightPanel.style.pointerEvents = 'none';
+          }
+        });
+
+        const targetOffset = window.innerHeight * 0.9;
+        if (window.lenis) {
+          lenis.scrollTo(targetOffset, { duration: 1.2 });
+        } else {
+          window.scrollTo({ top: targetOffset, behavior: 'smooth' });
+        }
+      });
+    }
   }
 
   // Hero title entrance if present (for other pages)
