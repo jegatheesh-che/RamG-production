@@ -136,8 +136,9 @@ button { cursor: pointer; border: none; background: none; }
   .nav {
     padding: 2px 8px;
   }
-  .nav__brand-logo-img {
-    height: 72px;
+  .nav__brand-logo-img,
+  .nav__overlay-logo-img {
+    height: 82px;
     max-width: 280px;
   }
 }
@@ -146,16 +147,17 @@ button { cursor: pointer; border: none; background: none; }
   .nav {
     padding: 2px 6px;
   }
-  .nav__brand-logo-img {
-    height: 56px;
-    max-width: 220px;
+  .nav__brand-logo-img,
+  .nav__overlay-logo-img {
+    height: 76px;
+    max-width: 230px;
   }
 }
 
-.nav__logo { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.1; }
+.nav__logo { display: flex; align-items: center; line-height: 1; text-decoration: none; }
 .nav__logo-icon { font-family: var(--font-serif); font-size: 26px; font-weight: 500; font-style: italic; color: var(--clr-gold); letter-spacing: 2px; text-shadow: 0 1px 4px rgba(255, 255, 255, 0.8); }
-.nav__logo-text { font-size: 7.5px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--clr-muted); margin-top: 2px; text-shadow: 0 1px 4px rgba(255, 255, 255, 0.8); }
-.nav__overlay-logo-img { height: 44px; width: auto; object-fit: contain; margin-bottom: 4px; }
+.nav__logo-text { display: none !important; }
+.nav__overlay-logo-img { height: 90px; width: auto; max-width: 360px; object-fit: contain; margin-bottom: 0; transition: transform 0.35s var(--ease-gold); }
 
 /* PREMIUM HAMBURGER BUTTON — PROMINENT & BOLD */
 .nav__burger {
@@ -278,9 +280,14 @@ button { cursor: pointer; border: none; background: none; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
-  padding-bottom: 32px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  width: calc(100% + 128px);
+  margin-left: -64px;
+  margin-top: -32px;
+  padding: 24px 64px;
+  background: #000000;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 .nav__overlay-header .nav__logo-icon {
@@ -300,8 +307,8 @@ button { cursor: pointer; border: none; background: none; }
   font-weight: 700;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: #1a1814;
-  background: rgba(26, 24, 20, 0.04);
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
   border: 2px solid var(--clr-gold);
   padding: 12px 28px;
   border-radius: 40px;
@@ -448,6 +455,12 @@ button { cursor: pointer; border: none; background: none; }
   .nav__overlay-content {
     padding: 24px 28px;
   }
+  .nav__overlay-header {
+    width: calc(100% + 56px);
+    margin-left: -28px;
+    margin-top: -24px;
+    padding: 16px 28px;
+  }
 }
 
 /* ===== CUSTOM ARROW CURSOR ===== */
@@ -464,7 +477,7 @@ button { cursor: pointer; border: none; background: none; }
   width: 24px;
   height: 24px;
   pointer-events: none !important;
-  z-index: 9999999 !important;
+  z-index: 99999999 !important;
   transform: translate3d(-100px, -100px, 0);
   will-change: transform;
 }
@@ -935,35 +948,7 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   100% { transform: scale(1); }
 }
 
-/* ===== CUSTOM ARROW CURSOR ===== */
-@media (pointer: fine) {
-  body, a, button, input, select, textarea, [role="button"] {
-    cursor: none !important;
-  }
-}
 
-.cursor__arrow {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 24px;
-  height: 24px;
-  pointer-events: none;
-  z-index: 99999;
-  transform: translate3d(-100px, -100px, 0);
-  will-change: transform;
-}
-
-.cursor__arrow svg {
-  width: 22px;
-  height: 22px;
-  filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.3));
-  transition: transform 0.2s var(--ease-gold);
-}
-
-.cursor__arrow.hovered svg {
-  transform: scale(1.35) rotate(-12deg);
-}
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
