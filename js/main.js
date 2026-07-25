@@ -232,102 +232,13 @@ function startWebsiteEntrance() {
   // Fade in body on load
   gsap.from('body', { opacity: 0, duration: 0.5, ease: 'power2.out' });
 
-  // Start split screen entrance
-  const splitHeroPin = document.querySelector('.split-hero-pin');
-  if (splitHeroPin) {
-    const splitTl = gsap.timeline();
-    
-    // Initial entrance of panel images
-    const leftImg = document.querySelector('.split-panel-left .split-panel-img');
-    const rightImg = document.querySelector('.split-panel-right .split-panel-img');
-    if (leftImg && rightImg) {
-      splitTl.from('.split-panel-left .split-panel-img', {
-          scale: 1.08,
-          opacity: 0,
-          duration: 1.2,
-          ease: "power3.out"
-      })
-      .from('.split-panel-right .split-panel-img', {
-          scale: 1.08,
-          opacity: 0,
-          duration: 1.2,
-          ease: "power3.out"
-      }, "<");
-    }
-
-    // Automatic 2s split-screen image slideshow transition
-    const leftSlides = document.querySelectorAll('.split-panel-left .split-slide');
-    const rightSlides = document.querySelectorAll('.split-panel-right .split-slide');
-    let splitSlideIdx = 0;
-    let splitTimer = null;
-
-    if (leftSlides.length > 1 && rightSlides.length > 1) {
-      splitTimer = setInterval(() => {
-        if (window.splitRevealed) {
-          if (splitTimer) clearInterval(splitTimer);
-          return;
-        }
-        leftSlides[splitSlideIdx].classList.remove('active');
-        rightSlides[splitSlideIdx].classList.remove('active');
-
-        splitSlideIdx = (splitSlideIdx + 1) % leftSlides.length;
-
-        leftSlides[splitSlideIdx].classList.add('active');
-        rightSlides[splitSlideIdx].classList.add('active');
-      }, 2000);
-    }
-
-    const heroVideo = document.getElementById('hero-reveal-video');
-    if (heroVideo) {
-      // Ensure video plays immediately on load for maximum opening impact
-      const playVideo = () => heroVideo.play().catch(() => {});
-      playVideo();
-      document.addEventListener('touchstart', playVideo, { once: true, passive: true });
-      document.addEventListener('scroll', playVideo, { once: true, passive: true });
-    }
-
-    // Responsive Click-to-Reveal Animation (PC & Mobile)
-    const isMobileViewport = window.innerWidth <= 768;
-    
-    const exploreBtn = document.getElementById('splitExploreBtn');
-    if (exploreBtn) {
-      exploreBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.splitRevealed = true;
-        if (splitTimer) clearInterval(splitTimer);
-        
-        if (heroVideo) {
-          heroVideo.currentTime = 0;
-          heroVideo.play().catch(() => {});
-        }
-
-        const clickTl = gsap.timeline({
-          onComplete: () => {
-            window.sliderPaused = false;
-            if (window.startHeroAuto) window.startHeroAuto();
-            
-            const leftPanel = document.querySelector('.split-panel-left');
-            const rightPanel = document.querySelector('.split-panel-right');
-            const centerLogo = document.querySelector('.split-center-logo');
-            if (leftPanel) { leftPanel.style.pointerEvents = 'none'; leftPanel.style.display = 'none'; }
-            if (rightPanel) { rightPanel.style.pointerEvents = 'none'; rightPanel.style.display = 'none'; }
-            if (centerLogo) { centerLogo.style.pointerEvents = 'none'; centerLogo.style.display = 'none'; }
-          }
-        });
-
-        if (isMobileViewport) {
-          // Mobile: Top panel slides UP (-100%), Bottom panel slides DOWN (+100%)
-          clickTl.to('.split-center-logo', { opacity: 0, scale: 0.8, duration: 0.4, ease: "power2.out" }, 0)
-                 .to('.split-panel-left', { yPercent: -100, duration: 1.0, ease: "power3.inOut" }, 0.1)
-                 .to('.split-panel-right', { yPercent: 100, duration: 1.0, ease: "power3.inOut" }, 0.1);
-        } else {
-          // PC Desktop: Left panel slides LEFT (-100%), Right panel slides RIGHT (+100%)
-          clickTl.to('.split-center-logo', { opacity: 0, scale: 0.85, duration: 0.4, ease: "power2.out" }, 0)
-                 .to('.split-panel-left', { xPercent: -100, duration: 1.1, ease: "power3.inOut" }, 0.1)
-                 .to('.split-panel-right', { xPercent: 100, duration: 1.1, ease: "power3.inOut" }, 0.1);
-        }
-      });
-    }
+  const heroVideo = document.getElementById('hero-reveal-video');
+  if (heroVideo) {
+    // Ensure video plays immediately on load for maximum opening impact
+    const playVideo = () => heroVideo.play().catch(() => {});
+    playVideo();
+    document.addEventListener('touchstart', playVideo, { once: true, passive: true });
+    document.addEventListener('scroll', playVideo, { once: true, passive: true });
   }
 
   // Hero title entrance if present (for other pages)
