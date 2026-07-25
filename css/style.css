@@ -2165,6 +2165,13 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
     width: 100% !important;
   }
   
+  /* Order images first on mobile */
+  .hero__image-col,
+  .editorial-image-wrapper,
+  .contact-split-media {
+    order: -1;
+  }
+  
   .hero__image-wrapper { height: 48vh; border-radius: 16px; width: 100% !important; }
   .editorial-image-wrapper, .contact-split-media { height: 320px; border-radius: 16px; width: 100% !important; }
   .editorial-text-col, .hero__text-col { width: 100% !important; box-sizing: border-box !important; }
