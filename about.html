@@ -121,7 +121,7 @@
             My journey into photography and filmmaking began in 2018, when I discovered that a single photograph could preserve a feeling forever and a single video could bring those emotions back to life. What started as a passion quickly became my purpose.
           </p>
           
-          <a href="contact.html" class="hero__cta reveal reveal-delay-3">Inquire Collection &rarr;</a>
+          <button id="seeMoreBtn" class="hero__cta reveal reveal-delay-3" style="border:none; cursor:pointer; background:none; font-family:inherit; padding:0;">See more &rarr;</button>
         </div>
         
         <div class="hero__image-col reveal">
@@ -132,6 +132,7 @@
       </section>
 
       <!-- SECTION 2: EDITORIAL PHILOSOPHY SPLIT -->
+      <div id="full-about-content" style="display: none;">
       <section class="editorial-split-section reveal">
         <div class="editorial-image-wrapper">
           <img src="assets/images/excellents/DSC08698-2.webp" alt="Authentic Emotional Storytelling" loading="lazy" />
@@ -193,9 +194,29 @@
           <img src="assets/images/excellents/slide4.webp" alt="RamG Production Studio" loading="lazy" />
         </div>
       </section>
-
+      </div> <!-- /#full-about-content -->
     </div>
   </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const seeMoreBtn = document.getElementById("seeMoreBtn");
+      const fullContent = document.getElementById("full-about-content");
+      
+      if(seeMoreBtn && fullContent) {
+        seeMoreBtn.addEventListener("click", () => {
+          fullContent.style.display = "block";
+          seeMoreBtn.style.display = "none";
+          // Give browser a tick to render block, then refresh GSAP triggers
+          setTimeout(() => {
+            if (typeof ScrollTrigger !== "undefined") {
+              ScrollTrigger.refresh();
+            }
+          }, 50);
+        });
+      }
+    });
+  </script>
 
   <!-- FOOTER -->
   <footer class="footer">
