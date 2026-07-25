@@ -24,15 +24,15 @@
 
 /* --- DESIGN TOKENS --- */
 :root {
-  --clr-bg:         #000000;
-  --clr-bg-light:   #080808;
-  --clr-bg-card:    #0d0d0d;
+  --clr-bg:         #09090b;
+  --clr-bg-light:   #121215;
+  --clr-bg-card:    #131316;
   --clr-gold:       #dfb142;
   --clr-gold-light: #f7e28b;
   --clr-gold-dark:  #b88a28;
-  --clr-white:      #ffffff;
-  --clr-muted:      #a3a3a3;
-  --clr-border:     rgba(223, 177, 66, 0.25);
+  --clr-white:      #f5f5f7;
+  --clr-muted:      #a1a1aa;
+  --clr-border:     rgba(223, 177, 66, 0.18);
   --font-serif:     'Cormorant Garamond', 'Playfair Display', 'Quince', Georgia, serif;
   --font-script:    'Pinyon Script', 'Hugh is Life', cursive, serif;
   --font-sans:      'Plus Jakarta Sans', 'Raleway', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -2422,16 +2422,16 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
 .reviews-hero {
   text-align: center;
   margin: 0 auto 50px;
-  background: #0d0d0d;
-  border: 1px solid rgba(223, 177, 66, 0.3);
-  padding: 48px 36px;
-  border-radius: 24px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(223, 177, 66, 0.08);
+  background: var(--clr-bg-card);
+  border: 1px solid var(--clr-border);
+  padding: 44px 32px;
+  border-radius: 20px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
   max-width: 800px;
 }
 
 .reviews-hero .section-label {
-  color: var(--clr-gold-light);
+  color: var(--clr-gold);
   letter-spacing: 3px;
   text-transform: uppercase;
   font-size: 0.75rem;
@@ -2439,19 +2439,11 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
 
 .reviews-hero__title {
   font-family: var(--font-serif);
-  font-size: clamp(2.5rem, 5vw, 4.2rem);
+  font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: 400;
   line-height: 1.15;
-  color: #ffffff;
+  color: var(--clr-white);
   margin: 12px 0;
-  background: linear-gradient(135deg, #ffffff 0%, #f7e28b 60%, #dfb142 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.reviews-hero__title em {
-  font-style: italic;
-  color: var(--clr-gold-light);
 }
 
 .reviews-hero__desc {
@@ -2459,7 +2451,7 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   margin: 16px auto 0;
   font-size: 1rem;
   line-height: 1.7;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--clr-muted);
 }
 
 /* Trust Stats Banner */
@@ -2471,9 +2463,8 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-  background: rgba(20, 20, 20, 0.6);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(149, 117, 49, 0.25);
+  background: var(--clr-bg-card);
+  border: 1px solid var(--clr-border);
   border-radius: 20px;
   padding: 32px 24px;
 }
@@ -2486,7 +2477,7 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   font-family: var(--font-serif);
   font-size: 2.2rem;
   font-weight: 400;
-  color: var(--clr-gold);
+  color: var(--clr-gold-light);
   margin-bottom: 6px;
 }
 
@@ -2494,7 +2485,7 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   font-size: 0.75rem;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--clr-muted);
 }
 
 /* Spotlight Review */
@@ -2507,7 +2498,7 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   font-size: 1.25rem;
   font-style: italic;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--clr-white);
   margin: 20px 0;
 }
 
@@ -2527,12 +2518,12 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
 }
 
 .review-filter-btn {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--clr-white);
   padding: 10px 24px;
   border-radius: 30px;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   cursor: pointer;
@@ -2543,8 +2534,9 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
 .review-filter-btn.active {
   background: var(--clr-gold);
   border-color: var(--clr-gold);
-  color: #ffffff;
-  box-shadow: 0 4px 15px rgba(149, 117, 49, 0.3);
+  color: #000000;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(223, 177, 66, 0.3);
 }
 
 /* Reviews Grid */
@@ -2556,8 +2548,8 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
 }
 
 .review-card {
-  background: #0d0d0d;
-  border: 1px solid rgba(223, 177, 66, 0.2);
+  background: var(--clr-bg-card);
+  border: 1px solid var(--clr-border);
   border-radius: 16px;
   padding: 28px 24px;
   display: flex;
@@ -2568,8 +2560,8 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
 
 .review-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(149, 117, 49, 0.4);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  border-color: rgba(223, 177, 66, 0.45);
+  box-shadow: 0 16px 35px rgba(0, 0, 0, 0.6);
 }
 
 .review-card__header {
