@@ -156,25 +156,91 @@ button { cursor: pointer; border: none; background: none; }
 .nav__logo-text { display: none !important; }
 .nav__overlay-logo-img { height: 90px; width: auto; max-width: 360px; object-fit: contain; margin-bottom: 0; transition: transform 0.35s var(--ease-gold); }
 
-/* PREMIUM HAMBURGER BUTTON — PROMINENT & BOLD */
+/* ===== DESKTOP NAVBAR LINKS (PC VIEW ONLY) ===== */
+.nav__desktop-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+  margin: 0;
+  padding: 10px 32px;
+  background: rgba(14, 14, 16, 0.85);
+  border: 1px solid var(--clr-border);
+  border-radius: 40px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+}
+
+.nav__desktop-link {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--clr-white);
+  transition: color 0.3s ease;
+  position: relative;
+  padding: 4px 0;
+}
+
+.nav__desktop-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--clr-gold);
+  transition: width 0.3s var(--ease-gold);
+}
+
+.nav__desktop-link:hover {
+  color: var(--clr-gold-light);
+}
+
+.nav__desktop-link:hover::after,
+.nav__desktop-link.active::after {
+  width: 100%;
+}
+
+.nav__desktop-link.active {
+  color: var(--clr-gold-light);
+}
+
+/* RESPONSIVE TOGGLE: DESKTOP VS MOBILE */
+@media (min-width: 901px) {
+  .nav__burger {
+    display: none !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .nav__desktop-links {
+    display: none !important;
+  }
+  .nav__burger {
+    display: flex !important;
+  }
+}
+
+/* PREMIUM HAMBURGER BUTTON — PROMINENT & BOLD (MOBILE ONLY) */
 .nav__burger {
   display: flex;
   align-items: center;
   gap: 16px;
-  padding: 14px 32px;
-  border: 2px solid var(--clr-gold);
+  padding: 12px 28px;
+  border: 1px solid var(--clr-gold);
   border-radius: 50px;
-  background: #ffffff;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(149, 117, 49, 0.2);
+  background: var(--clr-bg-card);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
   transition: all 0.35s var(--ease-gold);
   cursor: pointer;
 }
 
 .nav__burger:hover {
   border-color: var(--clr-gold-light);
-  background: var(--clr-gold);
-  box-shadow: 0 10px 32px rgba(149, 117, 49, 0.4);
-  transform: translateY(-3px) scale(1.04);
+  background: var(--clr-bg-light);
+  box-shadow: 0 10px 32px rgba(223, 177, 66, 0.3);
+  transform: translateY(-2px);
 }
 
 .nav__burger-text {
