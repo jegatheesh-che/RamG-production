@@ -474,3 +474,50 @@ document.querySelectorAll('.js-copy-card').forEach(card => {
     }
   });
 });
+
+// -----------------------------------------------
+// REVIEWS CATEGORY FILTER INTERACTIVITY
+// -----------------------------------------------
+document.addEventListener('DOMContentLoaded', () => {
+  const reviewFilterBtns = document.querySelectorAll('.review-filter-btn');
+  const reviewCards = document.querySelectorAll('.review-card');
+
+  if (reviewFilterBtns.length && reviewCards.length) {
+    reviewFilterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        reviewFilterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.getAttribute('data-filter');
+
+        reviewCards.forEach(card => {
+          const category = card.getAttribute('data-category');
+          if (filter === 'all' || category === filter) {
+            gsap.to(card, {
+              opacity: 1,
+              scale: 1,
+              duration: 0.4,
+              display: 'flex',
+              ease: 'power2.out'
+            });
+          } else {
+            gsap.to(card, {
+              opacity: 0,
+              scale: 0.95,
+              duration: 0.3,
+              display: 'none',
+              ease: 'power2.in'
+            });
+          }
+        });
+
+        setTimeout(() => {
+          if (typeof ScrollTrigger !== 'undefined') {
+            ScrollTrigger.refresh();
+          }
+        }, 450);
+      });
+    });
+  }
+});
+
