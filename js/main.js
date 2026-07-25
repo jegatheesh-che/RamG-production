@@ -530,3 +530,46 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// -----------------------------------------------
+// THEME SWITCHER (Dark & Bright Mode)
+// -----------------------------------------------
+(function applySavedThemeImmediately() {
+  const savedTheme = localStorage.getItem('ramg_theme');
+  if (savedTheme === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+})();
+
+function initThemeToggle() {
+  const toggleBtn = document.getElementById('themeToggleBtn');
+  if (!toggleBtn) return;
+
+  function updateToggleUI() {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    toggleBtn.innerHTML = isLight ? '🌙' : '☀️';
+    const label = isLight ? 'Switch to Dark Theme' : 'Switch to Bright Theme';
+    toggleBtn.setAttribute('title', label);
+    toggleBtn.setAttribute('aria-label', label);
+  }
+
+  updateToggleUI();
+
+  toggleBtn.addEventListener('click', () => {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    if (isLight) {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('ramg_theme', 'dark');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.setItem('ramg_theme', 'light');
+    }
+    updateToggleUI();
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initThemeToggle);
+} else {
+  initThemeToggle();
+}
+

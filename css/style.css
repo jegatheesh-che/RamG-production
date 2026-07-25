@@ -2750,5 +2750,130 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   }
 }
 
+/* ================================================
+   FLOATING ROUND THEME TOGGLE BUTTON & LIGHT THEME
+   ================================================ */
+.theme-toggle-btn {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 999999;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #131316;
+  border: 2px solid var(--clr-gold);
+  color: var(--clr-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(223, 177, 66, 0.2);
+  transition: transform 0.35s var(--ease-gold), background 0.35s, color 0.35s, border-color 0.35s, box-shadow 0.35s;
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.12) rotate(15deg);
+  background: var(--clr-gold);
+  color: #000000;
+  box-shadow: 0 12px 35px rgba(223, 177, 66, 0.4);
+}
+
+.theme-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+/* --- LIGHT THEME OVERRIDES --- */
+[data-theme="light"] {
+  --clr-bg:         #f8f7f5;
+  --clr-bg-light:   #efece6;
+  --clr-bg-card:    #ffffff;
+  --clr-gold:       #957531;
+  --clr-gold-light: #b89343;
+  --clr-gold-dark:  #785912;
+  --clr-white:      #111113;
+  --clr-muted:      #4a4742;
+  --clr-border:     rgba(149, 117, 49, 0.25);
+}
+
+[data-theme="light"] body {
+  background: var(--clr-bg);
+  color: var(--clr-white);
+}
+
+[data-theme="light"] .bg-wallpaper {
+  background: #f8f7f5;
+}
+
+[data-theme="light"] .nav {
+  background: #ffffff !important;
+  border-bottom: 1px solid var(--clr-border) !important;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="light"] .nav.scrolled {
+  background: #ffffff !important;
+}
+
+[data-theme="light"] .nav__desktop-link {
+  color: #111113 !important;
+}
+
+[data-theme="light"] .nav__overlay-bg {
+  background: #f8f7f5;
+}
+
+[data-theme="light"] .nav__overlay-link,
+[data-theme="light"] .nav__overlay-info-text,
+[data-theme="light"] .nav__overlay-info-link,
+[data-theme="light"] .nav__overlay-quote {
+  color: #111113;
+}
+
+[data-theme="light"] .nav__burger {
+  background: #ffffff;
+}
+
+[data-theme="light"] .home-intro,
+[data-theme="light"] .home-services,
+[data-theme="light"] .home-about__content,
+[data-theme="light"] .footer__quote,
+[data-theme="light"] .review-card,
+[data-theme="light"] .stat-card {
+  background: #ffffff !important;
+  color: #111113 !important;
+  border-color: rgba(149, 117, 49, 0.2) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
+}
+
+[data-theme="light"] .home-about__content p,
+[data-theme="light"] .review-card__text,
+[data-theme="light"] .section-desc {
+  color: #4a4742 !important;
+}
+
+[data-theme="light"] .theme-toggle-btn {
+  background: #ffffff;
+  color: #111113;
+  border-color: var(--clr-gold);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .theme-toggle-btn:hover {
+  background: var(--clr-gold);
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .theme-toggle-btn {
+    bottom: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+}
+
 
 
