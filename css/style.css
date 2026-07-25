@@ -24,15 +24,15 @@
 
 /* --- DESIGN TOKENS --- */
 :root {
-  --clr-bg:         #ffffff;
-  --clr-bg-light:   #f8f7f5;
-  --clr-bg-card:    #f2f0ed;
-  --clr-gold:       #957531;
-  --clr-gold-light: #bd9b52;
-  --clr-gold-dark:  #6b5220;
-  --clr-white:      #1a1814;
-  --clr-muted:      #3b3632;
-  --clr-border:     #e0dbd4;
+  --clr-bg:         #080808;
+  --clr-bg-light:   #121212;
+  --clr-bg-card:    rgba(22, 22, 22, 0.85);
+  --clr-gold:       #dfb142;
+  --clr-gold-light: #f7e28b;
+  --clr-gold-dark:  #b88a28;
+  --clr-white:      #f5f5f5;
+  --clr-muted:      #a3a3a3;
+  --clr-border:     rgba(223, 177, 66, 0.22);
   --font-serif:     'Cormorant Garamond', 'Playfair Display', 'Quince', Georgia, serif;
   --font-script:    'Pinyon Script', 'Hugh is Life', cursive, serif;
   --font-sans:      'Plus Jakarta Sans', 'Raleway', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -45,7 +45,7 @@
 /* --- RESET --- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 16px; -webkit-font-smoothing: antialiased; }
-body { background: transparent; color: var(--clr-white); font-family: var(--font-sans); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+body { background: var(--clr-bg); color: var(--clr-white); font-family: var(--font-sans); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
 
 
 /* --- WALLPAPER BACKGROUND --- */
@@ -55,8 +55,8 @@ body { background: transparent; color: var(--clr-white); font-family: var(--font
   width: 120vw; height: 120vh;
   z-index: -999;
   pointer-events: none;
-  background: #000 url('../assets/wallpaper/download.jpg') center/cover no-repeat;
-  filter: brightness(0.85);
+  background: #080808 url('../assets/wallpaper/download.jpg') center/cover no-repeat;
+  filter: brightness(0.35) contrast(1.1);
   animation: bg-zoom-global 15s var(--ease-gold) forwards;
   will-change: transform;
 }
@@ -2425,15 +2425,20 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
 .reviews-hero {
   text-align: center;
   margin: 0 auto 50px;
-  background: #ffffff;
-  padding: 40px 30px;
-  border-radius: 20px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  background: rgba(18, 18, 18, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(223, 177, 66, 0.3);
+  padding: 48px 36px;
+  border-radius: 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(223, 177, 66, 0.08);
   max-width: 800px;
 }
 
 .reviews-hero .section-label {
-  color: #957531;
+  color: var(--clr-gold-light);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-size: 0.75rem;
 }
 
 .reviews-hero__title {
@@ -2441,13 +2446,16 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   font-size: clamp(2.5rem, 5vw, 4.2rem);
   font-weight: 400;
   line-height: 1.15;
-  color: #111111;
+  color: #ffffff;
   margin: 12px 0;
+  background: linear-gradient(135deg, #ffffff 0%, #f7e28b 60%, #dfb142 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .reviews-hero__title em {
   font-style: italic;
-  color: #957531;
+  color: var(--clr-gold-light);
 }
 
 .reviews-hero__desc {
@@ -2455,7 +2463,7 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   margin: 16px auto 0;
   font-size: 1rem;
   line-height: 1.7;
-  color: #444444;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 /* Trust Stats Banner */
