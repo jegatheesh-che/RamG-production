@@ -2424,29 +2424,38 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
 
 .reviews-hero {
   text-align: center;
-  margin-bottom: 50px;
+  margin: 0 auto 50px;
+  background: #ffffff;
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  max-width: 800px;
+}
+
+.reviews-hero .section-label {
+  color: #957531;
 }
 
 .reviews-hero__title {
   font-family: var(--font-serif);
   font-size: clamp(2.5rem, 5vw, 4.2rem);
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.15;
-  color: var(--clr-text);
-  margin: 16px 0;
+  color: #111111;
+  margin: 12px 0;
 }
 
 .reviews-hero__title em {
   font-style: italic;
-  color: var(--clr-gold);
+  color: #957531;
 }
 
 .reviews-hero__desc {
-  max-width: 680px;
-  margin: 24px auto 0;
+  max-width: 640px;
+  margin: 16px auto 0;
   font-size: 1rem;
   line-height: 1.7;
-  color: rgba(255, 255, 255, 0.75);
+  color: #444444;
 }
 
 /* Trust Stats Banner */
