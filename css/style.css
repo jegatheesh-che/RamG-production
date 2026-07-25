@@ -1182,6 +1182,9 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
 .home-about__img-wrap video {
   width: 100%; height: auto;
   filter: brightness(0.94) saturate(0.9);
+  border: 3px solid #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.15);
   will-change: transform;
 }
 .home-about__img-wrap::after {
@@ -1248,9 +1251,14 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   transform: scale(1);
 }
 .home-about__content {
-  background: #ffffff;
+  background: #131316 !important;
   padding: 64px 48px;
-  border-radius: 4px;
+  border-radius: 12px;
+  border: 1px solid var(--clr-border) !important;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5) !important;
+}
+.home-about__content p {
+  font-size: 15px; color: #d0c8b8 !important; line-height: 1.9; margin-bottom: 20px;
 }
 .home-about__content .section-label { margin-bottom: 16px; }
 .home-about__content h2 {
@@ -1451,10 +1459,9 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   100% { left: 250%; }
 }
 
-/* --- PREMIUM GOLD/SILVER SHINE FOR WHITE BOXES --- */
+/* --- PREMIUM GOLD/SILVER SHINE FOR CARDS --- */
 .home-intro,
 .home-services,
-.home-about__content,
 .footer__quote {
   position: relative;
   overflow: hidden;
@@ -1462,7 +1469,6 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
 
 .home-intro::before,
 .home-services::before,
-.home-about__content::before,
 .footer__quote::before {
   content: '';
   position: absolute;
