@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — RamG Production</title>
+  <link rel="stylesheet" href="css/admin.css" />
+  <style>
+    /* Prevent content flash before auth check completes */
+    body { visibility: hidden; opacity: 0; transition: opacity 0.2s ease; }
+    body.auth-ready { visibility: visible; opacity: 1; }
+  </style>
+</head>
+<body>
+  <div class="admin-dashboard-wrapper">
+    <header class="admin-header">
+      <div class="admin-header__brand">
+        <img src="../assets/images/ramg-prods.png" alt="RamG Production" />
+        <h1>Admin Dashboard</h1>
+      </div>
+
+      <div class="admin-header__user">
+        <span id="userEmail" class="admin-header__email">Loading...</span>
+        <button id="logoutBtn" class="btn-logout">Logout</button>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <div class="admin-welcome-card">
+        <h2>Welcome to RamG Production Admin Panel</h2>
+        <p>You have successfully authenticated with Firebase Authentication. This protected workspace is ready for future management features.</p>
+      </div>
+
+      <section class="admin-gallery-manager">
+        <header class="admin-section-header" style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h2>Gallery Manager</h2>
+            <p>Current visual archive displayed dynamically from Firestore.</p>
+          </div>
+          <button id="btnAddNew" class="btn-primary" style="margin-top: 0;">+ Add New Item</button>
+        </header>
+
+        <div id="adminGalleryLoading" class="admin-loading-state">
+          <div class="spinner"></div>
+          <p>Loading gallery items...</p>
+        </div>
+
+        <div id="adminGalleryError" class="admin-error-state" style="display: none;"></div>
+        
+        <div id="adminGalleryEmpty" class="admin-empty-state" style="display: none;">
+          <p>No gallery items found.</p>
+        </div>
+
+        <div id="adminGalleryGrid" class="admin-gallery-grid" style="display: none;">
+          <!-- Dynamically populated cards will go here -->
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- MODALS -->
+  <dialog id="galleryModal" class="admin-modal">
+    <div class="admin-modal__content">
+      <header class="admin-modal__header">
+        <h3 id="galleryModalTitle">Add New Item</h3>
+        <button type="button" class="admin-modal__close" id="galleryModalClose">&times;</button>
+      </header>
+      <form id="galleryForm" class="admin-form">
+        <input type="hidden" id="galleryId" />
+        
+        <div class="form-group">
+          <label for="galleryTitle">Title *</label>
+          <input type="text" id="galleryTitle" required placeholder="e.g., Eternal Romance Film" />
+        </div>
+
+        <div class="form-group">
+          <label for="galleryCategory">Category *</label>
+          <select id="galleryCategory" required class="admin-select">
+            <option value="" disabled selected>Select Category</option>
+            <option value="weddings">Weddings</option>
+            <option value="films">Films</option>
+            <option value="portraits">Portraits</option>
+            <option value="destinations">Destinations</option>
+            <option value="editorial">Editorial</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="galleryMediaType">Media Type *</label>
+          <select id="galleryMediaType" required class="admin-select">
+            <option value="image" selected>Image</option>
+            <option value="video">Video (YouTube)</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="groupImageUpload">
+          <label for="galleryImage">Image File <span id="galleryImageAsterisk">*</span></label>
+          <input type="file" id="galleryImage" accept="image/*" />
+          <p class="admin-modal__hint" id="galleryImageHint">Select a WebP or JPEG image to upload.</p>
+        </div>
+
+        <div class="form-group" id="groupYoutubeId" style="display: none;">
+          <label for="galleryYoutubeId">YouTube ID *</label>
+          <input type="text" id="galleryYoutubeId" placeholder="e.g., 8iX_PxT9P-g" />
+          <p class="admin-modal__hint">The 11-character ID from the YouTube URL.</p>
+        </div>
+
+        <div id="galleryFormError" class="auth-error-msg" style="display: none; margin-top: 10px;"></div>
+
+        <div class="admin-modal__actions">
+          <button type="button" class="btn-secondary" id="galleryModalCancel">Cancel</button>
+          <button type="submit" class="btn-primary" id="galleryModalSubmit">Save Item</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <dialog id="deleteModal" class="admin-modal">
+    <div class="admin-modal__content">
+      <header class="admin-modal__header">
+        <h3>Confirm Deletion</h3>
+        <button type="button" class="admin-modal__close" id="deleteModalClose">&times;</button>
+      </header>
+      <div class="admin-modal__body">
+        <p>Are you sure you want to delete this item? This action cannot be undone.</p>
+        <p id="deleteItemTitle" style="margin-top: 8px; font-weight: 600; color: var(--clr-gold);"></p>
+        <div id="deleteModalError" class="auth-error-msg" style="display: none; margin-top: 16px;"></div>
+      </div>
+      <div class="admin-modal__actions">
+        <button type="button" class="btn-secondary" id="deleteModalCancel">Cancel</button>
+        <button type="button" class="btn-primary btn-danger" id="deleteModalConfirm">Delete Permanently</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script type="module" src="js/admin-dashboard.js"></script>
+  <script type="module" src="js/admin-gallery.js"></script>
+</body>
+</html>

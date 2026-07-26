@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Firebase Verification</title>
+</head>
+<body>
+  <h1>Firebase Web SDK Verification</h1>
+  <div id="status">Testing...</div>
+
+  <script type="module">
+    import { app, auth, db } from "./js/firebase-config.js";
+
+    const statusEl = document.getElementById("status");
+    try {
+      console.log("App loaded:", app);
+      console.log("Auth loaded:", auth);
+      console.log("Firestore loaded:", db);
+      statusEl.innerHTML = `
+        <p style="color: green; font-weight: bold;">SUCCESS: Firebase initialized!</p>
+        <ul>
+          <li>App Name: ${app.name}</li>
+          <li>Auth Service: ${auth ? "Initialized" : "Failed"}</li>
+          <li>Firestore Service: ${db ? "Initialized" : "Failed"}</li>
+        </ul>
+      `;
+    } catch (err) {
+      console.error("Firebase Initialization Error:", err);
+      statusEl.innerHTML = `<p style="color: red;">ERROR: ${err.message}</p>`;
+    }
+  </script>
+</body>
+</html>

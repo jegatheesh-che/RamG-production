@@ -1,0 +1,17 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDqr8ScyLi1v9SyRjBLJQ2PR3b2zCCaAuQ",
+  authDomain: "ramg-production-photography.firebaseapp.com",
+  projectId: "ramg-production-photography",
+  storageBucket: "ramg-production-photography.firebasestorage.app",
+  messagingSenderId: "736091587090",
+  appId: "1:736091587090:web:522256843266f0341a0ecb"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);

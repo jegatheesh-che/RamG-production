@@ -211,27 +211,29 @@ if (overlayMenu) {
 // -----------------------------------------------
 // SCROLL REVEAL (IntersectionObserver)
 // -----------------------------------------------
-const revealEls = document.querySelectorAll('.reveal');
-if (revealEls.length) {
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('in-view');
-        io.unobserve(e.target);
+window.initScrollReveal = function() {
+  const revealEls = document.querySelectorAll('.reveal:not(.in-view)');
+  if (revealEls.length) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in-view');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.05, rootMargin: '100px 0px 50px 0px' });
+    
+    revealEls.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.9) {
+        el.classList.add('in-view');
+      } else {
+        io.observe(el);
       }
     });
-  }, { threshold: 0.05, rootMargin: '100px 0px 50px 0px' });
-  
-  revealEls.forEach(el => {
-    // Immediately reveal elements near top of page so heros are never hidden
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight * 0.9) {
-      el.classList.add('in-view');
-    } else {
-      io.observe(el);
-    }
-  });
-}
+  }
+};
+window.initScrollReveal();
 
 // -----------------------------------------------
 // HERO SLIDER
@@ -447,13 +449,14 @@ document.addEventListener('DOMContentLoaded', () => {
 // -----------------------------------------------
 // GALLERY PAGE FILTERING & LIGHTBOX MODAL
 // -----------------------------------------------
-document.addEventListener('DOMContentLoaded', () => {
+window.initGalleryInteractions = function() {
   const filterBtns = document.querySelectorAll('.gallery-filters .filter-btn');
   const galleryCards = document.querySelectorAll('.gallery-masonry .gallery-card');
   
   if (filterBtns.length > 0 && galleryCards.length > 0) {
     filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
+      // Remove any pre-existing listeners by cloning or direct handler
+      btn.onclick = () => {
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         
@@ -471,7 +474,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
           }
         });
-      });
+      };
     });
   }
 
@@ -566,38 +569,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.querySelectorAll('.gallery-card, .collage-item').forEach(card => {
-      card.addEventListener('click', () => openLightbox(card));
+      card.onclick = () => openLightbox(card);
     });
 
-    if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
+    if (closeBtn) closeBtn.onclick = closeLightbox;
     
     if (prevBtn) {
-      prevBtn.addEventListener('click', (e) => {
+      prevBtn.onclick = (e) => {
         e.stopPropagation();
         const prevIdx = (currentIndex - 1 + activeCardsArray.length) % activeCardsArray.length;
         updateLightboxContent(prevIdx);
-      });
+      };
     }
 
     if (nextBtn) {
-      nextBtn.addEventListener('click', (e) => {
+      nextBtn.onclick = (e) => {
         e.stopPropagation();
         const nextIdx = (currentIndex + 1) % activeCardsArray.length;
         updateLightboxContent(nextIdx);
-      });
+      };
     }
 
-    lightbox.addEventListener('click', (e) => {
+    lightbox.onclick = (e) => {
       if (e.target === lightbox) closeLightbox();
-    });
+    };
 
-    document.addEventListener('keydown', (e) => {
+    document.onkeydown = (e) => {
       if (!lightbox.classList.contains('active')) return;
       if (e.key === 'Escape') closeLightbox();
       if (e.key === 'ArrowLeft' && prevBtn) prevBtn.click();
       if (e.key === 'ArrowRight' && nextBtn) nextBtn.click();
-    });
+    };
   }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  window.initGalleryInteractions();
 });
 
 // -----------------------------------------------

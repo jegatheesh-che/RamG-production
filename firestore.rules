@@ -1,0 +1,25 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to verify if the request is from the specific admin UID
+    function isAdmin() {
+      return request.auth != null && request.auth.uid == "Zks20I2RBLdxaa7qIu6jG1kS5CP2";
+    }
+
+    // Rules for the gallery collection
+    match /gallery/{document} {
+      // TEST 1: Public visitors can read gallery documents
+      allow read: if true;
+      
+      // TEST 2-7: Only the authenticated Admin UID can create, update, or delete documents
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Deny all other collections by default for security
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
