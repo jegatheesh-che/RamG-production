@@ -2428,10 +2428,10 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
 
 .lightbox-video-container iframe {
   position: absolute;
-  top: 0;
+  top: -55px;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: calc(100% + 55px);
   border: none;
 }
 
