@@ -725,7 +725,7 @@ if (document.readyState === 'loading') {
 
   const playBtn = cinemaWrapper.querySelector('.home-cinema__play-btn');
   const cover = cinemaWrapper.querySelector('.home-cinema__cover');
-  const youtubeId = cinemaWrapper.getAttribute('data-youtube-id') || 'ysz5S6PUM-U';
+  const youtubeId = cinemaWrapper.getAttribute('data-youtube-id') || '61h_QIuvs50';
   let player = null;
   let playerReady = false;
 
