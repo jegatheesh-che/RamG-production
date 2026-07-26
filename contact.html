@@ -13,11 +13,10 @@
     <div class="bg-wallpaper__inner"></div>
   </div>
 
-  <!-- CUSTOM ARROW CURSOR -->
-  <div class="cursor__arrow" aria-hidden="true">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M3 3L10.07 19.97L13.58 13.58L19.97 10.07L3 3Z" fill="#957531" stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"/>
-    </svg>
+  <!-- CUSTOM DUAL-ELEMENT CURSOR -->
+  <div class="custom-cursor is-hidden" aria-hidden="true">
+    <div class="custom-cursor__dot"></div>
+    <div class="custom-cursor__ring"></div>
   </div>
 
   <!-- NAV -->
@@ -218,7 +217,23 @@
   </footer>
 
   <!-- FLOATING ROUND THEME TOGGLE BUTTON -->
-  <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle Theme">☀️</button>
+  <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Toggle Theme">
+    <svg class="theme-icon theme-icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M12 2v2"></path>
+      <path d="M12 20v2"></path>
+      <path d="M4.93 4.93l1.41 1.41"></path>
+      <path d="M17.66 17.66l1.41 1.41"></path>
+      <path d="M2 12h2"></path>
+      <path d="M20 12h2"></path>
+      <path d="M6.34 17.66l-1.41 1.41"></path>
+      <path d="M19.07 4.93l-1.41 1.41"></path>
+    </svg>
+    <svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+    </svg>
+  </button>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
   <script src="js/main.js"></script>

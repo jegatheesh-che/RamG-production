@@ -523,34 +523,96 @@ button { cursor: pointer; border: none; background: none; }
   }
 }
 
-/* ===== CUSTOM ARROW CURSOR ===== */
-@media (pointer: fine) {
-  body, a, button, input, select, textarea, [role="button"] {
+/* ===== LUXURY DUAL-ELEMENT CUSTOM CURSOR ===== */
+@media (min-width: 769px), (hover: hover), (pointer: fine) {
+  html, body, a, button, input, select, textarea, [role="button"], *, *::before, *::after {
     cursor: none !important;
   }
 }
 
-.cursor__arrow {
+@media (max-width: 768px) and (pointer: coarse) {
+  html, body, *, *::before, *::after {
+    cursor: auto !important;
+  }
+}
+
+.custom-cursor {
   position: fixed;
   top: 0;
   left: 0;
-  width: 24px;
-  height: 24px;
   pointer-events: none !important;
-  z-index: 99999999 !important;
-  transform: translate3d(-100px, -100px, 0);
+  z-index: 999999;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.custom-cursor.is-hidden {
+  opacity: 0 !important;
+}
+
+.custom-cursor__dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background-color: var(--clr-gold, #957531);
+  border-radius: 50%;
+  pointer-events: none !important;
+  z-index: 1000000;
+  box-shadow: 0 0 10px rgba(149, 117, 49, 0.8);
+  transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+  transition: transform 0.15s ease-out, background-color 0.25s ease, box-shadow 0.25s ease, width 0.25s ease, height 0.25s ease;
   will-change: transform;
 }
 
-.cursor__arrow svg {
-  width: 22px;
-  height: 22px;
-  filter: drop-shadow(0px 2px 6px rgba(0, 0, 0, 0.35));
-  transition: transform 0.2s var(--ease-gold);
+.custom-cursor__ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 38px;
+  height: 38px;
+  border: 1.5px solid rgba(149, 117, 49, 0.65);
+  background: rgba(149, 117, 49, 0.05);
+  border-radius: 50%;
+  pointer-events: none !important;
+  z-index: 999999;
+  transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+  transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+              height 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+              background-color 0.3s ease, 
+              border-color 0.3s ease, 
+              box-shadow 0.3s ease;
+  will-change: transform;
 }
 
-.cursor__arrow.hovered svg {
-  transform: scale(1.4) rotate(-14deg);
+/* Hovering interactive elements */
+.custom-cursor.is-hovered .custom-cursor__ring {
+  width: 58px;
+  height: 58px;
+  border-color: rgba(255, 255, 255, 0.9);
+  background: rgba(149, 117, 49, 0.2);
+  box-shadow: 0 0 25px rgba(149, 117, 49, 0.4);
+}
+
+.custom-cursor.is-hovered .custom-cursor__dot {
+  background-color: #ffffff;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.9);
+  width: 8px;
+  height: 8px;
+}
+
+/* Click state */
+.custom-cursor.is-clicked .custom-cursor__ring {
+  width: 30px;
+  height: 30px;
+  border-color: var(--clr-gold, #957531);
+  background: rgba(149, 117, 49, 0.35);
+}
+
+.custom-cursor.is-clicked .custom-cursor__dot {
+  width: 4px;
+  height: 4px;
 }
 
 /* ===== HERO SLIDE BRAND OVERLAY (SLIDING IMAGES ONLY) ===== */
@@ -2767,10 +2829,44 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
   cursor: pointer;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(223, 177, 66, 0.2);
   transition: transform 0.35s var(--ease-gold), background 0.35s, color 0.35s, border-color 0.35s, box-shadow 0.35s;
+  overflow: hidden;
+}
+
+.theme-icon {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+}
+
+/* Default state (Dark Mode): Show Sun icon to switch to light mode */
+.theme-icon--sun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.theme-icon--moon {
+  opacity: 0;
+  transform: rotate(90deg) scale(0);
+}
+
+/* Light Theme state: Show Moon icon to switch to dark mode */
+[data-theme="light"] .theme-icon--sun {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0);
+}
+
+[data-theme="light"] .theme-icon--moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
 }
 
 .theme-toggle-btn:hover {

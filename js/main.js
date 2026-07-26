@@ -4,19 +4,27 @@
    ================================================ */
 
 // --- Lenis smooth scroll (Mobile-optimized) ---
-const isMobile = window.matchMedia('(max-width: 768px)').matches;
-const lenis = new Lenis({
-  lerp: isMobile ? 0.12 : 0.1,
-  smoothWheel: true,
-  touchMultiplier: 1.5,
-  touchInertiaMultiplier: 18
-});
+let lenis = null;
+if (typeof Lenis !== 'undefined') {
+  try {
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    lenis = new Lenis({
+      lerp: isMobile ? 0.12 : 0.1,
+      smoothWheel: true,
+      touchMultiplier: 1.5,
+      touchInertiaMultiplier: 18
+    });
 
-// --- GSAP ScrollTrigger sync ---
-gsap.registerPlugin(ScrollTrigger);
-gsap.ticker.add((time) => { lenis.raf(time * 1000); });
-gsap.ticker.lagSmoothing(0);
-lenis.on('scroll', ScrollTrigger.update);
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      gsap.registerPlugin(ScrollTrigger);
+      gsap.ticker.add((time) => { if (lenis) lenis.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
+      lenis.on('scroll', ScrollTrigger.update);
+    }
+  } catch (e) {
+    console.warn('Lenis or GSAP init warning:', e);
+  }
+}
 
 // -----------------------------------------------
 // NAV: scroll state
@@ -77,33 +85,99 @@ if (overlayMenu) {
 }
 
 // -----------------------------------------------
-// CUSTOM ARROW CURSOR (desktop only)
+// CUSTOM DUAL-ELEMENT CURSOR (desktop & fine pointer)
 // -----------------------------------------------
-if (window.matchMedia('(pointer: fine)').matches) {
-  const cursorArrow = document.querySelector('.cursor__arrow');
-  if (cursorArrow) {
-    let mouseX = -100, mouseY = -100, rafId = null;
-    document.addEventListener('mousemove', e => {
+(function initCustomCursor() {
+  // Only skip on small touch-only mobile devices (<768px with coarse pointer)
+  if (window.innerWidth <= 768 && window.matchMedia('(pointer: coarse)').matches) return;
+
+  function setupCursor() {
+    let cursorContainer = document.querySelector('.custom-cursor');
+    if (!cursorContainer) {
+      cursorContainer = document.createElement('div');
+      cursorContainer.className = 'custom-cursor is-hidden';
+      cursorContainer.setAttribute('aria-hidden', 'true');
+      cursorContainer.innerHTML = `
+        <div class="custom-cursor__dot"></div>
+        <div class="custom-cursor__ring"></div>
+      `;
+      document.body.appendChild(cursorContainer);
+    }
+
+    const dot = cursorContainer.querySelector('.custom-cursor__dot');
+    const ring = cursorContainer.querySelector('.custom-cursor__ring');
+    if (!dot || !ring) return;
+
+    let mouseX = -100, mouseY = -100;
+    let ringX = -100, ringY = -100;
+    let isInitialized = false;
+
+    // Mouse movement listener
+    window.addEventListener('mousemove', e => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      if (!rafId) {
-        rafId = requestAnimationFrame(() => {
-          cursorArrow.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
-          rafId = null;
-        });
+
+      if (!isInitialized) {
+        ringX = mouseX;
+        ringY = mouseY;
+        isInitialized = true;
+        cursorContainer.classList.remove('is-hidden');
       }
+
+      // Update dot instantly at exact pointer location
+      dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
     }, { passive: true });
 
+    // Smooth lerp loop for trailing ring
+    const lerp = (start, end, factor) => start + (end - start) * factor;
+
+    function renderCursor() {
+      if (isInitialized) {
+        ringX = lerp(ringX, mouseX, 0.2);
+        ringY = lerp(ringY, mouseY, 0.2);
+        ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+      }
+      requestAnimationFrame(renderCursor);
+    }
+    requestAnimationFrame(renderCursor);
+
+    // Hover effect delegation
+    const interactiveTargets = 'a, button, input, select, textarea, [role="button"], .gallery-item, .hero__arrow, .eshoot-item, .story-item, .home-featured__item, .form-submit, .nav__brand-logo, .hero__slide-overlay';
+
     document.addEventListener('mouseover', e => {
-      const target = e.target.closest('a, button, .gallery-item, .hero__arrow, .eshoot-item, .story-item, .home-featured__item');
-      if (target) {
-        cursorArrow.classList.add('hovered');
-      } else {
-        cursorArrow.classList.remove('hovered');
+      if (e.target && e.target.closest && e.target.closest(interactiveTargets)) {
+        cursorContainer.classList.add('is-hovered');
       }
     });
+
+    document.addEventListener('mouseout', e => {
+      if (e.target && e.target.closest) {
+        const target = e.target.closest(interactiveTargets);
+        if (target) {
+          if (!e.relatedTarget || !e.relatedTarget.closest || !e.relatedTarget.closest(interactiveTargets)) {
+            cursorContainer.classList.remove('is-hovered');
+          }
+        }
+      }
+    });
+
+    // Click feedback
+    document.addEventListener('mousedown', () => cursorContainer.classList.add('is-clicked'));
+    document.addEventListener('mouseup', () => cursorContainer.classList.remove('is-clicked'));
+
+    // Visibility toggling
+    document.addEventListener('mouseleave', () => cursorContainer.classList.add('is-hidden'));
+    document.addEventListener('mouseenter', () => {
+      if (isInitialized) cursorContainer.classList.remove('is-hidden');
+    });
   }
-}
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupCursor);
+  } else {
+    setupCursor();
+  }
+})();
 
 // -----------------------------------------------
 // SCROLL REVEAL (IntersectionObserver)
@@ -546,7 +620,6 @@ function initThemeToggle() {
 
   function updateToggleUI() {
     const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-    toggleBtn.innerHTML = isLight ? '🌙' : '☀️';
     const label = isLight ? 'Switch to Dark Theme' : 'Switch to Bright Theme';
     toggleBtn.setAttribute('title', label);
     toggleBtn.setAttribute('aria-label', label);
