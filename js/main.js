@@ -725,6 +725,7 @@ if (document.readyState === 'loading') {
 
   const playBtn = cinemaWrapper.querySelector('.home-cinema__play-btn');
   const cover = cinemaWrapper.querySelector('.home-cinema__cover');
+  const clickCapture = cinemaWrapper.querySelector('.home-cinema__click-capture');
   const youtubeId = cinemaWrapper.getAttribute('data-youtube-id') || '61h_QIuvs50';
   let player = null;
   let playerReady = false;
@@ -750,15 +751,19 @@ if (document.readyState === 'loading') {
   function togglePlayPause() {
     if (!playerReady) {
       cover.classList.add('is-hidden');
+      cinemaWrapper.classList.add('is-initialized');
       loadYouTubeAPI(() => {
         player = new YT.Player('youtubePlayerHome', {
           videoId: youtubeId,
           playerVars: {
             autoplay: 1,
-            controls: 1,
+            controls: 0,
+            disablekb: 1,
+            fs: 0,
             rel: 0,
             showinfo: 0,
-            modestbranding: 1
+            modestbranding: 1,
+            iv_load_policy: 3
           },
           events: {
             onReady: () => {
@@ -784,5 +789,6 @@ if (document.readyState === 'loading') {
     togglePlayPause();
   });
 
-  cover.addEventListener('click', togglePlayPause);
+  if (cover) cover.addEventListener('click', togglePlayPause);
+  if (clickCapture) clickCapture.addEventListener('click', togglePlayPause);
 })();

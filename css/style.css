@@ -1255,6 +1255,21 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   border: 1px solid rgba(149, 117, 49, 0.15);
 }
 
+.home-cinema__click-capture {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4; /* Above the player iframe (z-index 1) but below the play button (z-index 10) */
+  cursor: pointer;
+  display: none; /* Only show when video is initialized */
+}
+
+.home-cinema__wrapper.is-initialized .home-cinema__click-capture {
+  display: block;
+}
+
 .home-cinema__cover {
   position: absolute;
   top: 0;
