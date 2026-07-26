@@ -129,6 +129,7 @@
       <div class="gallery-filters reveal">
         <button class="filter-btn active" data-filter="all">All Works</button>
         <button class="filter-btn" data-filter="weddings">Weddings</button>
+        <button class="filter-btn" data-filter="films">Films</button>
         <button class="filter-btn" data-filter="portraits">Portraits</button>
         <button class="filter-btn" data-filter="destinations">Destinations</button>
         <button class="filter-btn" data-filter="editorial">Editorial</button>
@@ -138,6 +139,28 @@
       <div class="gallery-masonry-wrapper">
         <div class="gallery-masonry" id="galleryMasonry">
           
+          <!-- YouTube Video Card 1 -->
+          <div class="gallery-card gallery-card--tilt-left reveal" data-category="films" data-youtube-id="ysz5S6PUM-U" data-title="Highland Love Story">
+            <img src="https://img.youtube.com/vi/ysz5S6PUM-U/maxresdefault.jpg" alt="Highland Love Story Film" loading="lazy" />
+            <div class="gallery-card__video-badge">
+              <svg viewBox="0 0 24 24">
+                <polygon points="6 3 20 12 6 21 6 3"></polygon>
+              </svg>
+            </div>
+            <div class="gallery-card__expand">&#10530;</div>
+          </div>
+
+          <!-- YouTube Video Card 2 -->
+          <div class="gallery-card gallery-card--tilt-right reveal" data-category="films" data-youtube-id="aqz-KE-bpKQ" data-title="Wild &amp; Brave Wedding">
+            <img src="https://img.youtube.com/vi/aqz-KE-bpKQ/maxresdefault.jpg" alt="Wild &amp; Brave Wedding Film" loading="lazy" />
+            <div class="gallery-card__video-badge">
+              <svg viewBox="0 0 24 24">
+                <polygon points="6 3 20 12 6 21 6 3"></polygon>
+              </svg>
+            </div>
+            <div class="gallery-card__expand">&#10530;</div>
+          </div>
+
           <div class="gallery-card gallery-card--tilt-left reveal" data-category="weddings" data-title="The First Glance">
             <img src="assets/images/excellents/slide2.webp" alt="The First Glance" loading="lazy" />
             <div class="gallery-card__expand">&#10530;</div>
@@ -211,6 +234,9 @@
     
     <div class="lightbox-content">
       <img src="" alt="" class="lightbox-img" />
+      <div class="lightbox-video-container" style="display: none;">
+        <div id="lightboxYoutubePlayer"></div>
+      </div>
       <div class="lightbox-caption">
         <h3 class="lightbox-title"></h3>
         <p class="lightbox-sub"></p>

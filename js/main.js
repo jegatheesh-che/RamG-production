@@ -3,6 +3,35 @@
    GSAP + Lenis + vanilla scroll reveal + cursor
    ================================================ */
 
+
+// --- Dynamic YouTube Iframe API Loader (Global Scope) ---
+let ytAPIReady = false;
+const ytCallbacks = [];
+
+function loadYouTubeAPI(callback) {
+  if (window.YT && window.YT.Player) {
+    if (callback) callback();
+    return;
+  }
+  
+  if (callback) ytCallbacks.push(callback);
+
+  if (window.onYouTubeIframeAPIReady) return; // already loading
+
+  window.onYouTubeIframeAPIReady = function() {
+    ytAPIReady = true;
+    while (ytCallbacks.length > 0) {
+      const cb = ytCallbacks.shift();
+      try { cb(); } catch (e) { console.error(e); }
+    }
+  };
+
+  const tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  const firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+}
+
 // --- Lenis smooth scroll (Mobile-optimized) ---
 let lenis = null;
 if (typeof Lenis !== 'undefined') {
@@ -446,10 +475,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // LIGHTBOX MODAL LOGIC
+  // LIGHTBOX MODAL LOGIC WITH VIDEO SUPPORT
   const lightbox = document.getElementById('galleryLightbox');
   if (lightbox) {
     const lightboxImg = lightbox.querySelector('.lightbox-img');
+    const lightboxVideoContainer = lightbox.querySelector('.lightbox-video-container');
     const lightboxTitle = lightbox.querySelector('.lightbox-title');
     const lightboxSub = lightbox.querySelector('.lightbox-sub');
     const closeBtn = lightbox.querySelector('.lightbox-close');
@@ -458,6 +488,20 @@ document.addEventListener('DOMContentLoaded', () => {
     
     let activeCardsArray = [];
     let currentIndex = 0;
+    let lightboxPlayer = null;
+
+    function destroyLightboxPlayer() {
+      if (lightboxPlayer) {
+        try {
+          lightboxPlayer.destroy();
+        } catch (e) {}
+        lightboxPlayer = null;
+      }
+      const playerDiv = document.getElementById('lightboxYoutubePlayer');
+      if (playerDiv) {
+        playerDiv.innerHTML = '';
+      }
+    }
     
     function updateLightboxContent(idx) {
       if (idx < 0 || idx >= activeCardsArray.length) return;
@@ -467,11 +511,34 @@ document.addEventListener('DOMContentLoaded', () => {
       const rawCat = card.getAttribute('data-category') || 'Portfolio';
       const cat = rawCat.charAt(0).toUpperCase() + rawCat.slice(1);
       const title = card.getAttribute('data-title') || img?.alt || 'RamG Production Showcase';
+      const youtubeId = card.getAttribute('data-youtube-id');
       
-      if (img && lightboxImg) {
-        lightboxImg.src = img.src;
-        lightboxImg.alt = title;
+      destroyLightboxPlayer();
+
+      if (youtubeId && lightboxVideoContainer) {
+        if (lightboxImg) lightboxImg.style.display = 'none';
+        lightboxVideoContainer.style.display = 'block';
+        
+        loadYouTubeAPI(() => {
+          lightboxPlayer = new YT.Player('lightboxYoutubePlayer', {
+            videoId: youtubeId,
+            playerVars: {
+              autoplay: 1,
+              controls: 1,
+              rel: 0,
+              modestbranding: 1
+            }
+          });
+        });
+      } else {
+        if (lightboxVideoContainer) lightboxVideoContainer.style.display = 'none';
+        if (lightboxImg) {
+          lightboxImg.style.display = 'block';
+          lightboxImg.src = img ? img.src : '';
+          lightboxImg.alt = title;
+        }
       }
+      
       if (lightboxTitle) lightboxTitle.textContent = title;
       if (lightboxSub) lightboxSub.textContent = cat;
     }
@@ -491,6 +558,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function closeLightbox() {
+      destroyLightboxPlayer();
       lightbox.classList.remove('active');
       document.body.style.overflow = '';
     }
@@ -646,3 +714,75 @@ if (document.readyState === 'loading') {
   initThemeToggle();
 }
 
+
+
+// ===============================================
+// CINEMA SHOWCASE (YOUTUBE INTERACTIVE PLAYER)
+// ===============================================
+(function initCinemaShowcase() {
+  const cinemaWrapper = document.querySelector('.home-cinema__wrapper');
+  if (!cinemaWrapper) return;
+
+  const playBtn = cinemaWrapper.querySelector('.home-cinema__play-btn');
+  const cover = cinemaWrapper.querySelector('.home-cinema__cover');
+  const youtubeId = cinemaWrapper.getAttribute('data-youtube-id') || 'ysz5S6PUM-U';
+  let player = null;
+  let playerReady = false;
+
+  const playIcon = playBtn.querySelector('.icon-play');
+  const pauseIcon = playBtn.querySelector('.icon-pause');
+
+  function onPlayerStateChange(event) {
+    // event.data: 1 = PLAYING, 2 = PAUSED, 0 = ENDED
+    if (event.data === 1) {
+      cinemaWrapper.classList.add('is-playing');
+      if (playIcon) playIcon.style.display = 'none';
+      if (pauseIcon) pauseIcon.style.display = 'block';
+      playBtn.setAttribute('aria-label', 'Pause Film');
+    } else if (event.data === 2 || event.data === 0 || event.data === -1) {
+      cinemaWrapper.classList.remove('is-playing');
+      if (playIcon) playIcon.style.display = 'block';
+      if (pauseIcon) pauseIcon.style.display = 'none';
+      playBtn.setAttribute('aria-label', 'Play Film');
+    }
+  }
+
+  function togglePlayPause() {
+    if (!playerReady) {
+      cover.classList.add('is-hidden');
+      loadYouTubeAPI(() => {
+        player = new YT.Player('youtubePlayerHome', {
+          videoId: youtubeId,
+          playerVars: {
+            autoplay: 1,
+            controls: 1,
+            rel: 0,
+            showinfo: 0,
+            modestbranding: 1
+          },
+          events: {
+            onReady: () => {
+              playerReady = true;
+              player.playVideo();
+            },
+            onStateChange: onPlayerStateChange
+          }
+        });
+      });
+    } else {
+      const state = player.getPlayerState();
+      if (state === 1) { // playing
+        player.pauseVideo();
+      } else {
+        player.playVideo();
+      }
+    }
+  }
+
+  playBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    togglePlayPause();
+  });
+
+  cover.addEventListener('click', togglePlayPause);
+})();
