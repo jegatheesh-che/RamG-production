@@ -3605,10 +3605,62 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   border-color: #957531;
 }
 
-[data-theme="light"] .team-grid__expand-btn:hover {
+/* ================================================
+   ABOUT PAGE EXPANDABLE STORY / SEE MORE
+   ================================================ */
+.about-expandable-box {
+  margin-top: 10px;
+  position: relative;
+}
+
+.about-expandable-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s var(--ease-expo), opacity 0.4s ease;
+}
+
+.about-expandable-box.is-open .about-expandable-content {
+  max-height: 500px;
+  opacity: 1;
+  margin-bottom: 12px;
+}
+
+.about-expand-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--clr-gold-light);
+  background: transparent;
+  border: 1px solid var(--clr-border);
+  padding: 8px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: all 0.3s ease;
+}
+
+.about-expand-btn:hover {
+  background: var(--clr-gold);
+  color: #000000;
+  border-color: var(--clr-gold);
+}
+
+[data-theme="light"] .about-expand-btn {
+  color: #957531;
+  border-color: rgba(149, 117, 49, 0.3);
+}
+
+[data-theme="light"] .about-expand-btn:hover {
   background: #957531;
   color: #ffffff;
 }
+
 
 
 

@@ -20,8 +20,8 @@ service cloud.firestore {
       allow create, update, delete: if isAdmin();
     }
 
-    // Rules for Team Collection (About Page Members)
-    match /team/{document} {
+    // Rules for About Collection (Section 1 & 2 Content)
+    match /about/{document} {
       allow read: if true;
       allow create, update, delete: if isAdmin();
     }

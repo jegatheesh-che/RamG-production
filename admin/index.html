@@ -35,7 +35,7 @@
       <nav class="admin-nav-tabs">
         <button type="button" class="admin-tab-btn active" id="tabGallery">Gallery Manager</button>
         <button type="button" class="admin-tab-btn" id="tabReviews">Reviews Manager</button>
-        <button type="button" class="admin-tab-btn" id="tabTeam">Team &amp; About Manager <span id="adminTeamCounter" style="font-size: 0.75rem; opacity: 0.8; font-weight: normal;">(0/10)</span></button>
+        <button type="button" class="admin-tab-btn" id="tabAbout">About Page Content</button>
       </nav>
 
       <!-- SECTION: GALLERY MANAGER -->
@@ -90,30 +90,125 @@
         <div id="adminReviewsGrid" class="admin-reviews-grid" style="display: none;"></div>
       </section>
 
-      <!-- SECTION: TEAM & ABOUT MANAGER (MAX 10) -->
-      <section class="admin-team-manager" id="sectionTeam" style="display: none;">
-        <header class="admin-section-header" style="display: flex; justify-content: space-between; align-items: center;">
+      <!-- SECTION: ABOUT PAGE CONTENT MANAGER (SECTION 1 & SECTION 2) -->
+      <section class="admin-about-manager" id="sectionAbout" style="display: none;">
+        <header class="admin-section-header">
           <div>
-            <h2>Team &amp; About Page Manager</h2>
-            <p>Manage team members, portrait photos, roles, short bios, and full backstory details displayed on the website (Max 10).</p>
+            <h2>About Page Content Manager</h2>
+            <p>Update photos, titles, stories, quotes, and extended bios for Section 1 (Hero Split) and Section 2 (Philosophy Split) without changing the UI layout.</p>
           </div>
-          <button id="btnAddNewTeam" class="btn-primary" style="margin-top: 0;">+ Add Team Member</button>
         </header>
 
-        <div id="adminTeamLoading" class="admin-reviews-grid">
-          <div class="admin-review-card skeleton-card">
-            <div class="skeleton-text skeleton-title"></div>
-            <div class="skeleton-text skeleton-meta"></div>
+        <div id="adminAboutLoading" class="admin-empty-state" style="display: none;">
+          <p>Loading About page content...</p>
+        </div>
+
+        <form id="aboutContentForm" class="admin-form" style="display: flex; flex-direction: column; gap: 32px;">
+          <!-- SECTION 1 BLOCK -->
+          <div class="admin-card" style="max-width: 100%;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--clr-gold); margin-bottom: 20px; border-bottom: 1px dashed var(--clr-border); padding-bottom: 8px;">
+              Section 1: Hero Split ("About Me")
+            </h3>
+
+            <div class="form-group">
+              <label for="aboutHeroEyebrow">Eyebrow Tagline *</label>
+              <input type="text" id="aboutHeroEyebrow" required placeholder="e.g., About Me" />
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div class="form-group">
+                <label for="aboutHeroTitle">Main Title (Regular) *</label>
+                <input type="text" id="aboutHeroTitle" required placeholder="e.g., Every story" />
+              </div>
+
+              <div class="form-group">
+                <label for="aboutHeroTitleItalic">Title Subtitle (Italic Accent) *</label>
+                <input type="text" id="aboutHeroTitleItalic" required placeholder="e.g., deserves to be remembered." />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="aboutHeroDesc">Main Summary Story (Always Visible) *</label>
+              <textarea id="aboutHeroDesc" required class="admin-textarea" rows="4" placeholder="My journey into photography and filmmaking began in 2018..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="aboutHeroExtendedDesc">Extended Story (Revealed when 'Read Full Story +' is clicked)</label>
+              <textarea id="aboutHeroExtendedDesc" class="admin-textarea" rows="4" placeholder="Add extra story paragraphs here. If filled, a gold 'Read Full Story +' button will automatically appear..."></textarea>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 120px; gap: 16px; align-items: end;">
+              <div class="form-group">
+                <label for="aboutHeroImageFile">Hero Portrait Image (Upload File)</label>
+                <input type="file" id="aboutHeroImageFile" accept="image/*" />
+                <label for="aboutHeroImageUrl" style="margin-top: 8px;">Or Image Path / URL</label>
+                <input type="text" id="aboutHeroImageUrl" placeholder="e.g., assets/images/r_DSC00241_full.webp" />
+              </div>
+
+              <div style="text-align: center;">
+                <p style="font-size: 0.75rem; color: var(--clr-muted); margin-bottom: 4px;">Current</p>
+                <img id="imgPreviewHero" src="assets/images/r_DSC00241_full.webp" alt="Hero Preview" style="width: 100px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid var(--clr-gold);" />
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div id="adminTeamError" class="admin-error-state" style="display: none;"></div>
-        
-        <div id="adminTeamEmpty" class="admin-empty-state" style="display: none;">
-          <p>No team members found. Click "+ Add Team Member" to create your first team profile.</p>
-        </div>
+          <!-- SECTION 2 BLOCK -->
+          <div class="admin-card" style="max-width: 100%;">
+            <h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--clr-gold); margin-bottom: 20px; border-bottom: 1px dashed var(--clr-border); padding-bottom: 8px;">
+              Section 2: Philosophy Split ("My Philosophy")
+            </h3>
 
-        <div id="adminTeamGrid" class="admin-reviews-grid" style="display: none;"></div>
+            <div class="form-group">
+              <label for="aboutPhilEyebrow">Eyebrow Tagline *</label>
+              <input type="text" id="aboutPhilEyebrow" required placeholder="e.g., My Philosophy" />
+            </div>
+
+            <div class="form-group">
+              <label for="aboutPhilTitle">Section Heading *</label>
+              <input type="text" id="aboutPhilTitle" required placeholder="e.g., Genuine Moments — Authentic Emotions" />
+            </div>
+
+            <div class="form-group">
+              <label for="aboutPhilText1">Paragraph 1 (Core Philosophy) *</label>
+              <textarea id="aboutPhilText1" required class="admin-textarea" rows="3" placeholder="Since then, I have dedicated myself to capturing genuine moments..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="aboutPhilText2">Paragraph 2 (Connection &amp; Experience) *</label>
+              <textarea id="aboutPhilText2" required class="admin-textarea" rows="3" placeholder="One of the things I value most is the connection I build with every client..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="aboutPhilExtendedText">Extended Philosophy Story (Revealed via 'Read Full Story +')</label>
+              <textarea id="aboutPhilExtendedText" class="admin-textarea" rows="3" placeholder="Add extra philosophy story text here for the 'Read Full Story +' expander..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="aboutPhilQuote">Highlighted Quote Box *</label>
+              <textarea id="aboutPhilQuote" required class="admin-textarea" rows="3" placeholder="That’s why I take the time to listen, understand your vision..."></textarea>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 120px; gap: 16px; align-items: end;">
+              <div class="form-group">
+                <label for="aboutPhilImageFile">Philosophy Image (Upload File)</label>
+                <input type="file" id="aboutPhilImageFile" accept="image/*" />
+                <label for="aboutPhilImageUrl" style="margin-top: 8px;">Or Image Path / URL</label>
+                <input type="text" id="aboutPhilImageUrl" placeholder="e.g., assets/images/excellents/DSC08698-2.webp" />
+              </div>
+
+              <div style="text-align: center;">
+                <p style="font-size: 0.75rem; color: var(--clr-muted); margin-bottom: 4px;">Current</p>
+                <img id="imgPreviewPhil" src="assets/images/excellents/DSC08698-2.webp" alt="Philosophy Preview" style="width: 100px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid var(--clr-gold);" />
+              </div>
+            </div>
+          </div>
+
+          <div id="aboutFormError" class="auth-error-msg" style="display: none;"></div>
+
+          <div>
+            <button type="submit" id="aboutSubmitBtn" class="btn-primary" style="padding: 16px 40px; font-size: 1rem;">Save About Page Content</button>
+          </div>
+        </form>
       </section>
     </main>
   </div>
@@ -242,67 +337,6 @@
     </div>
   </dialog>
 
-  <!-- TEAM MEMBER MODAL -->
-  <dialog id="teamModal" class="admin-modal">
-    <div class="admin-modal__content">
-      <header class="admin-modal__header">
-        <h3 id="teamModalTitle">Add Team Member</h3>
-        <button type="button" class="admin-modal__close" id="teamModalClose">&times;</button>
-      </header>
-      <form id="teamForm" class="admin-form">
-        <input type="hidden" id="teamId" />
-        
-        <div class="form-group">
-          <label for="teamName">Member Full Name *</label>
-          <input type="text" id="teamName" required placeholder="e.g., RamG" />
-        </div>
-
-        <div class="form-group">
-          <label for="teamRole">Role &amp; Professional Title *</label>
-          <input type="text" id="teamRole" required placeholder="e.g., Founder & Lead Director" />
-        </div>
-
-        <div class="form-group">
-          <label for="teamBadge">Badge / Tag *</label>
-          <input type="text" id="teamBadge" required placeholder="e.g., Founder, Creative, Cinema" value="Team" />
-        </div>
-
-        <div class="form-group">
-          <label for="teamShortBio">Short Summary Bio (Always Visible) *</label>
-          <textarea id="teamShortBio" required class="admin-textarea" rows="3" placeholder="Pioneering visual storyteller behind RamG Production..."></textarea>
-        </div>
-
-        <div class="form-group">
-          <label for="teamFullBio">Full Extended Bio (Expanded via 'See More')</label>
-          <textarea id="teamFullBio" class="admin-textarea" rows="4" placeholder="Detailed backstory revealed when customer clicks 'Read Full Bio +' / 'See More'..."></textarea>
-        </div>
-
-        <div class="form-group">
-          <label for="teamImage">Portrait Image Upload (File)</label>
-          <input type="file" id="teamImage" accept="image/*" />
-          <p class="admin-modal__hint">Upload a high quality WebP or JPEG portrait.</p>
-        </div>
-
-        <div class="form-group">
-          <label for="teamImageUrl">Or Image URL (Cloudinary / Asset path)</label>
-          <input type="text" id="teamImageUrl" placeholder="e.g., assets/images/r_DSC00241_full.webp" />
-        </div>
-
-        <div class="form-group">
-          <label for="teamOrder">Display Order (1 to 10) *</label>
-          <input type="number" id="teamOrder" required min="1" max="10" value="1" />
-        </div>
-
-        <div id="teamFormError" class="auth-error-msg" style="display: none; margin-top: 10px;"></div>
-
-        <div class="admin-modal__actions">
-          <button type="button" class="btn-secondary" id="teamModalCancel">Cancel</button>
-          <button type="submit" class="btn-primary" id="teamModalSubmit">Save Member</button>
-        </div>
-      </form>
-    </div>
-  </dialog>
-
   <!-- DELETE GALLERY ITEM MODAL -->
   <dialog id="deleteModal" class="admin-modal">
     <div class="admin-modal__content">
@@ -341,25 +375,6 @@
     </div>
   </dialog>
 
-  <!-- DELETE TEAM MEMBER MODAL -->
-  <dialog id="deleteTeamModal" class="admin-modal">
-    <div class="admin-modal__content">
-      <header class="admin-modal__header">
-        <h3>Confirm Member Deletion</h3>
-        <button type="button" class="admin-modal__close" id="deleteTeamModalClose">&times;</button>
-      </header>
-      <div class="admin-modal__body">
-        <p>Are you sure you want to delete this team member from the About page? This action cannot be undone.</p>
-        <p id="deleteTeamItemTitle" style="margin-top: 8px; font-weight: 600; color: var(--clr-gold);"></p>
-        <div id="deleteTeamModalError" class="auth-error-msg" style="display: none; margin-top: 16px;"></div>
-      </div>
-      <div class="admin-modal__actions">
-        <button type="button" class="btn-secondary" id="deleteTeamModalCancel">Cancel</button>
-        <button type="button" class="btn-primary btn-danger" id="deleteTeamModalConfirm">Delete Member</button>
-      </div>
-    </div>
-  </dialog>
-
   <!-- APP-LIKE ACTION POPUP NOTIFICATION MODAL WITH ANIMATED SVG TICK -->
   <dialog id="appActionPopup" class="admin-modal app-action-modal">
     <div class="admin-modal__content app-action-content">
@@ -385,6 +400,6 @@
   <script type="module" src="/admin/js/admin-dashboard.js"></script>
   <script type="module" src="/admin/js/admin-gallery.js"></script>
   <script type="module" src="/admin/js/admin-reviews.js"></script>
-  <script type="module" src="/admin/js/admin-team.js"></script>
+  <script type="module" src="/admin/js/admin-about.js"></script>
 </body>
 </html>
