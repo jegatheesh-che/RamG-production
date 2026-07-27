@@ -1,5 +1,5 @@
 import { auth } from "/js/firebase-config.js";
-import { signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { signInWithEmailAndPassword, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const loginForm = document.getElementById("loginForm");
 const emailInput = document.getElementById("email");
@@ -52,6 +52,7 @@ loginForm.addEventListener("submit", async (e) => {
   setLoading(true);
 
   try {
+    await setPersistence(auth, browserLocalPersistence);
     await signInWithEmailAndPassword(auth, email, password);
     window.location.href = "/admin/";
   } catch (error) {
