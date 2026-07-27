@@ -92,20 +92,6 @@ async function loadGalleryItems() {
     loadingState.style.display = "none";
     galleryGrid.style.display = "grid";
 
-    // Initialize SortableJS for drag and drop
-    if (window.Sortable) {
-      Sortable.create(galleryGrid, {
-        animation: 150,
-        handle: '.drag-handle',
-        ghostClass: 'sortable-ghost',
-        dragClass: 'sortable-drag',
-        onEnd: async function (evt) {
-          if (evt.oldIndex === evt.newIndex) return;
-          await handleSortEnd();
-        }
-      });
-    }
-
   } catch (error) {
     console.error("[Admin Gallery] Error fetching gallery items:", error);
     loadingState.style.display = "none";
@@ -134,13 +120,15 @@ function createAdminGalleryCard(item) {
   }
 
   card.innerHTML = `
-    <div class="drag-handle" title="Drag to reorder">&#9776;</div>
     <img src="${thumbUrl}" alt="${item.title || 'Gallery Item'}" class="admin-gallery-item__thumb" loading="lazy" />
     <div class="admin-gallery-item__info">
       <h3 class="admin-gallery-item__title" title="${item.title || ''}">${item.title || 'Untitled'}</h3>
       <div class="admin-gallery-item__meta">
         <span class="admin-gallery-item__category">${item.category || 'Uncategorized'}</span>
-        <span class="admin-gallery-item__order">Order: ${item.order || 'N/A'}</span>
+        <div class="admin-gallery-item__order-editor">
+          <label>Order:</label>
+          <input type="number" class="order-input" data-id="${item.id}" value="${item.order || 0}" min="1" max="${currentGalleryItems.length}" />
+        </div>
       </div>
       <div class="admin-gallery-item__meta" style="margin-top: 4px;">
         <span class="admin-gallery-item__badge ${badgeClass}">${badgeText}</span>
@@ -155,6 +143,9 @@ function createAdminGalleryCard(item) {
   // Attach Listeners
   card.querySelector('.btn-edit').addEventListener('click', () => openEditModal(item));
   card.querySelector('.btn-delete').addEventListener('click', () => openDeleteModal(item));
+
+  const orderInput = card.querySelector('.order-input');
+  orderInput.addEventListener('change', (e) => handleOrderChange(item.id, e.target.value));
 
   return card;
 }
@@ -332,11 +323,21 @@ function showFormError(msg) {
 }
 
 // ================================================
-// REORDERING (DRAG AND DROP BATCH UPDATE)
+// REORDERING (DIRECT NUMBER INPUT)
 // ================================================
-async function handleSortEnd() {
-  const itemElements = Array.from(galleryGrid.children);
-  
+async function handleOrderChange(id, newOrderStr) {
+  const newOrder = parseInt(newOrderStr, 10);
+  const targetItem = currentGalleryItems.find(item => item.id === id);
+  if (!targetItem || isNaN(newOrder)) return;
+
+  const oldOrder = targetItem.order;
+  if (oldOrder === newOrder) return;
+  if (newOrder < 1 || newOrder > currentGalleryItems.length) {
+    alert(\`Please enter a valid position between 1 and \${currentGalleryItems.length}\`);
+    loadGalleryItems(); // Reset UI
+    return;
+  }
+
   galleryGrid.style.opacity = "0.5";
   galleryGrid.style.pointerEvents = "none";
 
@@ -344,15 +345,31 @@ async function handleSortEnd() {
     const batch = writeBatch(db);
     const getTilt = (order) => (order % 4 === 1) ? "tilt-left" : (order % 4 === 3) ? "tilt-right" : "";
 
-    itemElements.forEach((el, index) => {
-      const id = el.dataset.id;
-      if (!id) return;
-      const newOrder = index + 1; // 1-indexed order
-      
-      batch.update(doc(db, "gallery", id), {
-        order: newOrder,
-        tiltClass: getTilt(newOrder)
-      });
+    // Calculate new order for all items
+    currentGalleryItems.forEach(item => {
+      let updatedOrder = item.order;
+
+      if (item.id === id) {
+        updatedOrder = newOrder;
+      } else if (oldOrder < newOrder) {
+        // Target item moved down the list; shift intermediate items up
+        if (item.order > oldOrder && item.order <= newOrder) {
+          updatedOrder--;
+        }
+      } else if (oldOrder > newOrder) {
+        // Target item moved up the list; shift intermediate items down
+        if (item.order >= newOrder && item.order < oldOrder) {
+          updatedOrder++;
+        }
+      }
+
+      // If the order changed, add to batch
+      if (updatedOrder !== item.order || item.id === id) {
+        batch.update(doc(db, "gallery", item.id), {
+          order: updatedOrder,
+          tiltClass: getTilt(updatedOrder)
+        });
+      }
     });
 
     await batch.commit();
