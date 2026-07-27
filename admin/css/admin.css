@@ -319,7 +319,6 @@ body {
   font-size: 0.9rem;
 }
 
-.admin-loading-state,
 .admin-empty-state,
 .admin-error-state {
   text-align: center;
@@ -327,9 +326,115 @@ body {
   color: var(--clr-muted);
 }
 
-.admin-loading-state p {
-  margin-top: 16px;
-  font-size: 0.9rem;
+/* =========================================
+   SKELETON LOADER
+   ========================================= */
+.skeleton-card {
+  background: var(--clr-bg-input) !important;
+  border-color: rgba(255, 255, 255, 0.02) !important;
+  pointer-events: none;
+}
+
+.skeleton-img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.skeleton-info {
+  padding: 16px;
+}
+
+.skeleton-text {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.skeleton-title {
+  height: 20px;
+  width: 70%;
+  margin-bottom: 12px;
+}
+
+.skeleton-meta {
+  height: 14px;
+  width: 40%;
+}
+
+.skeleton-badge {
+  height: 24px;
+  width: 60px;
+  border-radius: 12px;
+  margin-top: 12px;
+}
+
+.skeleton-actions {
+  display: flex;
+  padding: 0 16px 16px;
+  gap: 8px;
+}
+
+.skeleton-btn {
+  height: 32px;
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+/* Shimmer Animation */
+.skeleton-img, .skeleton-text, .skeleton-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-img::after, .skeleton-text::after, .skeleton-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.05) 20%,
+    rgba(255, 255, 255, 0.1) 60%,
+    rgba(255, 255, 255, 0)
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* =========================================
+   STAGGERED CASCADE ANIMATION
+   ========================================= */
+.animate-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideUpFade 0.5s ease forwards;
+}
+
+@keyframes slideUpFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hide real images until loaded */
+.admin-gallery-item__thumb {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.admin-gallery-item__thumb.loaded {
+  opacity: 1;
 }
 
 .admin-error-state {

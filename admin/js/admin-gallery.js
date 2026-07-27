@@ -62,7 +62,7 @@ onAuthStateChanged(auth, (user) => {
 async function loadGalleryItems() {
   if (!galleryGrid || !loadingState) return;
 
-  loadingState.style.display = "block";
+  loadingState.style.display = "grid";
   errorState.style.display = "none";
   emptyState.style.display = "none";
   galleryGrid.style.display = "none";
@@ -85,7 +85,7 @@ async function loadGalleryItems() {
     }
 
     currentGalleryItems.forEach((item, index) => {
-      const card = createAdminGalleryCard(item);
+      const card = createAdminGalleryCard(item, index);
       galleryGrid.appendChild(card);
     });
 
@@ -103,10 +103,11 @@ async function loadGalleryItems() {
 // ================================================
 // DOM GENERATION
 // ================================================
-function createAdminGalleryCard(item) {
+function createAdminGalleryCard(item, index = 0) {
   const card = document.createElement("div");
-  card.className = "admin-gallery-item";
+  card.className = "admin-gallery-item animate-in";
   card.dataset.id = item.id;
+  card.style.animationDelay = \`\${index * 0.05}s\`;
 
   const isVideo = item.mediaType === "video";
   const badgeClass = isVideo ? "badge-video" : "badge-image";
@@ -146,6 +147,15 @@ function createAdminGalleryCard(item) {
 
   const orderInput = card.querySelector('.order-input');
   orderInput.addEventListener('change', (e) => handleOrderChange(item.id, e.target.value));
+
+  const img = card.querySelector('.admin-gallery-item__thumb');
+  if (img) {
+    if (img.complete) {
+      img.classList.add('loaded');
+    } else {
+      img.addEventListener('load', () => img.classList.add('loaded'));
+    }
+  }
 
   return card;
 }
