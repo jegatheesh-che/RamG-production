@@ -579,8 +579,16 @@ window.initGalleryInteractions = function() {
       const img = card.querySelector('img');
       const rawCat = card.getAttribute('data-category') || 'Portfolio';
       const cat = rawCat.charAt(0).toUpperCase() + rawCat.slice(1);
-      const title = card.getAttribute('data-title') || img?.alt || 'RamG Production Showcase';
-      const youtubeId = card.getAttribute('data-youtube-id');
+      const rawYoutubeId = card.getAttribute('data-youtube-id');
+      const youtubeId = (function extractYt(input) {
+        if (!input) return "";
+        input = String(input).trim();
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = input.match(regExp);
+        if (match && match[2] && match[2].length === 11) return match[2];
+        const clean = input.split(/[?&#]/)[0].replace(/^.*[\\\/]/, '');
+        return clean.length === 11 ? clean : input;
+      })(rawYoutubeId);
       
       destroyLightboxPlayer();
 

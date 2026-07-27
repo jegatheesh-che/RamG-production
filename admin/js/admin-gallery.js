@@ -110,6 +110,19 @@ function getOptimizedCloudinaryUrl(url, width = 400) {
   return url;
 }
 
+// YouTube URL & Shorts ID Extractor
+function extractYoutubeId(input) {
+  if (!input) return "";
+  input = String(input).trim();
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = input.match(regExp);
+  if (match && match[2] && match[2].length === 11) {
+    return match[2];
+  }
+  const clean = input.split(/[?&#]/)[0].replace(/^.*[\\\/]/, '');
+  return clean.length === 11 ? clean : input;
+}
+
 function createAdminGalleryCard(item, index = 0) {
   const card = document.createElement("div");
   card.className = "admin-gallery-item animate-in";
@@ -122,7 +135,8 @@ function createAdminGalleryCard(item, index = 0) {
 
   let thumbUrl = "";
   if (isVideo && item.youtubeId) {
-    thumbUrl = `https://img.youtube.com/vi/${item.youtubeId}/hqdefault.jpg`;
+    const cleanYtId = extractYoutubeId(item.youtubeId);
+    thumbUrl = `https://img.youtube.com/vi/${cleanYtId}/hqdefault.jpg`;
   } else if (!isVideo && item.cloudinaryUrl) {
     thumbUrl = getOptimizedCloudinaryUrl(item.cloudinaryUrl, 400);
   }
@@ -256,8 +270,9 @@ galleryForm.addEventListener("submit", async (e) => {
       // --- UPDATE EXISTING ITEM ---
       const updateData = { title, category };
       if (mediaType === "video") {
-        const yId = inputYoutubeId.value.trim();
-        if (!yId) throw new Error("YouTube ID is required.");
+        const rawYt = inputYoutubeId.value.trim();
+        const yId = extractYoutubeId(rawYt);
+        if (!yId) throw new Error("YouTube link or ID is required.");
         updateData.youtubeId = yId;
       }
 
@@ -287,8 +302,9 @@ galleryForm.addEventListener("submit", async (e) => {
         cloudinaryUrl = uploadData.secure_url;
         cloudinaryPublicId = uploadData.public_id;
       } else {
-        youtubeId = inputYoutubeId.value.trim();
-        if (!youtubeId) throw new Error("YouTube ID is required.");
+        const rawYt = inputYoutubeId.value.trim();
+        youtubeId = extractYoutubeId(rawYt);
+        if (!youtubeId) throw new Error("YouTube link or ID is required.");
       }
 
       // Calculate Order & Tilt

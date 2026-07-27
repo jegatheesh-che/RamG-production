@@ -66,6 +66,18 @@ function getOptimizedCloudinaryUrl(url, width = 800) {
   return url;
 }
 
+function extractYoutubeId(input) {
+  if (!input) return "";
+  input = String(input).trim();
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = input.match(regExp);
+  if (match && match[2] && match[2].length === 11) {
+    return match[2];
+  }
+  const clean = input.split(/[?&#]/)[0].replace(/^.*[\\\/]/, '');
+  return clean.length === 11 ? clean : input;
+}
+
 function createGalleryCardDOM(item) {
   const card = document.createElement("div");
   card.className = `gallery-card ${item.tiltClass || ''} reveal`;
@@ -74,9 +86,9 @@ function createGalleryCardDOM(item) {
   card.dataset.title = item.title || "";
 
   if (item.mediaType === "video") {
-    card.setAttribute("data-youtube-id", item.youtubeId || "");
-    // Use hqdefault instead of maxresdefault for vastly faster loading
-    const thumbnailUrl = `https://img.youtube.com/vi/${item.youtubeId}/hqdefault.jpg`;
+    const cleanYtId = extractYoutubeId(item.youtubeId);
+    card.setAttribute("data-youtube-id", cleanYtId);
+    const thumbnailUrl = `https://img.youtube.com/vi/${cleanYtId}/hqdefault.jpg`;
     
     card.innerHTML = `
       <img src="${thumbnailUrl}" alt="${item.title || 'Video'}" loading="lazy" />
