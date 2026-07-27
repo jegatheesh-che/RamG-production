@@ -44,12 +44,12 @@ module.exports = async function handler(req, res) {
 
     // 2. CALL CLOUDINARY API TO DESTROY THE IMAGE
     const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME || "dxbdobdxt";
-    const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY || "229864299119156"; // Assuming it might be set in Vercel
+    const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;
     const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET;
 
-    if (!CLOUDINARY_API_SECRET) {
-      console.error("[Cloudinary Error] API Secret is missing in environment");
-      return res.status(500).json({ error: 'Server configuration error' });
+    if (!CLOUDINARY_API_KEY || !CLOUDINARY_API_SECRET) {
+      console.error("[Cloudinary Error] API Key or Secret is missing in environment variables");
+      return res.status(500).json({ error: 'Server configuration error: Cloudinary credentials missing' });
     }
 
     const timestamp = Math.floor(Date.now() / 1000).toString();
