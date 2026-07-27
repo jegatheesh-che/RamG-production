@@ -31,9 +31,68 @@ if (logoutBtn) {
 }
 
 // ================================================
-// GLOBAL TOAST NOTIFICATION CONTROLLER
+// GLOBAL TOAST & APP POPUP NOTIFICATION CONTROLLER
 // ================================================
+window.showAppPopup = function(title, message, type = "success", duration = 3000) {
+  const dialog = document.getElementById("appActionPopup");
+  if (!dialog) return;
+
+  const iconText = document.getElementById("popupIconText");
+  const titleEl = document.getElementById("popupTitle");
+  const msgEl = document.getElementById("popupMessage");
+  const btnClose = document.getElementById("popupBtnClose");
+
+  dialog.className = `admin-modal app-action-modal popup-${type}`;
+
+  const iconMap = {
+    success: "✨",
+    delete: "🗑️",
+    info: "✏️",
+    error: "⚠️"
+  };
+
+  if (iconText) iconText.textContent = iconMap[type] || "✨";
+  if (titleEl) titleEl.textContent = title;
+  if (msgEl) msgEl.textContent = message;
+
+  if (btnClose) {
+    btnClose.onclick = () => {
+      dialog.close();
+    };
+  }
+
+  // Close on backdrop click
+  dialog.onclick = (e) => {
+    const rect = dialog.getBoundingClientRect();
+    const inDialog = (
+      rect.top <= e.clientY && e.clientY <= rect.top + rect.height &&
+      rect.left <= e.clientX && e.clientX <= rect.left + rect.width
+    );
+    if (!inDialog) dialog.close();
+  };
+
+  try {
+    dialog.showModal();
+  } catch(e) {}
+
+  if (duration > 0) {
+    setTimeout(() => {
+      if (dialog.open) dialog.close();
+    }, duration);
+  }
+};
+
 window.showToast = function(message, type = "success", duration = 3500) {
+  // Show app-like popup dialog
+  const titleMap = {
+    success: "Item Added Successfully!",
+    delete: "Item Deleted!",
+    info: "Item Updated!",
+    error: "Action Failed"
+  };
+  window.showAppPopup(titleMap[type] || "Action Completed", message, type, duration);
+
+  // Bottom toast notification
   let container = document.getElementById("adminToastContainer");
   if (!container) {
     container = document.createElement("div");
@@ -72,6 +131,5 @@ window.showToast = function(message, type = "success", duration = 3500) {
   };
 
   closeBtn.addEventListener("click", dismissToast);
-
   setTimeout(dismissToast, duration);
 };
