@@ -9,19 +9,19 @@ service cloud.firestore {
     }
 
     // Rules for Gallery Collection
-    match /gallery/{document} {
+    match /gallery/{document=**} {
       allow read: if true;
       allow create, update, delete: if isAdmin();
     }
 
     // Rules for Reviews Collection
-    match /reviews/{document} {
+    match /reviews/{document=**} {
       allow read: if true;
       allow create, update, delete: if isAdmin();
     }
 
     // Rules for About Collection (Section 1 & 2 Content)
-    match /about/{document} {
+    match /about/{document=**} {
       allow read: if true;
       allow create, update, delete: if isAdmin();
     }
