@@ -82,8 +82,88 @@ if (tabGallery && tabReviews) {
 }
 
 // ================================================
-// DATA FETCHING
+const DEFAULT_SEED_REVIEWS = [
+  {
+    name: "Sophie & Antoine",
+    subtitle: "Brussels, Belgium • Wedding",
+    stars: 5,
+    category: "wedding",
+    text: "We were both quite nervous in front of the camera, but RamG made us feel completely at ease. The final album was breathtaking — every look, smile, and tear of joy was captured so naturally.",
+    badge: "Verified Couple",
+    avatarUrl: "assets/images/excellents/DSC09416.webp",
+    order: 1
+  },
+  {
+    name: "Elena & Lucas",
+    subtitle: "Antwerp, Belgium • Cinematic Film",
+    stars: 5,
+    category: "film",
+    text: "The wedding highlight film literally brought our entire family to tears! The sound design, colors, and rhythm are equal to a feature film. Truly unmatched artistry!",
+    badge: "Verified Film Client",
+    avatarUrl: "assets/images/excellents/DSC07335.webp",
+    order: 2
+  },
+  {
+    name: "Camille V.",
+    subtitle: "Ghent, Belgium • Portrait Session",
+    stars: 5,
+    category: "portrait",
+    text: "RamG has a rare gift for capturing the subtle nuances of emotion. The portraits feel intimate, authentic, and timeless. I could not be happier with the experience.",
+    badge: "Verified Client",
+    avatarUrl: "assets/images/excellents/DSC08698-2.webp",
+    order: 3
+  },
+  {
+    name: "Charlotte & David",
+    subtitle: "Bruges, Belgium • Destination Wedding",
+    stars: 5,
+    category: "wedding",
+    text: "From our first consultation to the delivery of our gallery, everything was seamless. They captured moments we did not even realize were happening!",
+    badge: "Verified Couple",
+    avatarUrl: "assets/images/excellents/slide3.webp",
+    order: 4
+  },
+  {
+    name: "Mathieu & Clara",
+    subtitle: "Liège, Belgium • Wedding & Film",
+    stars: 5,
+    category: "wedding",
+    text: "An unforgettable experience. The photos look like editorial spreads from a high-fashion magazine, yet they feel completely true to who we are.",
+    badge: "Verified Couple",
+    avatarUrl: "assets/images/excellents/slide4.webp",
+    order: 5
+  },
+  {
+    name: "Isabelle & Laurent",
+    subtitle: "Namur, Belgium • Anniversary Shoot",
+    stars: 5,
+    category: "portrait",
+    text: "Professional, punctual, and remarkably creative. RamG knows how to use natural light to create magic.",
+    badge: "Verified Client",
+    avatarUrl: "assets/images/excellents/slide5.webp",
+    order: 6
+  }
+];
+
 // ================================================
+// DATA FETCHING & SEEDING
+// ================================================
+async function seedDefaultReviews() {
+  try {
+    loadingState.style.display = "grid";
+    emptyState.style.display = "none";
+    for (const rev of DEFAULT_SEED_REVIEWS) {
+      const newRef = doc(collection(db, "reviews"));
+      await setDoc(newRef, { ...rev, createdAt: serverTimestamp() });
+    }
+    await loadReviewItems();
+  } catch (err) {
+    console.error("[Admin Reviews] Seed Error:", err);
+    alert("Failed to seed default reviews: " + err.message);
+    loadReviewItems();
+  }
+}
+
 async function loadReviewItems() {
   if (!reviewsGrid || !loadingState) return;
 
@@ -106,6 +186,12 @@ async function loadReviewItems() {
     if (currentReviews.length === 0) {
       loadingState.style.display = "none";
       emptyState.style.display = "block";
+      emptyState.innerHTML = `
+        <p>No customer reviews found in database.</p>
+        <button type="button" id="btnSeedReviews" class="btn-primary" style="margin-top: 14px;">+ Import Default Website Reviews (6 Items)</button>
+      `;
+      const btnSeed = document.getElementById("btnSeedReviews");
+      if (btnSeed) btnSeed.addEventListener("click", seedDefaultReviews);
       return;
     }
 
@@ -121,7 +207,18 @@ async function loadReviewItems() {
     console.error("[Admin Reviews] Error fetching reviews:", error);
     loadingState.style.display = "none";
     errorState.style.display = "block";
-    errorState.textContent = "Failed to load reviews. Please try refreshing.";
+    errorState.innerHTML = `
+      <p style="margin-bottom: 8px;"><strong>Unable to load reviews from Firestore.</strong></p>
+      <p style="font-size: 0.85rem; opacity: 0.85; margin-bottom: 12px;">Error: ${error.message || error}</p>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <button type="button" id="btnRetryReviews" class="btn-secondary" style="font-size: 0.85rem; padding: 6px 12px;">🔄 Retry</button>
+        <button type="button" id="btnForceSeed" class="btn-primary" style="font-size: 0.85rem; padding: 6px 12px; margin-top: 0;">+ Seed Initial 6 Reviews</button>
+      </div>
+    `;
+    const btnRetry = document.getElementById("btnRetryReviews");
+    if (btnRetry) btnRetry.addEventListener("click", loadReviewItems);
+    const btnForceSeed = document.getElementById("btnForceSeed");
+    if (btnForceSeed) btnForceSeed.addEventListener("click", seedDefaultReviews);
   }
 }
 
