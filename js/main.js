@@ -828,3 +828,55 @@ if (document.readyState === 'loading') {
   if (cover) cover.addEventListener('click', startInstantPlayback);
   if (clickCapture) clickCapture.addEventListener('click', startInstantPlayback);
 })();
+
+// ===============================================
+// TEAM COLLECTIVE & SEE MORE INTERACTIVITY
+// ===============================================
+(function initTeamSection() {
+  const teamSection = document.querySelector('.team-section');
+  if (!teamSection) return;
+
+  const expandBtn = document.getElementById('teamExpandBtn');
+  const bioToggleBtns = teamSection.querySelectorAll('.team-card__bio-toggle');
+
+  if (expandBtn) {
+    expandBtn.addEventListener('click', () => {
+      const isExpanded = teamSection.classList.contains('is-expanded');
+      const btnText = expandBtn.querySelector('span');
+
+      if (isExpanded) {
+        teamSection.classList.remove('is-expanded');
+        if (btnText) btnText.textContent = 'View All 10 Team Members';
+        teamSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        teamSection.classList.add('is-expanded');
+        if (btnText) btnText.textContent = 'Show Less Team Members';
+      }
+
+      if (typeof ScrollTrigger !== 'undefined') {
+        setTimeout(() => ScrollTrigger.refresh(), 400);
+      }
+    });
+  }
+
+  bioToggleBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.team-card');
+      if (!card) return;
+
+      const isBioExpanded = card.classList.contains('is-bio-expanded');
+      if (isBioExpanded) {
+        card.classList.remove('is-bio-expanded');
+        btn.textContent = 'Read Full Bio +';
+      } else {
+        card.classList.add('is-bio-expanded');
+        btn.textContent = 'Read Less -';
+      }
+
+      if (typeof ScrollTrigger !== 'undefined') {
+        setTimeout(() => ScrollTrigger.refresh(), 400);
+      }
+    });
+  });
+})();
+
