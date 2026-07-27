@@ -1010,109 +1010,145 @@ body {
   padding: 0;
   border: none;
   background: transparent;
+  /* Center perfectly on all screens */
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: fit-content;
+  height: fit-content;
+  max-width: min(420px, 92vw);
 }
 
 .app-action-modal::backdrop {
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(8px);
-  animation: fadeInBackdrop 0.3s ease forwards;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: popupBackdropIn 0.25s ease forwards;
 }
 
+/* Card container */
 .app-action-content {
-  background: var(--clr-bg-card, #121214);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 20px;
-  padding: 38px 30px;
+  background: linear-gradient(145deg, #17171a 0%, #111113 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 48px 36px 40px;
   text-align: center;
-  max-width: 390px;
-  width: 90vw;
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.85), 0 0 50px rgba(223, 177, 66, 0.2);
+  width: min(420px, 92vw);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 24px 60px rgba(0, 0, 0, 0.7),
+    0 8px 24px rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 18px;
+  gap: 20px;
   position: relative;
   overflow: hidden;
-  perspective: 1000px;
-  transform-style: preserve-3d;
-  animation: cardFlip3D 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  /* Smooth spring entrance */
+  animation: popupSpringIn 0.5s cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
+  will-change: transform, opacity;
 }
 
+/* Subtle top shimmer line */
+.app-action-content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  border-radius: 100%;
+}
+
+/* Closing animation */
+.app-action-content.is-closing {
+  animation: popupSpringOut 0.28s cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+/* ---- Icon Wrapper ---- */
 .app-action-icon-wrapper {
   position: relative;
-  width: 68px;
-  height: 68px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  background: rgba(16, 185, 129, 0.15);
-  border: 2px solid #10b981;
+  background: rgba(16, 185, 129, 0.12);
+  border: 2px solid rgba(16, 185, 129, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
-  box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
-  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-  animation: iconPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.3);
+  flex-shrink: 0;
+  /* Enter animation — starts after card lands */
+  animation: iconBounceIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+  will-change: transform;
 }
 
-/* Radial Wave Ripple Animation Behind Icon */
-.app-action-icon-wrapper::before, .app-action-icon-wrapper::after {
+/* Radial Wave Ripple — delayed so it starts after icon appears */
+.app-action-icon-wrapper::before,
+.app-action-icon-wrapper::after {
   content: "";
   position: absolute;
-  inset: -14px;
+  inset: -16px;
   border-radius: 50%;
-  border: 2px solid #10b981;
+  border: 1.5px solid rgba(16, 185, 129, 0.4);
   opacity: 0;
   pointer-events: none;
-  animation: radialRipple 1.6s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  animation: radialRipple 2s cubic-bezier(0, 0.4, 0.8, 1) 0.6s infinite;
 }
 
 .app-action-icon-wrapper::after {
-  animation-delay: 0.5s;
+  animation-delay: 1.2s;
 }
 
+/* Delete variant */
 .app-action-modal.popup-delete .app-action-icon-wrapper {
-  background: rgba(239, 68, 68, 0.15);
-  border-color: #ef4444;
-  box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.6);
+  box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.3);
 }
-
 .app-action-modal.popup-delete .app-action-icon-wrapper::before,
 .app-action-modal.popup-delete .app-action-icon-wrapper::after {
-  border-color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.35);
 }
 
+/* Info/update variant */
 .app-action-modal.popup-info .app-action-icon-wrapper {
-  background: rgba(223, 177, 66, 0.15);
-  border-color: var(--clr-gold, #dfb142);
-  box-shadow: 0 0 30px rgba(223, 177, 66, 0.4);
+  background: rgba(223, 177, 66, 0.12);
+  border-color: rgba(223, 177, 66, 0.6);
+  box-shadow: 0 0 0 0 rgba(223, 177, 66, 0.3);
 }
-
 .app-action-modal.popup-info .app-action-icon-wrapper::before,
 .app-action-modal.popup-info .app-action-icon-wrapper::after {
-  border-color: var(--clr-gold, #dfb142);
+  border-color: rgba(223, 177, 66, 0.35);
 }
 
-@keyframes cardFlip3D {
-  0% {
-    opacity: 0;
-    transform: perspective(1000px) rotateX(-45deg) scale(0.82) translateY(40px);
-  }
-  65% {
-    transform: perspective(1000px) rotateX(8deg) scale(1.02) translateY(-4px);
-  }
-  100% {
-    opacity: 1;
-    transform: perspective(1000px) rotateX(0deg) scale(1) translateY(0);
-  }
+/* ---- Popup Keyframes ---- */
+@keyframes popupSpringIn {
+  0%   { opacity: 0; transform: scale(0.78) translateY(24px); }
+  60%  { opacity: 1; transform: scale(1.03) translateY(-4px); }
+  100% { opacity: 1; transform: scale(1)    translateY(0); }
+}
+
+@keyframes popupSpringOut {
+  0%   { opacity: 1; transform: scale(1)    translateY(0); }
+  100% { opacity: 0; transform: scale(0.88) translateY(16px); }
+}
+
+@keyframes iconBounceIn {
+  0%   { transform: scale(0); opacity: 0; }
+  60%  { transform: scale(1.18); opacity: 1; }
+  80%  { transform: scale(0.94); }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 @keyframes radialRipple {
-  0% { transform: scale(0.5); opacity: 0.95; }
-  100% { transform: scale(2.2); opacity: 0; }
+  0%   { transform: scale(0.6);  opacity: 0.7; }
+  100% { transform: scale(2.4);  opacity: 0; }
 }
 
-@keyframes fadeInBackdrop {
-  0% { opacity: 0; }
+@keyframes popupBackdropIn {
+  0%   { opacity: 0; }
   100% { opacity: 1; }
 }
 
@@ -1121,56 +1157,78 @@ body {
    ========================================= */
 .app-action-title {
   font-family: var(--font-serif, 'Cormorant Garamond', serif);
-  font-size: 1.55rem;
+  font-size: 1.6rem;
   font-weight: 600;
   color: var(--clr-white, #f5f5f7);
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2px;
   line-height: 1.2;
   margin: 0;
+  /* Fade up stagger */
+  animation: textFadeUp 0.4s ease 0.25s both;
 }
 
 .app-action-message {
-  font-size: 0.9rem;
-  color: var(--clr-muted, #a1a1aa);
-  line-height: 1.5;
+  font-size: 0.88rem;
+  color: rgba(161, 161, 170, 0.9);
+  line-height: 1.65;
   margin: 0;
   text-align: center;
-  max-width: 280px;
+  max-width: 300px;
+  animation: textFadeUp 0.4s ease 0.32s both;
 }
 
+@keyframes textFadeUp {
+  0%   { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Close / CTA Button */
 .app-action-btn {
-  min-width: 140px;
-  font-size: 0.95rem;
+  min-width: 160px;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
   font-weight: 600;
-  letter-spacing: 0.5px;
-  padding: 12px 28px;
-  border-radius: 10px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 14px 32px;
+  border-radius: 12px;
+  border: none;
+  background: var(--clr-gold, #dfb142);
+  color: #0a0a0c;
+  cursor: pointer;
   margin-top: 4px;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 16px rgba(223, 177, 66, 0.25);
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.2s ease,
+              background 0.2s ease;
+  box-shadow: 0 4px 20px rgba(223, 177, 66, 0.3);
+  animation: textFadeUp 0.4s ease 0.4s both;
 }
 
 .app-action-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(223, 177, 66, 0.4);
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 10px 28px rgba(223, 177, 66, 0.45);
 }
 
+.app-action-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Delete variant button */
 .popup-delete .app-action-btn {
   background: #ef4444;
-  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.3);
 }
-
 .popup-delete .app-action-btn:hover {
-  background: #dc2626;
-  box-shadow: 0 8px 24px rgba(239, 68, 68, 0.45);
+  box-shadow: 0 10px 28px rgba(239, 68, 68, 0.45);
+  background: #f05252;
 }
 
-/* Icon wrapper entrance animation — defined in .app-action-icon-wrapper above */
-
-@keyframes iconPop {
-  0% { transform: scale(0.4); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+/* Info/update variant button */
+.popup-info .app-action-btn {
+  background: var(--clr-gold, #dfb142);
 }
+
 
 /* =========================================
    ANIMATED SVG TICK & CROSS DRAWING ANIMATION

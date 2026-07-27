@@ -46,9 +46,10 @@ window.showAppPopup = function(title, message, type = "success", duration = 3000
 
   dialog.className = `admin-modal app-action-modal popup-${type}`;
 
-  // Reset card flip animation by forcing reflow
+  // Reset card spring animation by forcing reflow
   const contentEl = dialog.querySelector(".app-action-content");
   if (contentEl) {
+    contentEl.classList.remove("is-closing");
     contentEl.style.animation = "none";
     void contentEl.offsetHeight; // force reflow
     contentEl.style.animation = "";
@@ -58,19 +59,15 @@ window.showAppPopup = function(title, message, type = "success", duration = 3000
     if (svgTick) svgTick.style.display = "none";
     if (svgCross) {
       svgCross.style.display = "block";
-      // Re-trigger SVG stroke animation via clone
       const newCross = svgCross.cloneNode(true);
       newCross.style.display = "block";
       svgCross.replaceWith(newCross);
-      // newCross is the live element now
     }
   } else {
-    // Re-fetch after potential clone above
     svgCross = document.getElementById("svgCrossIcon");
     if (svgCross) svgCross.style.display = "none";
     if (svgTick) {
       svgTick.style.display = "block";
-      // Re-trigger SVG stroke animation via clone
       const newTick = svgTick.cloneNode(true);
       newTick.style.display = "block";
       svgTick.replaceWith(newTick);
@@ -80,32 +77,52 @@ window.showAppPopup = function(title, message, type = "success", duration = 3000
   if (titleEl) titleEl.textContent = title;
   if (msgEl) msgEl.textContent = message;
 
+  // Smooth close helper — plays exit animation before closing dialog
+  const smoothClose = () => {
+    if (!dialog.open) return;
+    const content = dialog.querySelector(".app-action-content");
+    if (content) {
+      content.classList.add("is-closing");
+      setTimeout(() => {
+        if (dialog.open) dialog.close();
+        if (content) content.classList.remove("is-closing");
+      }, 260);
+    } else {
+      dialog.close();
+    }
+  };
+
   // Set button text based on type
   if (btnClose) {
     const btnTextMap = { success: "Awesome! ✨", delete: "Got it 🗑️", info: "Updated ✏️", error: "OK" };
     btnClose.textContent = btnTextMap[type] || "OK";
-    btnClose.onclick = () => { dialog.close(); };
+    btnClose.onclick = smoothClose;
   }
 
-  // Close on backdrop click
+  // Close on backdrop click (outside card area)
   dialog.onclick = (e) => {
     const rect = dialog.getBoundingClientRect();
     const inDialog = (
       rect.top <= e.clientY && e.clientY <= rect.top + rect.height &&
       rect.left <= e.clientX && e.clientX <= rect.left + rect.width
     );
-    if (!inDialog) dialog.close();
+    if (!inDialog) smoothClose();
   };
 
   try {
     dialog.showModal();
   } catch(e) {}
 
+  // Auto-close with smooth exit
+  let autoCloseTimer = null;
   if (duration > 0) {
-    setTimeout(() => {
-      if (dialog.open) dialog.close();
-    }, duration);
+    autoCloseTimer = setTimeout(smoothClose, duration);
   }
+
+  // Cancel auto-close if user manually closes
+  dialog.addEventListener("close", () => {
+    if (autoCloseTimer) clearTimeout(autoCloseTimer);
+  }, { once: true });
 };
 
 window.showToast = function(message, type = "success", duration = 3500) {
