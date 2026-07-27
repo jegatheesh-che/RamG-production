@@ -336,8 +336,11 @@ galleryForm.addEventListener("submit", async (e) => {
       await setDoc(newDocRef, docData);
     }
 
-    // Success
+    // Success Toast & Refresh
     closeModals();
+    if (window.showToast) {
+      window.showToast(isEdit ? `✏️ Gallery item "${title}" updated!` : `✨ Gallery item "${title}" added successfully!`, isEdit ? "info" : "success");
+    }
     loadGalleryItems();
 
   } catch (error) {
@@ -466,6 +469,9 @@ deleteModalConfirm.addEventListener("click", async () => {
 
     // 4. Cleanup and Refresh
     closeModals();
+    if (window.showToast) {
+      window.showToast(`🗑️ Gallery item deleted successfully!`, "delete");
+    }
     itemToDelete = null;
     loadGalleryItems();
 

@@ -157,6 +157,9 @@ async function seedDefaultReviews() {
       await setDoc(newRef, { ...rev, createdAt: serverTimestamp() });
     }
     await loadReviewItems();
+    if (window.showToast) {
+      window.showToast("🎉 Initial 6 website reviews imported successfully!", "success");
+    }
   } catch (err) {
     console.error("[Admin Reviews] Seed Error:", err);
     alert("Failed to seed default reviews: " + err.message);
@@ -389,6 +392,9 @@ if (reviewForm) {
       }
 
       closeModals();
+      if (window.showToast) {
+        window.showToast(isEdit ? `✏️ Review for "${name}" updated!` : `✨ Review for "${name}" published successfully!`, isEdit ? "info" : "success");
+      }
       await loadReviewItems();
 
     } catch (err) {
@@ -415,6 +421,9 @@ if (deleteReviewModalConfirm) {
     try {
       await deleteDoc(doc(db, "reviews", reviewToDelete.id));
       closeModals();
+      if (window.showToast) {
+        window.showToast(`🗑️ Customer review deleted successfully!`, "delete");
+      }
       reviewToDelete = null;
       await loadReviewItems();
     } catch (err) {
