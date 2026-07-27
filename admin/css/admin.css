@@ -990,21 +990,26 @@ body {
   background: var(--clr-bg-card, #121214);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 20px;
-  padding: 36px 28px;
+  padding: 38px 30px;
   text-align: center;
-  max-width: 380px;
+  max-width: 390px;
   width: 90vw;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(223, 177, 66, 0.15);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.85), 0 0 50px rgba(223, 177, 66, 0.2);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
-  animation: appPopupSpring 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  gap: 18px;
+  position: relative;
+  overflow: hidden;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  animation: cardFlip3D 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .app-action-icon-wrapper {
-  width: 64px;
-  height: 64px;
+  position: relative;
+  width: 68px;
+  height: 68px;
   border-radius: 50%;
   background: rgba(16, 185, 129, 0.15);
   border: 2px solid #10b981;
@@ -1012,66 +1017,65 @@ body {
   align-items: center;
   justify-content: center;
   font-size: 2rem;
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
   transition: all 0.3s ease;
+}
+
+/* Radial Wave Ripple Animation Behind Icon */
+.app-action-icon-wrapper::before, .app-action-icon-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: -14px;
+  border-radius: 50%;
+  border: 2px solid #10b981;
+  opacity: 0;
+  pointer-events: none;
+  animation: radialRipple 1.6s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+.app-action-icon-wrapper::after {
+  animation-delay: 0.5s;
 }
 
 .app-action-modal.popup-delete .app-action-icon-wrapper {
   background: rgba(239, 68, 68, 0.15);
   border-color: #ef4444;
-  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+  box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
+}
+
+.app-action-modal.popup-delete .app-action-icon-wrapper::before,
+.app-action-modal.popup-delete .app-action-icon-wrapper::after {
+  border-color: #ef4444;
 }
 
 .app-action-modal.popup-info .app-action-icon-wrapper {
   background: rgba(223, 177, 66, 0.15);
   border-color: var(--clr-gold, #dfb142);
-  box-shadow: 0 0 20px rgba(223, 177, 66, 0.3);
+  box-shadow: 0 0 30px rgba(223, 177, 66, 0.4);
 }
 
-.app-action-title {
-  font-family: var(--font-serif, 'Cinzel', serif);
-  font-size: 1.35rem;
-  color: var(--clr-white, #fff);
-  margin: 0;
-  font-weight: 600;
+.app-action-modal.popup-info .app-action-icon-wrapper::before,
+.app-action-modal.popup-info .app-action-icon-wrapper::after {
+  border-color: var(--clr-gold, #dfb142);
 }
 
-.app-action-message {
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.8);
-  line-height: 1.5;
-  margin: 0;
+@keyframes cardFlip3D {
+  0% {
+    opacity: 0;
+    transform: perspective(1000px) rotateX(-45deg) scale(0.82) translateY(40px);
+  }
+  65% {
+    transform: perspective(1000px) rotateX(8deg) scale(1.02) translateY(-4px);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(1000px) rotateX(0deg) scale(1) translateY(0);
+  }
 }
 
-.app-action-btn {
-  margin-top: 8px;
-  width: 100%;
-  padding: 12px 24px;
-  border-radius: 10px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  background: var(--clr-gold, #dfb142);
-  color: #000;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.app-action-modal.popup-delete .app-action-btn {
-  background: #ef4444;
-  color: #fff;
-}
-
-.app-action-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(223, 177, 66, 0.3);
-}
-
-@keyframes appPopupSpring {
-  0% { opacity: 0; transform: scale(0.75) translateY(20px); }
-  100% { opacity: 1; transform: scale(1) translateY(0); }
+@keyframes radialRipple {
+  0% { transform: scale(0.5); opacity: 0.95; }
+  100% { transform: scale(2.2); opacity: 0; }
 }
 
 @keyframes fadeInBackdrop {
