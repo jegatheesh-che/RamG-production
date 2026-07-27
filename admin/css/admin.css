@@ -598,6 +598,38 @@ body {
   border-color: rgba(239, 68, 68, 0.3);
 }
 
+/* Reviews Manager Section Container */
+.admin-reviews-manager {
+  margin-top: 48px;
+  background: var(--clr-bg-card);
+  border: 1px solid var(--clr-border);
+  border-radius: 12px;
+  padding: 32px;
+}
+
+/* Modal body spacing */
+.admin-modal__body {
+  color: var(--clr-muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+
+.admin-modal__body p + p {
+  margin-top: 6px;
+}
+
+/* Inline form error messages */
+.auth-error-msg {
+  background: var(--clr-error-bg, rgba(239,68,68,0.1));
+  border: 1px solid var(--clr-error, #ef4444);
+  color: #fca5a5;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
 /* Modals */
 .admin-modal {
   border: none;
@@ -1018,7 +1050,8 @@ body {
   justify-content: center;
   font-size: 2rem;
   box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  animation: iconPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
 }
 
 /* Radial Wave Ripple Animation Behind Icon */
@@ -1084,6 +1117,62 @@ body {
 }
 
 /* =========================================
+   POPUP TITLE, MESSAGE & CLOSE BUTTON
+   ========================================= */
+.app-action-title {
+  font-family: var(--font-serif, 'Cormorant Garamond', serif);
+  font-size: 1.55rem;
+  font-weight: 600;
+  color: var(--clr-white, #f5f5f7);
+  letter-spacing: 0.3px;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.app-action-message {
+  font-size: 0.9rem;
+  color: var(--clr-muted, #a1a1aa);
+  line-height: 1.5;
+  margin: 0;
+  text-align: center;
+  max-width: 280px;
+}
+
+.app-action-btn {
+  min-width: 140px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 12px 28px;
+  border-radius: 10px;
+  margin-top: 4px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(223, 177, 66, 0.25);
+}
+
+.app-action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(223, 177, 66, 0.4);
+}
+
+.popup-delete .app-action-btn {
+  background: #ef4444;
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.3);
+}
+
+.popup-delete .app-action-btn:hover {
+  background: #dc2626;
+  box-shadow: 0 8px 24px rgba(239, 68, 68, 0.45);
+}
+
+/* Icon wrapper entrance animation — defined in .app-action-icon-wrapper above */
+
+@keyframes iconPop {
+  0% { transform: scale(0.4); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* =========================================
    ANIMATED SVG TICK & CROSS DRAWING ANIMATION
    ========================================= */
 .svg-tick-icon, .svg-cross-icon {
@@ -1139,4 +1228,53 @@ body {
 
 @keyframes strokeCheck {
   100% { stroke-dashoffset: 0; }
+}
+
+/* =========================================
+   RESPONSIVE — MOBILE OPTIMIZATIONS
+   ========================================= */
+@media (max-width: 600px) {
+  .app-action-content {
+    padding: 28px 20px;
+    border-radius: 16px;
+  }
+
+  .app-action-title {
+    font-size: 1.3rem;
+  }
+
+  .admin-header__brand img {
+    max-width: 80px;
+  }
+
+  .admin-header__brand h1 {
+    font-size: 1.1rem;
+  }
+
+  .admin-gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+  }
+
+  .admin-nav-tabs {
+    gap: 8px;
+  }
+
+  .admin-tab-btn {
+    font-size: 0.85rem;
+    padding: 8px 14px;
+  }
+
+  .admin-modal__content {
+    padding: 20px 16px;
+  }
+
+  .admin-modal__actions {
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .admin-modal__actions button {
+    width: 100%;
+  }
 }

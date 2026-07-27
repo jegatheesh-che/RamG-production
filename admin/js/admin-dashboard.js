@@ -37,27 +37,42 @@ window.showAppPopup = function(title, message, type = "success", duration = 3000
   const dialog = document.getElementById("appActionPopup");
   if (!dialog) return;
 
-  const svgTick = document.getElementById("svgTickIcon");
-  const svgCross = document.getElementById("svgCrossIcon");
+  // Re-fetch SVG elements fresh each call (references can go stale after cloneNode)
+  let svgTick = document.getElementById("svgTickIcon");
+  let svgCross = document.getElementById("svgCrossIcon");
   const titleEl = document.getElementById("popupTitle");
   const msgEl = document.getElementById("popupMessage");
   const btnClose = document.getElementById("popupBtnClose");
 
   dialog.className = `admin-modal app-action-modal popup-${type}`;
 
+  // Reset card flip animation by forcing reflow
+  const contentEl = dialog.querySelector(".app-action-content");
+  if (contentEl) {
+    contentEl.style.animation = "none";
+    void contentEl.offsetHeight; // force reflow
+    contentEl.style.animation = "";
+  }
+
   if (type === "delete" || type === "error") {
     if (svgTick) svgTick.style.display = "none";
     if (svgCross) {
       svgCross.style.display = "block";
-      // Re-trigger SVG stroke animation
-      svgCross.replaceWith(svgCross.cloneNode(true));
+      // Re-trigger SVG stroke animation via clone
+      const newCross = svgCross.cloneNode(true);
+      newCross.style.display = "block";
+      svgCross.replaceWith(newCross);
+      // newCross is the live element now
     }
   } else {
+    // Re-fetch after potential clone above
+    svgCross = document.getElementById("svgCrossIcon");
     if (svgCross) svgCross.style.display = "none";
     if (svgTick) {
       svgTick.style.display = "block";
-      // Re-trigger SVG stroke animation
+      // Re-trigger SVG stroke animation via clone
       const newTick = svgTick.cloneNode(true);
+      newTick.style.display = "block";
       svgTick.replaceWith(newTick);
     }
   }
@@ -65,10 +80,11 @@ window.showAppPopup = function(title, message, type = "success", duration = 3000
   if (titleEl) titleEl.textContent = title;
   if (msgEl) msgEl.textContent = message;
 
+  // Set button text based on type
   if (btnClose) {
-    btnClose.onclick = () => {
-      dialog.close();
-    };
+    const btnTextMap = { success: "Awesome! ✨", delete: "Got it 🗑️", info: "Updated ✏️", error: "OK" };
+    btnClose.textContent = btnTextMap[type] || "OK";
+    btnClose.onclick = () => { dialog.close(); };
   }
 
   // Close on backdrop click
