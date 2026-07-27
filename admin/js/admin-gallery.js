@@ -85,14 +85,26 @@ async function loadGalleryItems() {
     }
 
     currentGalleryItems.forEach((item, index) => {
-      const isFirst = index === 0;
-      const isLast = index === currentGalleryItems.length - 1;
-      const card = createAdminGalleryCard(item, isFirst, isLast);
+      const card = createAdminGalleryCard(item);
       galleryGrid.appendChild(card);
     });
 
     loadingState.style.display = "none";
     galleryGrid.style.display = "grid";
+
+    // Initialize SortableJS for drag and drop
+    if (window.Sortable) {
+      Sortable.create(galleryGrid, {
+        animation: 150,
+        handle: '.drag-handle',
+        ghostClass: 'sortable-ghost',
+        dragClass: 'sortable-drag',
+        onEnd: async function (evt) {
+          if (evt.oldIndex === evt.newIndex) return;
+          await handleSortEnd();
+        }
+      });
+    }
 
   } catch (error) {
     console.error("[Admin Gallery] Error fetching gallery items:", error);
@@ -105,9 +117,10 @@ async function loadGalleryItems() {
 // ================================================
 // DOM GENERATION
 // ================================================
-function createAdminGalleryCard(item, isFirst, isLast) {
+function createAdminGalleryCard(item) {
   const card = document.createElement("div");
   card.className = "admin-gallery-item";
+  card.dataset.id = item.id;
 
   const isVideo = item.mediaType === "video";
   const badgeClass = isVideo ? "badge-video" : "badge-image";
@@ -121,6 +134,7 @@ function createAdminGalleryCard(item, isFirst, isLast) {
   }
 
   card.innerHTML = `
+    <div class="drag-handle" title="Drag to reorder">&#9776;</div>
     <img src="${thumbUrl}" alt="${item.title || 'Gallery Item'}" class="admin-gallery-item__thumb" loading="lazy" />
     <div class="admin-gallery-item__info">
       <h3 class="admin-gallery-item__title" title="${item.title || ''}">${item.title || 'Untitled'}</h3>
@@ -134,16 +148,12 @@ function createAdminGalleryCard(item, isFirst, isLast) {
     </div>
     <div class="admin-gallery-item__actions">
       <button class="btn-action btn-edit" data-id="${item.id}">Edit</button>
-      <button class="btn-action btn-up" data-id="${item.id}" ${isFirst ? 'disabled' : ''}>&uarr; Up</button>
-      <button class="btn-action btn-down" data-id="${item.id}" ${isLast ? 'disabled' : ''}>&darr; Down</button>
       <button class="btn-action btn-action--danger btn-delete" data-id="${item.id}">Delete</button>
     </div>
   `;
 
   // Attach Listeners
   card.querySelector('.btn-edit').addEventListener('click', () => openEditModal(item));
-  card.querySelector('.btn-up').addEventListener('click', () => moveItem(item.id, 'up'));
-  card.querySelector('.btn-down').addEventListener('click', () => moveItem(item.id, 'down'));
   card.querySelector('.btn-delete').addEventListener('click', () => openDeleteModal(item));
 
   return card;
@@ -322,47 +332,35 @@ function showFormError(msg) {
 }
 
 // ================================================
-// REORDERING
+// REORDERING (DRAG AND DROP BATCH UPDATE)
 // ================================================
-async function moveItem(id, direction) {
-  const currentIndex = currentGalleryItems.findIndex(item => item.id === id);
-  if (currentIndex === -1) return;
-
-  const targetIndex = direction === 'up' ? currentIndex - 1 : currentIndex + 1;
-  if (targetIndex < 0 || targetIndex >= currentGalleryItems.length) return; // Out of bounds
-
-  const itemA = currentGalleryItems[currentIndex];
-  const itemB = currentGalleryItems[targetIndex];
-
-  // Swap order values
-  const orderA = itemA.order;
-  const orderB = itemB.order;
-
-  // Optimistic UI Update (optional, but we'll just show loading state and refresh)
+async function handleSortEnd() {
+  const itemElements = Array.from(galleryGrid.children);
+  
   galleryGrid.style.opacity = "0.5";
   galleryGrid.style.pointerEvents = "none";
 
   try {
     const batch = writeBatch(db);
-    
-    // We swap the `order`, but `tiltClass` should strictly follow the order number to preserve the rhythm.
     const getTilt = (order) => (order % 4 === 1) ? "tilt-left" : (order % 4 === 3) ? "tilt-right" : "";
 
-    batch.update(doc(db, "gallery", itemA.id), { 
-      order: orderB,
-      tiltClass: getTilt(orderB)
-    });
-    
-    batch.update(doc(db, "gallery", itemB.id), { 
-      order: orderA,
-      tiltClass: getTilt(orderA)
+    itemElements.forEach((el, index) => {
+      const id = el.dataset.id;
+      if (!id) return;
+      const newOrder = index + 1; // 1-indexed order
+      
+      batch.update(doc(db, "gallery", id), {
+        order: newOrder,
+        tiltClass: getTilt(newOrder)
+      });
     });
 
     await batch.commit();
     await loadGalleryItems();
   } catch (error) {
     console.error("[Admin Gallery] Reorder error:", error);
-    alert("Failed to reorder items. Please try again.");
+    alert("Failed to save new order. Please try again.");
+    await loadGalleryItems(); // Revert UI
   } finally {
     galleryGrid.style.opacity = "1";
     galleryGrid.style.pointerEvents = "auto";
