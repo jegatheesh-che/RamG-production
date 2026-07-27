@@ -9,9 +9,24 @@
 </head>
 <body>
   <!-- GLOBAL PRELOADER -->
-  <div class="global-preloader">
-    <img src="assets/images/ramg-prods.png" alt="RamG Production" class="preloader-logo" />
-    <div class="preloader-spinner"></div>
+  <div class="global-preloader" id="globalPreloader">
+    <div class="preloader-content">
+      <div class="preloader-minimal-spinner" aria-hidden="true">
+        <div class="preloader-ring-inner"></div>
+      </div>
+      
+      <div class="preloader-brand-text">RAMG PRODUCTION</div>
+
+      <div class="preloader-bar-container">
+        <div class="preloader-bar" id="preloaderBar"></div>
+        <div class="preloader-bar-glow"></div>
+      </div>
+
+      <div class="preloader-footer">
+        <span class="preloader-status" id="preloaderStatus">INITIALIZING...</span>
+        <span class="preloader-counter"><span id="preloaderNum">0</span>%</span>
+      </div>
+    </div>
   </div>
   
   <div class="bg-wallpaper">

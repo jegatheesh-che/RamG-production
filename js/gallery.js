@@ -1,12 +1,16 @@
 // ================================================
 // RAMG PRODUCTION — DYNAMIC FIRESTORE GALLERY
-// Fetch & Render Gallery Cards from Firestore
+// Fetch & Render Gallery Cards from Firestore (Instant Load & Background Sync)
 // ================================================
 
 import { db } from "./firebase-config.js";
 import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Ensure interactions are initialized immediately for pre-rendered cards
+  if (typeof window.initGalleryInteractions === "function") {
+    window.initGalleryInteractions();
+  }
   loadFirestoreGallery();
 });
 
@@ -15,54 +19,44 @@ async function loadFirestoreGallery() {
   if (!galleryMasonry) return;
 
   try {
-    console.log("[Firestore Gallery] Fetching documents from /gallery...");
+    console.log("[Firestore Gallery] Syncing documents from /gallery in background...");
     
-    // Fetch all documents from gallery collection
     const querySnapshot = await getDocs(collection(db, "gallery"));
     
     if (querySnapshot.empty) {
-      console.warn("[Firestore Gallery] /gallery collection is empty.");
-      galleryMasonry.innerHTML = `
-        <div class="gallery-empty-msg" style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--clr-muted, #a1a1aa);">
-          <p>No gallery items found in archive.</p>
-        </div>
-      `;
+      console.log("[Firestore Gallery] /gallery collection is empty. Retaining default archive.");
       return;
     }
 
     const items = [];
     querySnapshot.forEach((doc) => {
-      items.push(doc.data());
+      items.push({ id: doc.id, ...doc.data() });
     });
 
-    // Sort by order ASC (1 through 16)
     items.sort((a, b) => (a.order || 0) - (b.order || 0));
 
-    console.log(`[Firestore Gallery] Loaded and sorted ${items.length} items.`);
+    console.log(`[Firestore Gallery] Loaded ${items.length} items from Firestore.`);
 
-    // Clear loading state
-    galleryMasonry.innerHTML = "";
+    // Replace grid only if Firestore returned valid data
+    if (items.length > 0) {
+      galleryMasonry.innerHTML = "";
+      items.forEach((item) => {
+        const cardEl = createGalleryCardDOM(item);
+        galleryMasonry.appendChild(cardEl);
+      });
 
-    items.forEach((item) => {
-      const cardEl = createGalleryCardDOM(item);
-      galleryMasonry.appendChild(cardEl);
-    });
-
-    // Initialize GSAP reveals, category filtering, and Lightbox modal
-    if (typeof window.initScrollReveal === "function") {
-      window.initScrollReveal();
-    }
-    if (typeof window.initGalleryInteractions === "function") {
-      window.initGalleryInteractions();
+      // Re-initialize GSAP reveals & interactions for newly injected cards
+      if (typeof window.initScrollReveal === "function") {
+        window.initScrollReveal();
+      }
+      if (typeof window.initGalleryInteractions === "function") {
+        window.initGalleryInteractions();
+      }
     }
 
   } catch (error) {
-    console.error("[Firestore Gallery Error] Failed to load documents:", error);
-    galleryMasonry.innerHTML = `
-      <div class="gallery-error-msg" style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--clr-muted, #a1a1aa);">
-        <p>Unable to load visual archive at this time. Please check your connection and try refreshing.</p>
-      </div>
-    `;
+    console.warn("[Firestore Gallery] Network/Permission notice, displaying pre-hydrated archive:", error);
+    // Keep instant pre-hydrated cards intact so user sees 0ms fast website
   }
 }
 
