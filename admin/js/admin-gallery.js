@@ -351,7 +351,7 @@ async function handleOrderChange(id, newOrderStr) {
   const oldOrder = targetItem.order;
   if (oldOrder === newOrder) return;
   if (newOrder < 1 || newOrder > currentGalleryItems.length) {
-    alert(\`Please enter a valid position between 1 and \${currentGalleryItems.length}\`);
+    alert(`Please enter a valid position between 1 and ${currentGalleryItems.length}`);
     loadGalleryItems(); // Reset UI
     return;
   }
