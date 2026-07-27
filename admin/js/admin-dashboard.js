@@ -1,4 +1,4 @@
-import { auth } from "../../js/firebase-config.js";
+import { auth } from "/js/firebase-config.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const userEmail = document.getElementById("userEmail");
@@ -8,7 +8,7 @@ const logoutBtn = document.getElementById("logoutBtn");
 onAuthStateChanged(auth, (user) => {
   if (!user) {
     // Unauthenticated user -> Redirect to login
-    window.location.href = "login.html";
+    window.location.href = "/admin/login";
   } else {
     // Authenticated user -> Render dashboard
     if (userEmail) {
@@ -23,7 +23,7 @@ if (logoutBtn) {
   logoutBtn.addEventListener("click", async () => {
     try {
       await signOut(auth);
-      window.location.href = "login.html";
+      window.location.href = "/admin/login";
     } catch (error) {
       console.error("[Auth Error] Sign out failed:", error);
     }

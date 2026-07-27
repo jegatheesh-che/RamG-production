@@ -3,7 +3,7 @@
 // Phase 9B+: Full Management (Add, Edit, Reorder, Delete)
 // ================================================
 
-import { auth, db } from "../../js/firebase-config.js";
+import { auth, db } from "/js/firebase-config.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { collection, getDocs, doc, setDoc, updateDoc, deleteDoc, serverTimestamp, writeBatch } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 

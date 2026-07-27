@@ -1,4 +1,4 @@
-import { auth } from "../../js/firebase-config.js";
+import { auth } from "/js/firebase-config.js";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const loginForm = document.getElementById("loginForm");
@@ -12,7 +12,7 @@ const errorMessage = document.getElementById("errorMessage");
 // Check if user is already authenticated
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    window.location.href = "index.html";
+    window.location.href = "/admin/";
   }
 });
 
@@ -53,7 +53,7 @@ loginForm.addEventListener("submit", async (e) => {
 
   try {
     await signInWithEmailAndPassword(auth, email, password);
-    window.location.href = "index.html";
+    window.location.href = "/admin/";
   } catch (error) {
     console.warn("[Auth Notice] Login attempt rejected:", error.code);
     setLoading(false);
