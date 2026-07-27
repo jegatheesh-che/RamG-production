@@ -48,6 +48,51 @@ html { font-size: 16px; -webkit-font-smoothing: antialiased; }
 body { background: var(--clr-bg); color: var(--clr-white); font-family: var(--font-sans); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
 
 
+/* --- GLOBAL PRELOADER --- */
+.global-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  background-color: var(--clr-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s var(--ease-gold), visibility 0.8s;
+}
+
+.global-preloader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader-logo {
+  height: 60px;
+  width: auto;
+  margin-bottom: 24px;
+  animation: preloader-pulse 2s infinite var(--ease-gold);
+}
+
+.preloader-spinner {
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(223, 177, 66, 0.2);
+  border-top-color: var(--clr-gold);
+  border-radius: 50%;
+  animation: preloader-spin 1s linear infinite;
+}
+
+@keyframes preloader-pulse {
+  0%, 100% { opacity: 0.7; transform: scale(0.98); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes preloader-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 /* --- WALLPAPER BACKGROUND --- */
 .bg-wallpaper {
   position: fixed;

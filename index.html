@@ -6,8 +6,15 @@
   <title>RamG Production</title>
   <meta name="description" content="RamG Production — capturing love stories, moments and emotions." />
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="preload" href="assets/images/Ram G.webm" as="video" type="video/webm" fetchpriority="high">
 </head>
 <body>
+  <!-- GLOBAL PRELOADER -->
+  <div class="global-preloader">
+    <img src="assets/images/ramg-prods.png" alt="RamG Production" class="preloader-logo" />
+    <div class="preloader-spinner"></div>
+  </div>
+
   <div class="bg-wallpaper">
     <div class="bg-wallpaper__inner"></div>
   </div>
@@ -137,31 +144,31 @@
           </video>
         </div>
         <div class="hero__slide">
-          <img src="assets/images/excellents/slide2.webp" alt="Wedding ceremony" loading="lazy" />
+          <img src="assets/images/excellents/slide2.webp" alt="Wedding ceremony" fetchpriority="high" />
           <div class="hero__slide-overlay">
             <h2 class="hero__slide-brand">RamG Production</h2>
           </div>
         </div>
         <div class="hero__slide">
-          <img src="assets/images/excellents/DSC08698-2.webp" alt="Romantic couple portrait" loading="lazy" />
+          <img src="assets/images/excellents/DSC08698-2.webp" alt="Romantic couple portrait" fetchpriority="high" />
           <div class="hero__slide-overlay">
             <h2 class="hero__slide-brand">RamG Production</h2>
           </div>
         </div>
         <div class="hero__slide">
-          <img src="assets/images/excellents/slide4.webp" alt="Fine art wedding" loading="lazy" />
+          <img src="assets/images/excellents/slide4.webp" alt="Fine art wedding" fetchpriority="high" />
           <div class="hero__slide-overlay">
             <h2 class="hero__slide-brand">RamG Production</h2>
           </div>
         </div>
         <div class="hero__slide">
-          <img src="assets/images/excellents/slide5.webp" alt="Couple outdoors golden hour" loading="lazy" />
+          <img src="assets/images/excellents/slide5.webp" alt="Couple outdoors golden hour" fetchpriority="high" />
           <div class="hero__slide-overlay">
             <h2 class="hero__slide-brand">RamG Production</h2>
           </div>
         </div>
         <div class="hero__slide">
-          <img src="assets/images/excellents/slide6.webp" alt="Couple portrait" loading="lazy" />
+          <img src="assets/images/excellents/slide6.webp" alt="Couple portrait" fetchpriority="high" />
           <div class="hero__slide-overlay">
             <h2 class="hero__slide-brand">RamG Production</h2>
           </div>
@@ -368,9 +375,9 @@
       <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
     </svg>
   </button>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="js/main.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+  <script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script defer src="js/main.js"></script>
 </body>
 </html>

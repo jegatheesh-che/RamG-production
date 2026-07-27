@@ -340,30 +340,49 @@ document.querySelectorAll('.story-item').forEach(item => {
 });
 
 // -----------------------------------------------
-// INITIAL ENTRANCE LOGIC
+// INITIAL ENTRANCE LOGIC & PRELOADER
 // -----------------------------------------------
 function startWebsiteEntrance() {
-  // Fade in body on load
+  const preloader = document.querySelector('.global-preloader');
+  
+  // Fade out preloader
+  if (preloader) {
+    preloader.classList.add('is-hidden');
+    setTimeout(() => { preloader.remove(); }, 800);
+  }
+
+  // Fade in body
   gsap.from('body', { opacity: 0, duration: 0.5, ease: 'power2.out' });
 
   const heroVideo = document.getElementById('hero-reveal-video');
   if (heroVideo) {
-    // Ensure video plays immediately on load for maximum opening impact
     const playVideo = () => heroVideo.play().catch(() => {});
     playVideo();
     document.addEventListener('touchstart', playVideo, { once: true, passive: true });
     document.addEventListener('scroll', playVideo, { once: true, passive: true });
   }
 
-  // Hero title entrance if present (for other pages)
   const heroTitle = document.querySelector('.hero__title');
   if (heroTitle) {
     gsap.from(heroTitle, { y: 40, opacity: 0, duration: 1.2, ease: 'expo.out', delay: 0.3 });
   }
 }
 
-// Start immediately on load
-startWebsiteEntrance();
+// Start entrance animation when window fully loads (assets ready)
+// Fallback after 3 seconds in case an asset hangs
+let entranceStarted = false;
+window.addEventListener('load', () => {
+  if (!entranceStarted) {
+    entranceStarted = true;
+    startWebsiteEntrance();
+  }
+});
+setTimeout(() => {
+  if (!entranceStarted) {
+    entranceStarted = true;
+    startWebsiteEntrance();
+  }
+}, 3000);
 
 // Page nav links with GSAP fade
 document.querySelectorAll('.nav__link[href]').forEach(link => {
