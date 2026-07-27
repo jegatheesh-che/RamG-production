@@ -103,11 +103,20 @@ async function loadGalleryItems() {
 // ================================================
 // DOM GENERATION
 // ================================================
+// Utility for faster image loading
+function getOptimizedCloudinaryUrl(url, width = 400) {
+  if (!url || !url.includes('res.cloudinary.com')) return url;
+  if (url.includes('/upload/') && !url.includes('q_auto')) {
+    return url.replace('/upload/', `/upload/w_${width},q_auto,f_auto/`);
+  }
+  return url;
+}
+
 function createAdminGalleryCard(item, index = 0) {
   const card = document.createElement("div");
   card.className = "admin-gallery-item animate-in";
   card.dataset.id = item.id;
-  card.style.animationDelay = \`\${index * 0.05}s\`;
+  card.style.animationDelay = `${index * 0.05}s`;
 
   const isVideo = item.mediaType === "video";
   const badgeClass = isVideo ? "badge-video" : "badge-image";
@@ -115,9 +124,9 @@ function createAdminGalleryCard(item, index = 0) {
 
   let thumbUrl = "";
   if (isVideo && item.youtubeId) {
-    thumbUrl = `https://img.youtube.com/vi/${item.youtubeId}/maxresdefault.jpg`;
+    thumbUrl = `https://img.youtube.com/vi/${item.youtubeId}/hqdefault.jpg`;
   } else if (!isVideo && item.cloudinaryUrl) {
-    thumbUrl = item.cloudinaryUrl;
+    thumbUrl = getOptimizedCloudinaryUrl(item.cloudinaryUrl, 400);
   }
 
   card.innerHTML = `

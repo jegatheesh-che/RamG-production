@@ -66,20 +66,26 @@ async function loadFirestoreGallery() {
   }
 }
 
+// Utility for faster image loading
+function getOptimizedCloudinaryUrl(url, width = 800) {
+  if (!url || !url.includes('res.cloudinary.com')) return url;
+  if (url.includes('/upload/') && !url.includes('q_auto')) {
+    return url.replace('/upload/', `/upload/w_${width},q_auto,f_auto/`);
+  }
+  return url;
+}
+
 function createGalleryCardDOM(item) {
   const card = document.createElement("div");
-  
-  // Set classes (gallery-card, optional tiltClass, reveal, in-view)
-  const tiltClass = item.tiltClass ? ` ${item.tiltClass}` : "";
-  card.className = `gallery-card${tiltClass} reveal`;
-  
-  // Set data attributes for filtering & lightbox
-  card.setAttribute("data-category", item.category || "");
-  card.setAttribute("data-title", item.title || "");
+  card.className = `gallery-card ${item.tiltClass || ''} reveal`;
+  card.dataset.id = item.id;
+  card.dataset.category = item.category || "uncategorized";
+  card.dataset.title = item.title || "";
 
   if (item.mediaType === "video") {
     card.setAttribute("data-youtube-id", item.youtubeId || "");
-    const thumbnailUrl = `https://img.youtube.com/vi/${item.youtubeId}/maxresdefault.jpg`;
+    // Use hqdefault instead of maxresdefault for vastly faster loading
+    const thumbnailUrl = `https://img.youtube.com/vi/${item.youtubeId}/hqdefault.jpg`;
     
     card.innerHTML = `
       <img src="${thumbnailUrl}" alt="${item.title || 'Video'}" loading="lazy" />
@@ -92,8 +98,9 @@ function createGalleryCardDOM(item) {
     `;
   } else {
     // Image item
+    const optimizedUrl = getOptimizedCloudinaryUrl(item.cloudinaryUrl, 800);
     card.innerHTML = `
-      <img src="${item.cloudinaryUrl}" alt="${item.title || 'Photo'}" loading="lazy" />
+      <img src="${optimizedUrl}" alt="${item.title || 'Photo'}" loading="lazy" />
       <div class="gallery-card__expand">&#10530;</div>
     `;
   }
