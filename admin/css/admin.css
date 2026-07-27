@@ -709,3 +709,141 @@ body {
   opacity: 0.7;
   pointer-events: none;
 }
+
+/* =========================================
+   ADMIN NAVIGATION TABS & REVIEWS MANAGER
+   ========================================= */
+.admin-nav-tabs {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 8px;
+}
+
+.admin-tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--clr-muted, #a1a1aa);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.admin-tab-btn:hover {
+  color: var(--clr-white);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.admin-tab-btn.active {
+  color: var(--clr-gold, #dfb142);
+  background: rgba(223, 177, 66, 0.1);
+  border-bottom: 2px solid var(--clr-gold, #dfb142);
+}
+
+/* Reviews Manager Grid & Cards */
+.admin-reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.admin-review-card {
+  background: var(--clr-bg-card, #121214);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.admin-review-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(223, 177, 66, 0.3);
+}
+
+.admin-review-card__header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.admin-review-card__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(223, 177, 66, 0.3);
+}
+
+.admin-review-card__name {
+  font-family: var(--font-serif, 'Cinzel', serif);
+  font-size: 1.05rem;
+  color: var(--clr-white);
+  font-weight: 600;
+  margin: 0;
+}
+
+.admin-review-card__subtitle {
+  font-size: 0.8rem;
+  color: var(--clr-muted, #a1a1aa);
+  margin-top: 2px;
+}
+
+.admin-review-card__stars {
+  color: #fbbf24;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+.admin-review-card__text {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  font-style: italic;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.admin-review-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.admin-review-card__badge {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: rgba(223, 177, 66, 0.12);
+  color: var(--clr-gold, #dfb142);
+}
+
+.admin-textarea {
+  background: var(--clr-bg-input, #18181b);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 12px 16px;
+  color: var(--clr-white);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  outline: none;
+  resize: vertical;
+  min-height: 100px;
+}
+
+.admin-textarea:focus {
+  border-color: var(--clr-gold, #dfb142);
+}

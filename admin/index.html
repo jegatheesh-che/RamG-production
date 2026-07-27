@@ -28,90 +28,29 @@
     <main class="admin-main">
       <div class="admin-welcome-card">
         <h2>Welcome to RamG Production Admin Panel</h2>
-        <p>You have successfully authenticated with Firebase Authentication. This protected workspace is ready for future management features.</p>
+        <p>You have successfully authenticated. Manage your portfolio gallery items and customer reviews below.</p>
       </div>
 
-      <section class="admin-gallery-manager">
+      <!-- ADMIN NAVIGATION TABS -->
+      <nav class="admin-nav-tabs">
+        <button type="button" class="admin-tab-btn active" id="tabGallery">Gallery Manager</button>
+        <button type="button" class="admin-tab-btn" id="tabReviews">Reviews Manager</button>
+      </nav>
+
+      <!-- SECTION: GALLERY MANAGER -->
+      <section class="admin-gallery-manager" id="sectionGallery">
         <header class="admin-section-header" style="display: flex; justify-content: space-between; align-items: center;">
           <div>
             <h2>Gallery Manager</h2>
             <p>Current visual archive displayed dynamically from Firestore.</p>
           </div>
-          <button id="btnAddNew" class="btn-primary" style="margin-top: 0;">+ Add New Item</button>
+          <button id="btnAddNew" class="btn-primary" style="margin-top: 0;">+ Add New Gallery Item</button>
         </header>
 
         <div id="adminGalleryLoading" class="admin-gallery-grid">
           <div class="admin-gallery-item skeleton-card">
             <div class="skeleton-img"></div>
-            <div class="skeleton-info">
-              <div class="skeleton-text skeleton-title"></div>
-              <div class="skeleton-text skeleton-meta"></div>
-              <div class="skeleton-text skeleton-badge"></div>
-            </div>
-            <div class="skeleton-actions">
-              <div class="skeleton-btn"></div>
-              <div class="skeleton-btn"></div>
-            </div>
-          </div>
-          <div class="admin-gallery-item skeleton-card">
-            <div class="skeleton-img"></div>
-            <div class="skeleton-info">
-              <div class="skeleton-text skeleton-title"></div>
-              <div class="skeleton-text skeleton-meta"></div>
-              <div class="skeleton-text skeleton-badge"></div>
-            </div>
-            <div class="skeleton-actions">
-              <div class="skeleton-btn"></div>
-              <div class="skeleton-btn"></div>
-            </div>
-          </div>
-          <div class="admin-gallery-item skeleton-card">
-            <div class="skeleton-img"></div>
-            <div class="skeleton-info">
-              <div class="skeleton-text skeleton-title"></div>
-              <div class="skeleton-text skeleton-meta"></div>
-              <div class="skeleton-text skeleton-badge"></div>
-            </div>
-            <div class="skeleton-actions">
-              <div class="skeleton-btn"></div>
-              <div class="skeleton-btn"></div>
-            </div>
-          </div>
-          <div class="admin-gallery-item skeleton-card">
-            <div class="skeleton-img"></div>
-            <div class="skeleton-info">
-              <div class="skeleton-text skeleton-title"></div>
-              <div class="skeleton-text skeleton-meta"></div>
-              <div class="skeleton-text skeleton-badge"></div>
-            </div>
-            <div class="skeleton-actions">
-              <div class="skeleton-btn"></div>
-              <div class="skeleton-btn"></div>
-            </div>
-          </div>
-          <div class="admin-gallery-item skeleton-card">
-            <div class="skeleton-img"></div>
-            <div class="skeleton-info">
-              <div class="skeleton-text skeleton-title"></div>
-              <div class="skeleton-text skeleton-meta"></div>
-              <div class="skeleton-text skeleton-badge"></div>
-            </div>
-            <div class="skeleton-actions">
-              <div class="skeleton-btn"></div>
-              <div class="skeleton-btn"></div>
-            </div>
-          </div>
-          <div class="admin-gallery-item skeleton-card">
-            <div class="skeleton-img"></div>
-            <div class="skeleton-info">
-              <div class="skeleton-text skeleton-title"></div>
-              <div class="skeleton-text skeleton-meta"></div>
-              <div class="skeleton-text skeleton-badge"></div>
-            </div>
-            <div class="skeleton-actions">
-              <div class="skeleton-btn"></div>
-              <div class="skeleton-btn"></div>
-            </div>
+            <div class="skeleton-info"><div class="skeleton-text skeleton-title"></div></div>
           </div>
         </div>
 
@@ -121,14 +60,39 @@
           <p>No gallery items found.</p>
         </div>
 
-        <div id="adminGalleryGrid" class="admin-gallery-grid" style="display: none;">
-          <!-- Dynamically populated cards will go here -->
+        <div id="adminGalleryGrid" class="admin-gallery-grid" style="display: none;"></div>
+      </section>
+
+      <!-- SECTION: REVIEWS MANAGER -->
+      <section class="admin-reviews-manager" id="sectionReviews" style="display: none;">
+        <header class="admin-section-header" style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h2>Reviews & Testimonials Manager</h2>
+            <p>Customer reviews, star ratings, and stories displayed on the website.</p>
+          </div>
+          <button id="btnAddNewReview" class="btn-primary" style="margin-top: 0;">+ Add New Review</button>
+        </header>
+
+        <div id="adminReviewsLoading" class="admin-reviews-grid">
+          <div class="admin-review-card skeleton-card">
+            <div class="skeleton-text skeleton-title"></div>
+            <div class="skeleton-text skeleton-meta"></div>
+          </div>
         </div>
+
+        <div id="adminReviewsError" class="admin-error-state" style="display: none;"></div>
+        
+        <div id="adminReviewsEmpty" class="admin-empty-state" style="display: none;">
+          <p>No reviews found. Click "+ Add New Review" to publish your first customer testimonial.</p>
+        </div>
+
+        <div id="adminReviewsGrid" class="admin-reviews-grid" style="display: none;"></div>
       </section>
     </main>
   </div>
 
   <!-- MODALS -->
+  <!-- GALLERY MODAL -->
   <dialog id="galleryModal" class="admin-modal">
     <div class="admin-modal__content">
       <header class="admin-modal__header">
@@ -170,9 +134,9 @@
         </div>
 
         <div class="form-group" id="groupYoutubeId" style="display: none;">
-          <label for="galleryYoutubeId">YouTube ID *</label>
-          <input type="text" id="galleryYoutubeId" placeholder="e.g., 8iX_PxT9P-g" />
-          <p class="admin-modal__hint">The 11-character ID from the YouTube URL.</p>
+          <label for="galleryYoutubeId">YouTube ID or Link *</label>
+          <input type="text" id="galleryYoutubeId" placeholder="e.g., https://youtube.com/shorts/CvuAlcbzDxw or 8iX_PxT9P-g" />
+          <p class="admin-modal__hint">Paste YouTube video link or 11-character video ID.</p>
         </div>
 
         <div id="galleryFormError" class="auth-error-msg" style="display: none; margin-top: 10px;"></div>
@@ -185,6 +149,73 @@
     </div>
   </dialog>
 
+  <!-- REVIEWS MODAL -->
+  <dialog id="reviewModal" class="admin-modal">
+    <div class="admin-modal__content">
+      <header class="admin-modal__header">
+        <h3 id="reviewModalTitle">Add Customer Review</h3>
+        <button type="button" class="admin-modal__close" id="reviewModalClose">&times;</button>
+      </header>
+      <form id="reviewForm" class="admin-form">
+        <input type="hidden" id="reviewId" />
+        
+        <div class="form-group">
+          <label for="reviewName">Customer / Couple Name *</label>
+          <input type="text" id="reviewName" required placeholder="e.g., Sophie & Antoine" />
+        </div>
+
+        <div class="form-group">
+          <label for="reviewSubtitle">Location & Event Context *</label>
+          <input type="text" id="reviewSubtitle" required placeholder="e.g., Brussels, Belgium • Wedding" />
+        </div>
+
+        <div class="form-group">
+          <label for="reviewStars">Star Rating *</label>
+          <select id="reviewStars" required class="admin-select">
+            <option value="5" selected>⭐⭐⭐⭐⭐ (5 Stars)</option>
+            <option value="4">⭐⭐⭐⭐ (4 Stars)</option>
+            <option value="3">⭐⭐⭐ (3 Stars)</option>
+            <option value="2">⭐⭐ (2 Stars)</option>
+            <option value="1">⭐ (1 Star)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="reviewCategory">Category Filter *</label>
+          <select id="reviewCategory" required class="admin-select">
+            <option value="wedding" selected>Wedding</option>
+            <option value="film">Cinematic Film</option>
+            <option value="portrait">Portrait</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="reviewText">Customer Feedback / Review Quote *</label>
+          <textarea id="reviewText" required class="admin-textarea" rows="4" placeholder="Write what customer actually says..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="reviewBadge">Client Badge / Tag</label>
+          <input type="text" id="reviewBadge" placeholder="e.g., Verified Couple" defaultValue="Verified Client" />
+        </div>
+
+        <div class="form-group">
+          <label for="reviewAvatar">Customer Photo / Avatar (Optional)</label>
+          <input type="file" id="reviewAvatar" accept="image/*" />
+          <p class="admin-modal__hint">Upload a portrait image or leave empty for default avatar.</p>
+        </div>
+
+        <div id="reviewFormError" class="auth-error-msg" style="display: none; margin-top: 10px;"></div>
+
+        <div class="admin-modal__actions">
+          <button type="button" class="btn-secondary" id="reviewModalCancel">Cancel</button>
+          <button type="submit" class="btn-primary" id="reviewModalSubmit">Save Review</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- DELETE GALLERY ITEM MODAL -->
   <dialog id="deleteModal" class="admin-modal">
     <div class="admin-modal__content">
       <header class="admin-modal__header">
@@ -203,7 +234,27 @@
     </div>
   </dialog>
 
+  <!-- DELETE REVIEW MODAL -->
+  <dialog id="deleteReviewModal" class="admin-modal">
+    <div class="admin-modal__content">
+      <header class="admin-modal__header">
+        <h3>Confirm Review Deletion</h3>
+        <button type="button" class="admin-modal__close" id="deleteReviewModalClose">&times;</button>
+      </header>
+      <div class="admin-modal__body">
+        <p>Are you sure you want to delete this review? This action cannot be undone.</p>
+        <p id="deleteReviewItemTitle" style="margin-top: 8px; font-weight: 600; color: var(--clr-gold);"></p>
+        <div id="deleteReviewModalError" class="auth-error-msg" style="display: none; margin-top: 16px;"></div>
+      </div>
+      <div class="admin-modal__actions">
+        <button type="button" class="btn-secondary" id="deleteReviewModalCancel">Cancel</button>
+        <button type="button" class="btn-primary btn-danger" id="deleteReviewModalConfirm">Delete Review</button>
+      </div>
+    </div>
+  </dialog>
+
   <script type="module" src="/admin/js/admin-dashboard.js"></script>
   <script type="module" src="/admin/js/admin-gallery.js"></script>
+  <script type="module" src="/admin/js/admin-reviews.js"></script>
 </body>
 </html>

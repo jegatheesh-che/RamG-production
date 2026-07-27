@@ -10,10 +10,13 @@ service cloud.firestore {
 
     // Rules for the gallery collection
     match /gallery/{document} {
-      // TEST 1: Public visitors can read gallery documents
       allow read: if true;
-      
-      // TEST 2-7: Only the authenticated Admin UID can create, update, or delete documents
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Rules for the reviews collection
+    match /reviews/{document} {
+      allow read: if true;
       allow create, update, delete: if isAdmin();
     }
 

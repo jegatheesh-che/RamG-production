@@ -712,7 +712,7 @@ document.querySelectorAll('.js-copy-card').forEach(card => {
 // -----------------------------------------------
 // REVIEWS CATEGORY FILTER INTERACTIVITY
 // -----------------------------------------------
-document.addEventListener('DOMContentLoaded', () => {
+window.initReviewFilters = function() {
   const reviewFilterBtns = document.querySelectorAll('.review-filter-btn');
   const reviewCards = document.querySelectorAll('.review-card');
 
