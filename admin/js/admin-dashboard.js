@@ -37,21 +37,31 @@ window.showAppPopup = function(title, message, type = "success", duration = 3000
   const dialog = document.getElementById("appActionPopup");
   if (!dialog) return;
 
-  const iconText = document.getElementById("popupIconText");
+  const svgTick = document.getElementById("svgTickIcon");
+  const svgCross = document.getElementById("svgCrossIcon");
   const titleEl = document.getElementById("popupTitle");
   const msgEl = document.getElementById("popupMessage");
   const btnClose = document.getElementById("popupBtnClose");
 
   dialog.className = `admin-modal app-action-modal popup-${type}`;
 
-  const iconMap = {
-    success: "✨",
-    delete: "🗑️",
-    info: "✏️",
-    error: "⚠️"
-  };
+  if (type === "delete" || type === "error") {
+    if (svgTick) svgTick.style.display = "none";
+    if (svgCross) {
+      svgCross.style.display = "block";
+      // Re-trigger SVG stroke animation
+      svgCross.replaceWith(svgCross.cloneNode(true));
+    }
+  } else {
+    if (svgCross) svgCross.style.display = "none";
+    if (svgTick) {
+      svgTick.style.display = "block";
+      // Re-trigger SVG stroke animation
+      const newTick = svgTick.cloneNode(true);
+      svgTick.replaceWith(newTick);
+    }
+  }
 
-  if (iconText) iconText.textContent = iconMap[type] || "✨";
   if (titleEl) titleEl.textContent = title;
   if (msgEl) msgEl.textContent = message;
 

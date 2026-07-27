@@ -251,11 +251,21 @@
         <button type="button" class="btn-primary btn-danger" id="deleteReviewModalConfirm">Delete Review</button>
       </div>
     </div>
-  <!-- APP-LIKE ACTION POPUP NOTIFICATION MODAL -->
+  <!-- APP-LIKE ACTION POPUP NOTIFICATION MODAL WITH ANIMATED SVG TICK -->
   <dialog id="appActionPopup" class="admin-modal app-action-modal">
     <div class="admin-modal__content app-action-content">
       <div class="app-action-icon-wrapper" id="popupIconWrapper">
-        <span id="popupIconText">✨</span>
+        <!-- SVG Animated Tick (Success / Add / Edit) -->
+        <svg class="svg-tick-icon" id="svgTickIcon" viewBox="0 0 52 52">
+          <circle class="svg-tick-circle" cx="26" cy="26" r="23" fill="none"/>
+          <path class="svg-tick-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
+        <!-- SVG Animated Cross (Delete) -->
+        <svg class="svg-cross-icon" id="svgCrossIcon" viewBox="0 0 52 52" style="display: none;">
+          <circle class="svg-cross-circle" cx="26" cy="26" r="23" fill="none"/>
+          <path class="svg-cross-line1" fill="none" d="M16 16l20 20"/>
+          <path class="svg-cross-line2" fill="none" d="M36 16l-20 20"/>
+        </svg>
       </div>
       <h3 id="popupTitle" class="app-action-title">Action Completed</h3>
       <p id="popupMessage" class="app-action-message">Your changes have been saved.</p>
