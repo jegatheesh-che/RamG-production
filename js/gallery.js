@@ -66,12 +66,9 @@ async function loadFirestoreGallery() {
   }
 }
 
-// Utility for faster image loading
 function getOptimizedCloudinaryUrl(url, width = 800) {
-  if (!url || !url.includes('res.cloudinary.com')) return url;
-  if (url.includes('/upload/') && !url.includes('q_auto')) {
-    return url.replace('/upload/', `/upload/w_${width},q_auto,f_auto/`);
-  }
+  // If the cloud restricts dynamic transformations, the optimized URL will return 401/403.
+  // To ensure images always load, we fallback to the original URL.
   return url;
 }
 
