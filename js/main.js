@@ -749,7 +749,7 @@ window.initReviewFilters = function() {
       });
     });
   }
-});
+};
 
 // -----------------------------------------------
 // THEME SWITCHER (Dark & Bright Mode)
