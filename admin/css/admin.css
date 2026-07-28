@@ -19,6 +19,60 @@
   --font-sans:      'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+/* Light Theme Variables Override */
+html.light-theme {
+  --clr-bg:         #f4f5f8;
+  --clr-bg-card:    #ffffff;
+  --clr-bg-input:   #e9ecef;
+  --clr-gold:       #b8860b;
+  --clr-gold-hover: #d4af37;
+  --clr-white:      #18181c;
+  --clr-muted:      #555963;
+  --clr-border:     rgba(184, 134, 11, 0.3);
+}
+
+html.light-theme .about-section-card {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+html.light-theme .custom-upload-zone {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+html.light-theme .admin-header {
+  background: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+html.light-theme .admin-nav-tabs {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--clr-border);
+  color: var(--clr-white);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--clr-gold);
+  color: #000;
+  border-color: var(--clr-gold);
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
