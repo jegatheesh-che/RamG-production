@@ -110,12 +110,16 @@
         <div id="adminReviewsGrid" class="admin-reviews-grid" style="display: none;"></div>
       </section>
 
-      <!-- SECTION: ABOUT PAGE CONTENT MANAGER (SECTION 1 & SECTION 2) -->
+      <!-- SECTION: ABOUT PAGE DYNAMIC SECTION BUILDER (MAX 10 SECTIONS) -->
       <section class="admin-about-manager" id="sectionAbout" style="display: none;">
-        <header class="admin-section-header">
+        <header class="admin-section-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
           <div>
-            <h2>About Page Content Manager</h2>
-            <p>Update photos, titles, stories, quotes, and extended bios for Section 1 (Hero Split) and Section 2 (Philosophy Split) without changing the UI layout.</p>
+            <h2>About Page Story Builder</h2>
+            <p>Create, customize, reorder, and manage up to 10 story sections for your About page.</p>
+          </div>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <span id="adminAboutSectionCounter" style="font-size: 0.9rem; color: var(--clr-gold); font-weight: 600;">0 / 10 Sections</span>
+            <button type="button" id="btnAddAboutSection" class="btn-primary" style="margin-top: 0;">+ Add New Section</button>
           </div>
         </header>
 
@@ -123,110 +127,15 @@
           <p>Loading About page content...</p>
         </div>
 
-        <form id="aboutContentForm" class="admin-form" style="display: flex; flex-direction: column; gap: 32px;">
-          <!-- SECTION 1 BLOCK -->
-          <div class="admin-card" style="max-width: 100%;">
-            <h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--clr-gold); margin-bottom: 20px; border-bottom: 1px dashed var(--clr-border); padding-bottom: 8px;">
-              Section 1: Hero Split ("About Me")
-            </h3>
-
-            <div class="form-group">
-              <label for="aboutHeroEyebrow">Eyebrow Tagline *</label>
-              <input type="text" id="aboutHeroEyebrow" required placeholder="e.g., About Me" />
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-              <div class="form-group">
-                <label for="aboutHeroTitle">Main Title (Regular) *</label>
-                <input type="text" id="aboutHeroTitle" required placeholder="e.g., Every story" />
-              </div>
-
-              <div class="form-group">
-                <label for="aboutHeroTitleItalic">Title Subtitle (Italic Accent) *</label>
-                <input type="text" id="aboutHeroTitleItalic" required placeholder="e.g., deserves to be remembered." />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="aboutHeroDesc">Main Summary Story (Always Visible) *</label>
-              <textarea id="aboutHeroDesc" required class="admin-textarea" rows="4" placeholder="My journey into photography and filmmaking began in 2018..."></textarea>
-            </div>
-
-            <div class="form-group">
-              <label for="aboutHeroExtendedDesc">Extended Story (Revealed when 'Read Full Story +' is clicked)</label>
-              <textarea id="aboutHeroExtendedDesc" class="admin-textarea" rows="4" placeholder="Add extra story paragraphs here. If filled, a gold 'Read Full Story +' button will automatically appear..."></textarea>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 120px; gap: 16px; align-items: end;">
-              <div class="form-group">
-                <label for="aboutHeroImageFile">Hero Portrait Image (Upload File)</label>
-                <input type="file" id="aboutHeroImageFile" accept="image/*" />
-                <label for="aboutHeroImageUrl" style="margin-top: 8px;">Or Image Path / URL</label>
-                <input type="text" id="aboutHeroImageUrl" placeholder="e.g., /assets/images/r_DSC00241_full.webp" />
-              </div>
-
-              <div style="text-align: center;">
-                <p style="font-size: 0.75rem; color: var(--clr-muted); margin-bottom: 4px;">Current</p>
-                <img id="imgPreviewHero" src="/assets/images/r_DSC00241_full.webp" alt="Hero Preview" style="width: 100px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid var(--clr-gold);" />
-              </div>
-            </div>
-          </div>
-
-          <!-- SECTION 2 BLOCK -->
-          <div class="admin-card" style="max-width: 100%;">
-            <h3 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--clr-gold); margin-bottom: 20px; border-bottom: 1px dashed var(--clr-border); padding-bottom: 8px;">
-              Section 2: Philosophy Split ("My Philosophy")
-            </h3>
-
-            <div class="form-group">
-              <label for="aboutPhilEyebrow">Eyebrow Tagline *</label>
-              <input type="text" id="aboutPhilEyebrow" required placeholder="e.g., My Philosophy" />
-            </div>
-
-            <div class="form-group">
-              <label for="aboutPhilTitle">Section Heading *</label>
-              <input type="text" id="aboutPhilTitle" required placeholder="e.g., Genuine Moments — Authentic Emotions" />
-            </div>
-
-            <div class="form-group">
-              <label for="aboutPhilText1">Paragraph 1 (Core Philosophy) *</label>
-              <textarea id="aboutPhilText1" required class="admin-textarea" rows="3" placeholder="Since then, I have dedicated myself to capturing genuine moments..."></textarea>
-            </div>
-
-            <div class="form-group">
-              <label for="aboutPhilText2">Paragraph 2 (Connection &amp; Experience) *</label>
-              <textarea id="aboutPhilText2" required class="admin-textarea" rows="3" placeholder="One of the things I value most is the connection I build with every client..."></textarea>
-            </div>
-
-            <div class="form-group">
-              <label for="aboutPhilExtendedText">Extended Philosophy Story (Revealed via 'Read Full Story +')</label>
-              <textarea id="aboutPhilExtendedText" class="admin-textarea" rows="3" placeholder="Add extra philosophy story text here for the 'Read Full Story +' expander..."></textarea>
-            </div>
-
-            <div class="form-group">
-              <label for="aboutPhilQuote">Highlighted Quote Box *</label>
-              <textarea id="aboutPhilQuote" required class="admin-textarea" rows="3" placeholder="That’s why I take the time to listen, understand your vision..."></textarea>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 120px; gap: 16px; align-items: end;">
-              <div class="form-group">
-                <label for="aboutPhilImageFile">Philosophy Image (Upload File)</label>
-                <input type="file" id="aboutPhilImageFile" accept="image/*" />
-                <label for="aboutPhilImageUrl" style="margin-top: 8px;">Or Image Path / URL</label>
-                <input type="text" id="aboutPhilImageUrl" placeholder="e.g., /assets/images/excellents/DSC08698-2.webp" />
-              </div>
-
-              <div style="text-align: center;">
-                <p style="font-size: 0.75rem; color: var(--clr-muted); margin-bottom: 4px;">Current</p>
-                <img id="imgPreviewPhil" src="/assets/images/excellents/DSC08698-2.webp" alt="Philosophy Preview" style="width: 100px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid var(--clr-gold);" />
-              </div>
-            </div>
+        <form id="aboutContentForm" class="admin-form" style="display: flex; flex-direction: column; gap: 24px;">
+          <div id="adminAboutSectionsContainer" style="display: flex; flex-direction: column; gap: 24px;">
+            <!-- Dynamic Section Cards Rendered via admin-about.js -->
           </div>
 
           <div id="aboutFormError" class="auth-error-msg" style="display: none;"></div>
 
-          <div>
-            <button type="submit" id="aboutSubmitBtn" class="btn-primary" style="padding: 16px 40px; font-size: 1rem;">Save About Page Content</button>
+          <div style="margin-top: 16px;">
+            <button type="submit" id="aboutSubmitBtn" class="btn-primary" style="padding: 16px 40px; font-size: 1rem;">Save All About Sections</button>
           </div>
         </form>
       </section>
