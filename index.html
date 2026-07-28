@@ -3,11 +3,109 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RamG Production</title>
-  <meta name="description" content="RamG Production — capturing love stories, moments and emotions." />
+  <title>RamG Production — Fine Art Wedding Photography &amp; Cinematic Films | Belgium</title>
+  <meta name="description" content="RamG Production — Belgium-based luxury fine art wedding photographer &amp; videographer capturing emotional ceremonies, couple portraits, and authentic love stories worldwide." />
+  <meta name="keywords" content="RamG Production, Belgium wedding photographer, fine art wedding photography, wedding videographer Belgium, Brussels wedding photographer, destination wedding Europe, luxury wedding film" />
+  <link rel="canonical" href="https://ramgproduction.com/" />
+  
+  <!-- Geo Tags for Local SEO & GEO -->
+  <meta name="geo.region" content="BE" />
+  <meta name="geo.placename" content="Belgium" />
+  <meta name="geo.position" content="50.8503;4.3517" />
+  <meta name="ICBM" content="50.8503, 4.3517" />
+  
+  <!-- Open Graph / Facebook / WhatsApp -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ramgproduction.com/" />
+  <meta property="og:title" content="RamG Production — Fine Art Wedding Photography &amp; Cinematic Films | Belgium" />
+  <meta property="og:description" content="Belgium-based fine art wedding photographer &amp; videographer capturing quiet human moments, emotional ceremonies, and authentic love stories worldwide." />
+  <meta property="og:image" content="https://ramgproduction.com/assets/images/ramg-prods.png" />
+  <meta property="og:site_name" content="RamG Production" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="RamG Production — Fine Art Wedding Photography &amp; Cinematic Films" />
+  <meta name="twitter:description" content="Capturing light, stillness, and human emotion since 2020. Available for worldwide commissions." />
+  <meta name="twitter:image" content="https://ramgproduction.com/assets/images/ramg-prods.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/images/ramg-prods.png" />
+  <link rel="apple-touch-icon" href="assets/images/ramg-prods.png" />
+
   <link rel="stylesheet" href="css/style.css" />
   <link rel="preload" href="assets/images/Ram G.webm" as="video" type="video/webm" fetchpriority="high">
+
+  <!-- Schema.org JSON-LD (SEO, AEO, GEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["PhotographyBusiness", "LocalBusiness"],
+        "@id": "https://ramgproduction.com/#organization",
+        "name": "RamG Production",
+        "url": "https://ramgproduction.com/",
+        "logo": "https://ramgproduction.com/assets/images/ramg-prods.png",
+        "image": "https://ramgproduction.com/assets/images/ramg-prods.png",
+        "description": "Belgium-based luxury fine art wedding photographer and visual production studio dedicated to documenting love stories and cinematic films worldwide.",
+        "telephone": "+32493899387",
+        "email": "Ramgprods@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "BE",
+          "addressRegion": "Belgium"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "50.8503",
+          "longitude": "4.3517"
+        },
+        "sameAs": [
+          "https://www.instagram.com/ramgprods"
+        ],
+        "priceRange": "€€€"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://ramgproduction.com/#website",
+        "url": "https://ramgproduction.com/",
+        "name": "RamG Production",
+        "publisher": {
+          "@id": "https://ramgproduction.com/#organization"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ramgproduction.com/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://ramgproduction.com/"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://ramgproduction.com/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What services does RamG Production offer in Belgium?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "RamG Production specializes in fine art wedding photography, cinematic wedding films, engagement sessions (E-Shoots), and editorial portraiture."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
+
 <body>
   <!-- GLOBAL PRELOADER -->
   <div class="global-preloader" id="globalPreloader">
@@ -61,7 +159,7 @@
   </nav>
 
   <!-- PREMIUM HAMBURGER OVERLAY MENU -->
-  <div class="nav__overlay" id="mobileMenu" aria-hidden="true">
+  <div class="nav__overlay" id="overlayMenu" aria-hidden="true">
     <div class="nav__overlay-bg"></div>
     <div class="nav__overlay-content">
       
@@ -70,7 +168,7 @@
         <a href="index.html" class="nav__logo">
           <img src="assets/images/ramg-prods.png" alt="RamG Production Logo" class="nav__overlay-logo-img" />
         </a>
-        <button class="nav__overlay-close" id="menuCloseBtn" aria-label="Close Menu">
+        <button class="nav__overlay-close" id="overlayCloseBtn" aria-label="Close Menu">
           <span>Close</span>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -207,9 +305,9 @@
   <!-- ═══════════════════════════════════════ -->
   <section class="home-intro">
     <span class="home-intro__eyebrow reveal">Belgium &mdash; Worldwide</span>
-    <h2 class="home-intro__title reveal reveal-delay-1">
+    <h1 class="home-intro__title reveal reveal-delay-1">
       Photography that feels like<br /><em>a held breath.</em>
-    </h2>
+    </h1>
     <div class="home-intro__line reveal reveal-delay-2"></div>
     <p class="home-intro__body reveal reveal-delay-3">
       I document love stories, emotional ceremonies, and quiet human moments — with a

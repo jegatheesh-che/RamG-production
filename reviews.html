@@ -3,10 +3,92 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Client Words &amp; Reviews — RamG Production</title>
-  <meta name="description" content="Read authentic words, love stories, and reviews from clients who trusted RamG Production for fine art photography and cinematic films across Belgium and worldwide." />
+  <title>Client Words &amp; Reviews — RamG Production | Belgium Wedding Testimonials</title>
+  <meta name="description" content="Read authentic words, love stories, and verified client reviews for RamG Production — fine art wedding photography &amp; cinematic films in Belgium and destination locations." />
+  <meta name="keywords" content="RamG Production reviews, Belgium wedding photographer reviews, client testimonials wedding photography" />
+  <link rel="canonical" href="https://ramgproduction.com/reviews" />
+
+  <!-- Geo Tags -->
+  <meta name="geo.region" content="BE" />
+  <meta name="geo.placename" content="Belgium" />
+  <meta name="geo.position" content="50.8503;4.3517" />
+  <meta name="ICBM" content="50.8503, 4.3517" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ramgproduction.com/reviews" />
+  <meta property="og:title" content="Client Words &amp; Reviews — RamG Production" />
+  <meta property="og:description" content="Read authentic client testimonials and love stories from couples who trusted RamG Production for fine art wedding photography." />
+  <meta property="og:image" content="https://ramgproduction.com/assets/images/ramg-prods.png" />
+  <meta property="og:site_name" content="RamG Production" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Client Reviews — RamG Production" />
+  <meta name="twitter:description" content="Authentic words and love stories from our clients." />
+  <meta name="twitter:image" content="https://ramgproduction.com/assets/images/ramg-prods.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/images/ramg-prods.png" />
+  <link rel="apple-touch-icon" href="assets/images/ramg-prods.png" />
+
   <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Schema.org JSON-LD (SEO, AEO, GEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ramgproduction.com/reviews#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://ramgproduction.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Reviews",
+            "item": "https://ramgproduction.com/reviews"
+          }
+        ]
+      },
+      {
+        "@type": "PhotographyBusiness",
+        "@id": "https://ramgproduction.com/#organization",
+        "name": "RamG Production",
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "5.0",
+          "reviewCount": "24",
+          "bestRating": "5",
+          "worstRating": "1"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://ramgproduction.com/reviews#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What do clients say about RamG Production wedding photography?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Clients consistently highlight our natural documentary style, editorial elegance, emotional storytelling, and serene, comfortable presence during events."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
+
 <body>
   <!-- GLOBAL PRELOADER -->
   <div class="global-preloader" id="globalPreloader">
@@ -60,7 +142,7 @@
   </nav>
 
   <!-- PREMIUM HAMBURGER OVERLAY MENU -->
-  <div class="nav__overlay" id="mobileMenu" aria-hidden="true">
+  <div class="nav__overlay" id="overlayMenu" aria-hidden="true">
     <div class="nav__overlay-bg"></div>
     <div class="nav__overlay-content">
       
@@ -69,7 +151,7 @@
         <a href="index.html" class="nav__logo">
           <img src="assets/images/ramg-prods.png" alt="RamG Production Logo" class="nav__overlay-logo-img" />
         </a>
-        <button class="nav__overlay-close" id="menuCloseBtn" aria-label="Close Menu">
+        <button class="nav__overlay-close" id="overlayCloseBtn" aria-label="Close Menu">
           <span>Close</span>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18"></line>

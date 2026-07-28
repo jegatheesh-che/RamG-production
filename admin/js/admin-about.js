@@ -90,7 +90,7 @@ const DEFAULT_ABOUT_CONTENT = {
   heroTitleItalic: "deserves to be remembered.",
   heroDesc: "My journey into photography and filmmaking began in 2018, when I discovered that a single photograph could preserve a feeling forever and a single video could bring those emotions back to life. What started as a passion quickly became my purpose.",
   heroExtendedDesc: "Over the years, I have honed my artistic vision across Belgium, France, and international luxury destinations, blending documentary realism with high-fashion magazine styling to craft heirloom portraits.",
-  heroImageUrl: "assets/images/r_DSC00241_full.webp",
+  heroImageUrl: "/assets/images/r_DSC00241_full.webp",
 
   // Section 2
   philEyebrow: "My Philosophy",
@@ -99,7 +99,7 @@ const DEFAULT_ABOUT_CONTENT = {
   philText2: "One of the things I value most is the connection I build with every client. I believe the best moments happen when people feel comfortable, understood, and truly themselves.",
   philExtendedText: "We work seamlessly with event coordinators, floral artists, and venue directors to ensure a serene, unhurried atmosphere on your wedding day.",
   philQuote: "That’s why I take the time to listen, understand your vision, and create an experience that feels natural, relaxed, and enjoyable from beginning to end.",
-  philImageUrl: "assets/images/excellents/DSC08698-2.webp"
+  philImageUrl: "/assets/images/excellents/DSC08698-2.webp"
 };
 
 // ================================================

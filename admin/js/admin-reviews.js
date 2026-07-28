@@ -90,7 +90,7 @@ const DEFAULT_SEED_REVIEWS = [
     category: "wedding",
     text: "We were both quite nervous in front of the camera, but RamG made us feel completely at ease. The final album was breathtaking — every look, smile, and tear of joy was captured so naturally.",
     badge: "Verified Couple",
-    avatarUrl: "assets/images/excellents/DSC09416.webp",
+    avatarUrl: "/assets/images/excellents/DSC09416.webp",
     order: 1
   },
   {
@@ -100,7 +100,7 @@ const DEFAULT_SEED_REVIEWS = [
     category: "film",
     text: "The wedding highlight film literally brought our entire family to tears! The sound design, colors, and rhythm are equal to a feature film. Truly unmatched artistry!",
     badge: "Verified Film Client",
-    avatarUrl: "assets/images/excellents/DSC07335.webp",
+    avatarUrl: "/assets/images/excellents/DSC07335.webp",
     order: 2
   },
   {
@@ -110,7 +110,7 @@ const DEFAULT_SEED_REVIEWS = [
     category: "portrait",
     text: "RamG has a rare gift for capturing the subtle nuances of emotion. The portraits feel intimate, authentic, and timeless. I could not be happier with the experience.",
     badge: "Verified Client",
-    avatarUrl: "assets/images/excellents/DSC08698-2.webp",
+    avatarUrl: "/assets/images/excellents/DSC08698-2.webp",
     order: 3
   },
   {
@@ -120,7 +120,7 @@ const DEFAULT_SEED_REVIEWS = [
     category: "wedding",
     text: "From our first consultation to the delivery of our gallery, everything was seamless. They captured moments we did not even realize were happening!",
     badge: "Verified Couple",
-    avatarUrl: "assets/images/excellents/slide3.webp",
+    avatarUrl: "/assets/images/excellents/slide3.webp",
     order: 4
   },
   {
@@ -130,7 +130,7 @@ const DEFAULT_SEED_REVIEWS = [
     category: "wedding",
     text: "An unforgettable experience. The photos look like editorial spreads from a high-fashion magazine, yet they feel completely true to who we are.",
     badge: "Verified Couple",
-    avatarUrl: "assets/images/excellents/slide4.webp",
+    avatarUrl: "/assets/images/excellents/slide4.webp",
     order: 5
   },
   {
@@ -140,7 +140,7 @@ const DEFAULT_SEED_REVIEWS = [
     category: "portrait",
     text: "Professional, punctual, and remarkably creative. RamG knows how to use natural light to create magic.",
     badge: "Verified Client",
-    avatarUrl: "assets/images/excellents/slide5.webp",
+    avatarUrl: "/assets/images/excellents/slide5.webp",
     order: 6
   }
 ];

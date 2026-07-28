@@ -3,10 +3,93 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gallery — RamG Production</title>
-  <meta name="description" content="Portfolio gallery — weddings, portraits, destination and fine art photography by RamG Production." />
+  <title>Portfolio Gallery — Fine Art Wedding Photography Archive | RamG Production</title>
+  <meta name="description" content="Explore the official visual archive of RamG Production — curated fine art wedding stories, engagement sessions, luxury portraits, and destination films." />
+  <meta name="keywords" content="RamG Production portfolio, wedding gallery Belgium, luxury wedding photos, fine art portrait gallery" />
+  <link rel="canonical" href="https://ramgproduction.com/gallery" />
+
+  <!-- Geo Tags -->
+  <meta name="geo.region" content="BE" />
+  <meta name="geo.placename" content="Belgium" />
+  <meta name="geo.position" content="50.8503;4.3517" />
+  <meta name="ICBM" content="50.8503, 4.3517" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ramgproduction.com/gallery" />
+  <meta property="og:title" content="Portfolio Gallery — RamG Production Fine Art Photography" />
+  <meta property="og:description" content="Curated fine art wedding archive, intimate couple sessions, and cinematic wedding stories captured across Belgium and worldwide." />
+  <meta property="og:image" content="https://ramgproduction.com/assets/images/ramg-prods.png" />
+  <meta property="og:site_name" content="RamG Production" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Portfolio Gallery — RamG Production" />
+  <meta name="twitter:description" content="Curated visual archive of fine art weddings, editorial portraits, and destination stories." />
+  <meta name="twitter:image" content="https://ramgproduction.com/assets/images/ramg-prods.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/images/ramg-prods.png" />
+  <link rel="apple-touch-icon" href="assets/images/ramg-prods.png" />
+
   <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Schema.org JSON-LD (SEO, AEO, GEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ImageGallery",
+        "@id": "https://ramgproduction.com/gallery#gallery",
+        "url": "https://ramgproduction.com/gallery",
+        "name": "Portfolio Gallery — RamG Production",
+        "description": "Curated visual archive of fine art wedding photography, portraits, and films by RamG Production.",
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://ramgproduction.com/#website",
+          "url": "https://ramgproduction.com/",
+          "name": "RamG Production"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://ramgproduction.com/gallery#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://ramgproduction.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Gallery",
+            "item": "https://ramgproduction.com/gallery"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://ramgproduction.com/gallery#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Can clients filter RamG Production portfolio by category?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, our portfolio gallery allows filtering by Weddings, Films, Fine Art Portraits, Destination Stories, and Editorial Sessions."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
+
 <body>
   <!-- GLOBAL PRELOADER -->
   <div class="global-preloader" id="globalPreloader">
@@ -142,6 +225,7 @@
       <header class="gallery-page__header reveal">
         <p class="section-label">Curated Visual Archive</p>
         <h1 class="section-title"><em>Portfolio</em> Gallery</h1>
+        <h2 style="font-size: 1.1rem; font-weight: 300; opacity: 0.8; margin-top: 8px;">Selected Photography &amp; Film Stories</h2>
         <div class="gold-line"></div>
       </header>
 
