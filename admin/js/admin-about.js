@@ -1,6 +1,6 @@
 // ================================================
 // RAMG PRODUCTION — ULTRA CLEAN ABOUT PAGE STORY BUILDER (MAX 10)
-// Simple, professional 1-box story section manager with Cloudinary & Firestore sync
+// Simple 1-box story section manager with direct file uploads & Cloudinary sync
 // ================================================
 
 import { auth, db } from "/js/firebase-config.js";
@@ -191,12 +191,10 @@ function renderAboutSections() {
         <textarea class="admin-textarea sec-input-desc" rows="6" placeholder="Write your section story here..." required>${sec.desc || ''}</textarea>
       </div>
 
-      <div style="display: grid; grid-template-columns: 1fr 120px; gap: 16px; align-items: end;">
+      <div style="display: grid; grid-template-columns: 1fr 120px; gap: 16px; align-items: center;">
         <div class="form-group">
           <label>Section Image (Upload File)</label>
           <input type="file" class="sec-input-file" accept="image/*" />
-          <label style="margin-top: 8px;">Or Image Path / URL</label>
-          <input type="text" class="sec-input-img-url" value="${sec.imageUrl || ''}" placeholder="e.g., /assets/images/excellents/slide4.webp" />
         </div>
 
         <div style="text-align: center;">
@@ -254,13 +252,15 @@ function attachCardEvents() {
     });
   });
 
-  // Live Image Preview Update on URL input
-  document.querySelectorAll(".sec-input-img-url").forEach(input => {
-    input.addEventListener("input", (e) => {
+  // Instant Image File Preview on File Pick
+  document.querySelectorAll(".sec-input-file").forEach(input => {
+    input.addEventListener("change", (e) => {
       const card = e.target.closest(".about-section-card");
-      if (card) {
+      if (card && e.target.files && e.target.files[0]) {
         const preview = card.querySelector(".sec-img-preview");
-        if (preview) preview.src = e.target.value.trim() || '/assets/images/ramg-prods.png';
+        if (preview) {
+          preview.src = URL.createObjectURL(e.target.files[0]);
+        }
       }
     });
   });
@@ -274,7 +274,6 @@ function saveCurrentInputValues() {
       sectionsList[idx].eyebrow = card.querySelector(".sec-input-eyebrow")?.value.trim() || "";
       sectionsList[idx].title = card.querySelector(".sec-input-title")?.value.trim() || "";
       sectionsList[idx].desc = card.querySelector(".sec-input-desc")?.value.trim() || "";
-      sectionsList[idx].imageUrl = card.querySelector(".sec-input-img-url")?.value.trim() || "";
     }
   });
 }
