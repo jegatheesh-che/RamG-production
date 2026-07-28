@@ -1,6 +1,6 @@
 // ================================================
-// RAMG PRODUCTION — DYNAMIC ABOUT PAGE SECTION BUILDER (MAX 10)
-// Manages dynamic story sections array with Cloudinary upload & Firestore sync
+// RAMG PRODUCTION — ULTRA CLEAN ABOUT PAGE STORY BUILDER (MAX 10)
+// Simple, professional 1-box story section manager with Cloudinary & Firestore sync
 // ================================================
 
 import { auth, db } from "/js/firebase-config.js";
@@ -35,40 +35,28 @@ const sectionCounter = document.getElementById("adminAboutSectionCounter");
 // State: List of About Page Sections (Max 10)
 let sectionsList = [];
 
-// Default Seed Sections
+// Clean Default Initial Sections
 const DEFAULT_SECTIONS = [
   {
     id: "sec_hero",
-    layout: "split_right",
     eyebrow: "About Me",
-    title: "Every story",
-    titleItalic: "deserves to be remembered.",
-    desc: "My journey into photography and filmmaking began in 2018, when I discovered that a single photograph could preserve a feeling forever and a single video could bring those emotions back to life. What started as a passion quickly became my purpose.",
-    extendedDesc: "Over the years, I have honed my artistic vision across Belgium, France, and international luxury destinations, blending documentary realism with high-fashion magazine styling to craft heirloom portraits.",
-    imageUrl: "/assets/images/r_DSC00241_full.webp",
-    quote: ""
+    title: "Every story deserves to be remembered.",
+    desc: "My journey into photography and filmmaking began in 2018, when I discovered that a single photograph could preserve a feeling forever and a single video could bring those emotions back to life. What started as a passion quickly became my purpose.\n\nOver the years, I have honed my artistic vision across Belgium, France, and international luxury destinations, blending documentary realism with high-fashion magazine styling to craft heirloom portraits.",
+    imageUrl: "/assets/images/r_DSC00241_full.webp"
   },
   {
     id: "sec_philosophy",
-    layout: "split_left",
     eyebrow: "My Philosophy",
     title: "Genuine Moments — Authentic Emotions",
-    titleItalic: "",
-    desc: "Since then, I have dedicated myself to capturing genuine moments, authentic emotions, and meaningful stories. For me, photography and videography are not just about creating beautiful images—they are about preserving memories that will be treasured for generations.\n\nOne of the things I value most is the connection I build with every client. I believe the best moments happen when people feel comfortable, understood, and truly themselves.",
-    extendedDesc: "We work seamlessly with event coordinators, floral artists, and venue directors to ensure a serene, unhurried atmosphere on your wedding day.",
-    imageUrl: "/assets/images/excellents/DSC08698-2.webp",
-    quote: "That’s why I take the time to listen, understand your vision, and create an experience that feels natural, relaxed, and enjoyable from beginning to end."
+    desc: "Since then, I have dedicated myself to capturing genuine moments, authentic emotions, and meaningful stories. For me, photography and videography are not just about creating beautiful images—they are about preserving memories that will be treasured for generations.\n\nOne of the things I value most is the connection I build with every client. I believe the best moments happen when people feel comfortable, understood, and truly themselves.\n\nThat's why I take the time to listen, understand your vision, and create an experience that feels natural, relaxed, and enjoyable from beginning to end.",
+    imageUrl: "/assets/images/excellents/DSC08698-2.webp"
   },
   {
     id: "sec_journey",
-    layout: "split_right",
     eyebrow: "My Journey",
     title: "Growth & Dedication",
-    titleItalic: "",
-    desc: "Every wedding, event, portrait, and celebration has taught me something new. Each client has helped shape my creative journey, and every experience has made me a better photographer, filmmaker, and storyteller.\n\nMy goal is simple: to create timeless photographs and cinematic films that allow you to relive your most precious moments exactly as they felt.",
-    extendedDesc: "When you choose to work with me, you’re choosing someone who genuinely cares about your story, values your memories, and is committed to capturing them with creativity, passion, and authenticity.",
-    imageUrl: "/assets/images/excellents/slide4.webp",
-    quote: ""
+    desc: "Every wedding, event, portrait, and celebration has taught me something new. Each client has helped shape my creative journey, and every experience has made me a better photographer, filmmaker, and storyteller.\n\nMy goal is simple: to create timeless photographs and cinematic films that allow you to relive your most precious moments exactly as they felt.\n\nWhen you choose to work with me, you’re choosing someone who genuinely cares about your story, values your memories, and is committed to capturing them with creativity, passion, and authenticity.",
+    imageUrl: "/assets/images/excellents/slide4.webp"
   }
 ];
 
@@ -124,7 +112,7 @@ async function loadAboutContent() {
     if (docSnap.exists() && Array.isArray(docSnap.data().sections) && docSnap.data().sections.length > 0) {
       sectionsList = docSnap.data().sections.slice(0, MAX_SECTIONS);
     } else {
-      console.log("[Admin About] Using default 3 initial sections...");
+      console.log("[Admin About] Using default initial sections...");
       sectionsList = JSON.parse(JSON.stringify(DEFAULT_SECTIONS));
       await setDoc(docRef, { sections: sectionsList, updatedAt: serverTimestamp() });
     }
@@ -175,7 +163,7 @@ function renderAboutSections() {
         <div class="about-section-card__title-group">
           <span class="about-section-card__badge">Section ${idx + 1}</span>
           <h3 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--clr-white);">
-            ${sec.eyebrow || 'New Story Section'} ${sec.title ? '&mdash; ' + sec.title : ''}
+            ${sec.eyebrow || 'Story Section'} ${sec.title ? '&mdash; ' + sec.title : ''}
           </h3>
         </div>
 
@@ -189,44 +177,18 @@ function renderAboutSections() {
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
         <div class="form-group">
           <label>Eyebrow Tagline *</label>
-          <input type="text" class="sec-input-eyebrow" value="${sec.eyebrow || ''}" placeholder="e.g., My Philosophy" required />
+          <input type="text" class="sec-input-eyebrow" value="${sec.eyebrow || ''}" placeholder="e.g., About Me, My Philosophy" required />
         </div>
 
         <div class="form-group">
-          <label>Layout Style *</label>
-          <select class="sec-input-layout" style="background: var(--clr-bg-input); color: var(--clr-white); border: 1px solid var(--clr-border); padding: 12px; border-radius: 8px;">
-            <option value="split_right" ${sec.layout === 'split_right' ? 'selected' : ''}>Split (Text Left, Image Right)</option>
-            <option value="split_left" ${sec.layout === 'split_left' ? 'selected' : ''}>Split (Image Left, Text Right)</option>
-            <option value="quote" ${sec.layout === 'quote' ? 'selected' : ''}>Highlight Quote / Philosophy Banner</option>
-          </select>
-        </div>
-      </div>
-
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-        <div class="form-group">
-          <label>Main Title (Regular) *</label>
-          <input type="text" class="sec-input-title" value="${sec.title || ''}" placeholder="e.g., Genuine Moments" required />
-        </div>
-
-        <div class="form-group">
-          <label>Title Accent / Subtitle (Italic)</label>
-          <input type="text" class="sec-input-title-italic" value="${sec.titleItalic || ''}" placeholder="e.g., Authentic Emotions" />
+          <label>Section Heading *</label>
+          <input type="text" class="sec-input-title" value="${sec.title || ''}" placeholder="e.g., Every story deserves to be remembered." required />
         </div>
       </div>
 
       <div class="form-group">
-        <label>Main Story Text (Always Visible) *</label>
-        <textarea class="admin-textarea sec-input-desc" rows="3" placeholder="Enter main section narrative..." required>${sec.desc || ''}</textarea>
-      </div>
-
-      <div class="form-group">
-        <label>Extended Story Text (Revealed via 'Read Full Story +')</label>
-        <textarea class="admin-textarea sec-input-extended" rows="3" placeholder="Optional extra paragraphs for 'Read Full Story +' toggle...">${sec.extendedDesc || ''}</textarea>
-      </div>
-
-      <div class="form-group">
-        <label>Highlighted Quote Box (Optional)</label>
-        <textarea class="admin-textarea sec-input-quote" rows="2" placeholder="Optional quote block inside section...">${sec.quote || ''}</textarea>
+        <label>Section Story Text (Write your story paragraphs here) *</label>
+        <textarea class="admin-textarea sec-input-desc" rows="6" placeholder="Write your section story here..." required>${sec.desc || ''}</textarea>
       </div>
 
       <div style="display: grid; grid-template-columns: 1fr 120px; gap: 16px; align-items: end;">
@@ -310,12 +272,8 @@ function saveCurrentInputValues() {
   cards.forEach((card, idx) => {
     if (sectionsList[idx]) {
       sectionsList[idx].eyebrow = card.querySelector(".sec-input-eyebrow")?.value.trim() || "";
-      sectionsList[idx].layout = card.querySelector(".sec-input-layout")?.value || "split_right";
       sectionsList[idx].title = card.querySelector(".sec-input-title")?.value.trim() || "";
-      sectionsList[idx].titleItalic = card.querySelector(".sec-input-title-italic")?.value.trim() || "";
       sectionsList[idx].desc = card.querySelector(".sec-input-desc")?.value.trim() || "";
-      sectionsList[idx].extendedDesc = card.querySelector(".sec-input-extended")?.value.trim() || "";
-      sectionsList[idx].quote = card.querySelector(".sec-input-quote")?.value.trim() || "";
       sectionsList[idx].imageUrl = card.querySelector(".sec-input-img-url")?.value.trim() || "";
     }
   });
@@ -332,14 +290,10 @@ if (btnAddSection) {
     const newIdx = sectionsList.length + 1;
     sectionsList.push({
       id: `sec_${Date.now()}`,
-      layout: newIdx % 2 === 0 ? "split_left" : "split_right",
       eyebrow: `Story Section ${newIdx}`,
-      title: "New Story Title",
-      titleItalic: "",
-      desc: "Enter main section narrative here...",
-      extendedDesc: "",
-      imageUrl: "/assets/images/excellents/slide5.webp",
-      quote: ""
+      title: "New Section Heading",
+      desc: "Write your section story here...",
+      imageUrl: "/assets/images/excellents/slide5.webp"
     });
     renderAboutSections();
   });
@@ -401,7 +355,7 @@ if (aboutForm) {
       renderAboutSections();
 
       if (window.showAppPopup) {
-        window.showAppPopup("About Story Saved", `Successfully updated ${sectionsList.length} sections on the About page!`, "edit");
+        window.showAppPopup("About Page Saved", `Successfully saved ${sectionsList.length} story sections!`, "edit");
       }
 
     } catch (err) {
