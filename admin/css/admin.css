@@ -1516,29 +1516,45 @@ body {
 }
 
 /* ================================================
-   DYNAMIC SECTION BUILDER STYLES
+   DYNAMIC SECTION BUILDER STYLES (APP-LIKE & MOBILE RESPONSIVE)
    ================================================ */
+@keyframes sectionFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 .about-section-card {
-  background: var(--clr-bg-card);
-  border: 1px solid var(--clr-border);
-  border-radius: 12px;
+  background: rgba(22, 22, 27, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
   padding: 24px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   position: relative;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  animation: sectionFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
 }
 
 .about-section-card:hover {
-  border-color: rgba(223, 177, 66, 0.4);
+  border-color: rgba(223, 177, 66, 0.35);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
 }
 
 .about-section-card__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px dashed var(--clr-border);
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
   padding-bottom: 16px;
   gap: 16px;
   flex-wrap: wrap;
@@ -1551,15 +1567,16 @@ body {
 }
 
 .about-section-card__badge {
-  background: rgba(223, 177, 66, 0.15);
+  background: linear-gradient(135deg, rgba(223, 177, 66, 0.25) 0%, rgba(223, 177, 66, 0.08) 100%);
   color: var(--clr-gold);
-  padding: 4px 10px;
-  border-radius: 20px;
+  padding: 6px 14px;
+  border-radius: 30px;
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border: 1px solid rgba(223, 177, 66, 0.3);
+  letter-spacing: 0.08em;
+  border: 1px solid rgba(223, 177, 66, 0.35);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .about-section-card__actions {
@@ -1569,34 +1586,40 @@ body {
 }
 
 .btn-icon-action {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--clr-white);
-  width: 34px;
-  height: 34px;
-  border-radius: 6px;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
+  font-size: 1rem;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-icon-action:hover:not(:disabled) {
   background: var(--clr-gold);
   color: #000;
   border-color: var(--clr-gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(223, 177, 66, 0.3);
+}
+
+.btn-icon-action:active:not(:disabled) {
+  transform: scale(0.94);
 }
 
 .btn-icon-action:disabled {
-  opacity: 0.3;
+  opacity: 0.25;
   cursor: not-allowed;
 }
 
 .btn-icon-delete {
-  background: rgba(239, 68, 68, 0.1);
-  border-color: rgba(239, 68, 68, 0.2);
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.25);
   color: #ef4444;
 }
 
@@ -1604,6 +1627,95 @@ body {
   background: #ef4444;
   color: #fff;
   border-color: #ef4444;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
 }
+
+/* Custom Upload Dropzone UI */
+.custom-upload-zone {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px dashed rgba(223, 177, 66, 0.3);
+  border-radius: 14px;
+  padding: 16px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.custom-upload-zone:hover {
+  border-color: var(--clr-gold);
+  background: rgba(223, 177, 66, 0.04);
+}
+
+.custom-upload-btn {
+  background: linear-gradient(135deg, rgba(223, 177, 66, 0.2) 0%, rgba(223, 177, 66, 0.05) 100%);
+  border: 1px solid rgba(223, 177, 66, 0.4);
+  color: var(--clr-gold);
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.custom-upload-btn:hover {
+  background: var(--clr-gold);
+  color: #000;
+}
+
+.sec-img-preview {
+  width: 100px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid rgba(223, 177, 66, 0.4);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.sec-img-preview:hover {
+  transform: scale(1.05);
+}
+
+/* Mobile Responsive Overrides */
+@media (max-width: 768px) {
+  .about-section-card {
+    padding: 18px;
+    border-radius: 16px;
+    gap: 16px;
+  }
+
+  .about-section-card__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .about-section-card__actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .custom-upload-zone {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .custom-upload-btn {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .sec-img-preview {
+    width: 100%;
+    height: 160px;
+  }
+}
+
 
 

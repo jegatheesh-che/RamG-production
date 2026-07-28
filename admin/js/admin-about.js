@@ -1,6 +1,6 @@
 // ================================================
-// RAMG PRODUCTION — ULTRA CLEAN ABOUT PAGE STORY BUILDER (MAX 10)
-// Simple 1-box story section manager with direct file uploads & Cloudinary sync
+// RAMG PRODUCTION — ULTRA CLEAN APP-LIKE ABOUT STORY BUILDER
+// Native app aesthetic, smooth glassmorphism, responsive 1-box story builder
 // ================================================
 
 import { auth, db } from "/js/firebase-config.js";
@@ -142,7 +142,7 @@ function updateCounter() {
 }
 
 // ================================================
-// RENDER DYNAMIC SECTION CARDS IN ADMIN PANEL
+// RENDER APP-LIKE SECTION CARDS IN ADMIN PANEL
 // ================================================
 function renderAboutSections() {
   if (!sectionsContainer) return;
@@ -161,9 +161,9 @@ function renderAboutSections() {
     card.innerHTML = `
       <div class="about-section-card__header">
         <div class="about-section-card__title-group">
-          <span class="about-section-card__badge">Section ${idx + 1}</span>
-          <h3 style="font-family: var(--font-serif); font-size: 1.25rem; color: var(--clr-white);">
-            ${sec.eyebrow || 'Story Section'} ${sec.title ? '&mdash; ' + sec.title : ''}
+          <span class="about-section-card__badge">Section 0${idx + 1}</span>
+          <h3 style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--clr-white); font-weight: 400;">
+            ${escapeHtml(sec.eyebrow || 'Story Section')} ${sec.title ? '&mdash; ' + escapeHtml(sec.title) : ''}
           </h3>
         </div>
 
@@ -174,32 +174,41 @@ function renderAboutSections() {
         </div>
       </div>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
         <div class="form-group">
-          <label>Eyebrow Tagline *</label>
-          <input type="text" class="sec-input-eyebrow" value="${sec.eyebrow || ''}" placeholder="e.g., About Me, My Philosophy" required />
+          <label style="font-size: 0.85rem; font-weight: 600; color: var(--clr-gold);">Eyebrow Tagline *</label>
+          <input type="text" class="sec-input-eyebrow" value="${escapeHtml(sec.eyebrow || '')}" placeholder="e.g., About Me, My Philosophy" required />
         </div>
 
         <div class="form-group">
-          <label>Section Heading *</label>
-          <input type="text" class="sec-input-title" value="${sec.title || ''}" placeholder="e.g., Every story deserves to be remembered." required />
+          <label style="font-size: 0.85rem; font-weight: 600; color: var(--clr-gold);">Section Heading *</label>
+          <input type="text" class="sec-input-title" value="${escapeHtml(sec.title || '')}" placeholder="e.g., Every story deserves to be remembered." required />
         </div>
       </div>
 
       <div class="form-group">
-        <label>Section Story Text (Write your story paragraphs here) *</label>
-        <textarea class="admin-textarea sec-input-desc" rows="6" placeholder="Write your section story here..." required>${sec.desc || ''}</textarea>
+        <label style="font-size: 0.85rem; font-weight: 600; color: var(--clr-gold);">Section Story Text (Write your narrative here) *</label>
+        <textarea class="admin-textarea sec-input-desc" rows="5" placeholder="Write your story section narrative..." required>${escapeHtml(sec.desc || '')}</textarea>
       </div>
 
-      <div style="display: grid; grid-template-columns: 1fr 120px; gap: 16px; align-items: center;">
-        <div class="form-group">
-          <label>Section Image (Upload File)</label>
-          <input type="file" class="sec-input-file" accept="image/*" />
+      <div class="custom-upload-zone">
+        <div style="flex: 1;">
+          <label style="font-size: 0.85rem; font-weight: 600; color: var(--clr-gold); margin-bottom: 8px; display: block;">Section Photo</label>
+          <label class="custom-upload-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            <span>Upload Photo File</span>
+            <input type="file" class="sec-input-file" accept="image/*" style="display: none;" />
+          </label>
+          <span class="file-name-indicator" style="font-size: 0.8rem; color: var(--clr-muted); margin-left: 12px;">No new file chosen</span>
         </div>
 
         <div style="text-align: center;">
-          <p style="font-size: 0.75rem; color: var(--clr-muted); margin-bottom: 4px;">Preview</p>
-          <img class="sec-img-preview" src="${sec.imageUrl || '/assets/images/ramg-prods.png'}" alt="Preview" style="width: 100px; height: 120px; object-fit: cover; border-radius: 8px; border: 1px solid var(--clr-gold);" />
+          <p style="font-size: 0.75rem; color: var(--clr-muted); margin-bottom: 4px;">Photo Preview</p>
+          <img class="sec-img-preview" src="${sec.imageUrl || '/assets/images/ramg-prods.png'}" alt="Preview" />
         </div>
       </div>
     `;
@@ -208,6 +217,17 @@ function renderAboutSections() {
   });
 
   attachCardEvents();
+}
+
+// Escape HTML special chars safely
+function escapeHtml(str) {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 // Event Listeners for Dynamic Cards
@@ -252,14 +272,21 @@ function attachCardEvents() {
     });
   });
 
-  // Instant Image File Preview on File Pick
+  // Instant Image File Preview & File Name Label Update
   document.querySelectorAll(".sec-input-file").forEach(input => {
     input.addEventListener("change", (e) => {
       const card = e.target.closest(".about-section-card");
       if (card && e.target.files && e.target.files[0]) {
+        const file = e.target.files[0];
         const preview = card.querySelector(".sec-img-preview");
+        const fileNameIndicator = card.querySelector(".file-name-indicator");
+
         if (preview) {
-          preview.src = URL.createObjectURL(e.target.files[0]);
+          preview.src = URL.createObjectURL(file);
+        }
+        if (fileNameIndicator) {
+          fileNameIndicator.textContent = file.name;
+          fileNameIndicator.style.color = "var(--clr-gold)";
         }
       }
     });
@@ -289,9 +316,9 @@ if (btnAddSection) {
     const newIdx = sectionsList.length + 1;
     sectionsList.push({
       id: `sec_${Date.now()}`,
-      eyebrow: `Story Section ${newIdx}`,
+      eyebrow: `Story Section 0${newIdx}`,
       title: "New Section Heading",
-      desc: "Write your section story here...",
+      desc: "Write your section story narrative here...",
       imageUrl: "/assets/images/excellents/slide5.webp"
     });
     renderAboutSections();
