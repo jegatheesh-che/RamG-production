@@ -125,22 +125,21 @@ if (overlayMenu) {
   // Only skip on small touch-only mobile devices (<768px with coarse pointer)
   if (window.innerWidth <= 768 && window.matchMedia('(pointer: coarse)').matches) return;
 
-  // Golden arrow SVG — tip at top-left origin (0,0)
-  const ARROW_SVG = `<svg class="custom-cursor__arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 34" fill="none">
+  // Golden arrowhead SVG — clean triangle, no tail, no glow, tip at top-left (0,0)
+  const ARROW_SVG = `<svg class="custom-cursor__arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" fill="none">
     <defs>
       <linearGradient id="arrowGold" x1="0" y1="0" x2="1" y2="1">
         <stop offset="0%" stop-color="#f7e28b"/>
-        <stop offset="50%" stop-color="#dfb142"/>
+        <stop offset="55%" stop-color="#dfb142"/>
         <stop offset="100%" stop-color="#b88a28"/>
       </linearGradient>
     </defs>
-    <!-- Main arrow body -->
-    <path d="M2 2 L2 26 L10 18 L16 32 L20 30 L14 16 L24 16 Z"
-          fill="url(#arrowGold)"
-          stroke="#7a5a10"
-          stroke-width="1"
-          stroke-linejoin="round"
-          stroke-linecap="round"/>
+    <!-- Clean triangle arrowhead — tip at top-left corner -->
+    <polygon points="1,1 21,1 1,21"
+             fill="url(#arrowGold)"
+             stroke="#7a5a10"
+             stroke-width="1"
+             stroke-linejoin="round"/>
   </svg>`;
 
   function setupCursor() {
