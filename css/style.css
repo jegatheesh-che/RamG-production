@@ -1633,10 +1633,6 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
     scroll-snap-align: start;
   }
 }
-    width: 18px;
-    height: 18px;
-  }
-}
 
 /* About teaser */
 .home-about {
