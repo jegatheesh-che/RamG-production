@@ -800,51 +800,68 @@ if (document.readyState === 'loading') {
 // CINEMA SHOWCASE (YOUTUBE INTERACTIVE PLAYER)
 // ===============================================
 (function initCinemaShowcase() {
-  const cinemaWrappers = document.querySelectorAll('.home-cinema__wrapper');
-  if (!cinemaWrappers.length) return;
+  const stage = document.getElementById('cinemaStage');
+  if (!stage) return;
 
-  cinemaWrappers.forEach(cinemaWrapper => {
-    const playBtn = cinemaWrapper.querySelector('.home-cinema__play-btn');
-    const cover = cinemaWrapper.querySelector('.home-cinema__cover');
-    const clickCapture = cinemaWrapper.querySelector('.home-cinema__click-capture');
-    const youtubeId = cinemaWrapper.getAttribute('data-youtube-id') || '61h_QIuvs50';
-    const playerDiv = cinemaWrapper.querySelector('.home-cinema__player');
+  const playBtn = stage.querySelector('.home-cinema__play-btn');
+  const cover = document.getElementById('cinemaCover');
+  const mainThumb = document.getElementById('cinemaMainThumb');
+  const mainTitle = document.getElementById('cinemaMainTitle');
+  const playerDiv = document.getElementById('cinemaPlayerDiv');
+  const cards = document.querySelectorAll('.home-cinema__card');
 
-    function startInstantPlayback() {
-      if (cover) {
-        cover.classList.add('is-hidden');
-        setTimeout(() => { cover.style.display = 'none'; }, 450);
-      }
-      if (clickCapture) {
-        clickCapture.style.display = 'none';
-      }
-      cinemaWrapper.classList.add('is-initialized', 'is-playing');
+  let currentYoutubeId = stage.getAttribute('data-youtube-id') || '61h_QIuvs50';
 
-      if (playerDiv && !playerDiv.querySelector('iframe')) {
-        playerDiv.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=0&enablejsapi=1&rel=0&playsinline=1&controls=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="position: absolute; top:0; left:0; width:100%; height:100%; border:0;"></iframe>`;
-      }
-      if (playBtn) playBtn.style.display = 'none';
+  function playCurrentVideo() {
+    if (cover) {
+      cover.classList.add('is-hidden');
+      setTimeout(() => { cover.style.display = 'none'; }, 450);
     }
+    stage.classList.add('is-initialized', 'is-playing');
 
-    if (playBtn) playBtn.addEventListener('click', (e) => { e.stopPropagation(); startInstantPlayback(); });
-    if (cover) cover.addEventListener('click', startInstantPlayback);
-    if (clickCapture) clickCapture.addEventListener('click', startInstantPlayback);
-  });
-
-  // Desktop Navigation Buttons
-  const track = document.querySelector('.home-cinema__track');
-  const prevBtn = document.querySelector('.home-cinema__nav--prev');
-  const nextBtn = document.querySelector('.home-cinema__nav--next');
-
-  if (track && prevBtn && nextBtn) {
-    prevBtn.addEventListener('click', () => {
-      const itemWidth = track.querySelector('.home-cinema__wrapper').offsetWidth + 24; // width + gap
-      track.scrollBy({ left: -itemWidth, behavior: 'smooth' });
-    });
-
-    nextBtn.addEventListener('click', () => {
-      const itemWidth = track.querySelector('.home-cinema__wrapper').offsetWidth + 24;
-      track.scrollBy({ left: itemWidth, behavior: 'smooth' });
-    });
+    if (playerDiv) {
+      playerDiv.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${currentYoutubeId}?autoplay=1&mute=0&enablejsapi=1&rel=0&playsinline=1&controls=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="position: absolute; top:0; left:0; width:100%; height:100%; border:0;"></iframe>`;
+    }
+    if (playBtn) playBtn.style.display = 'none';
   }
+
+  if (playBtn) playBtn.addEventListener('click', (e) => { e.stopPropagation(); playCurrentVideo(); });
+  if (cover) cover.addEventListener('click', playCurrentVideo);
+
+  // Playlist Card Selection
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      const yid = card.getAttribute('data-youtube-id');
+      const title = card.getAttribute('data-title');
+      const thumb = card.getAttribute('data-thumb');
+
+      // Update active state on cards
+      cards.forEach(c => {
+        c.classList.remove('is-active');
+        const badge = c.querySelector('.home-cinema__card-badge');
+        if (badge) badge.textContent = 'SELECT FILM';
+      });
+
+      card.classList.add('is-active');
+      const currentBadge = card.querySelector('.home-cinema__card-badge');
+      if (currentBadge) currentBadge.textContent = 'NOW PLAYING';
+
+      // Update stage video
+      currentYoutubeId = yid;
+      if (mainTitle) mainTitle.textContent = title;
+      if (mainThumb) mainThumb.src = thumb;
+
+      // Reset cover view & player iframe
+      if (cover) {
+        cover.style.display = 'block';
+        cover.classList.remove('is-hidden');
+      }
+      if (playBtn) playBtn.style.display = 'flex';
+      if (playerDiv) playerDiv.innerHTML = '';
+      stage.classList.remove('is-initialized', 'is-playing');
+
+      // Auto play on card click for seamless UX
+      playCurrentVideo();
+    });
+  });
 })();

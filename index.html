@@ -355,77 +355,75 @@
       <p class="section-label">Stories in Motion</p>
       <h2>Cinema Showcase</h2>
     </div>
-    <div class="home-cinema__carousel">
-      <button class="home-cinema__nav home-cinema__nav--prev" aria-label="Previous Video">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="15 18 9 12 15 6"></polyline>
+
+    <!-- Main Active Video Stage -->
+    <div class="home-cinema__stage" id="cinemaStage" data-youtube-id="61h_QIuvs50">
+      <div class="home-cinema__click-capture"></div>
+      
+      <div class="home-cinema__cover" id="cinemaCover">
+        <img id="cinemaMainThumb" src="https://img.youtube.com/vi/61h_QIuvs50/maxresdefault.jpg" alt="Cinema Showcase Cover" class="home-cinema__thumb" />
+        <div class="home-cinema__overlay"></div>
+        <div class="home-cinema__meta">
+          <span class="home-cinema__tag">FEATURED FILM</span>
+          <h3 id="cinemaMainTitle" class="home-cinema__title">Cinematic Wedding Story — Antwerp</h3>
+        </div>
+      </div>
+      
+      <!-- Custom Circular Play Button -->
+      <button class="home-cinema__play-btn" aria-label="Play Film">
+        <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor">
+          <polygon points="6 3 20 12 6 21 6 3"></polygon>
         </svg>
       </button>
 
-      <div class="home-cinema__track">
-      <!-- Video 1 -->
-      <div class="home-cinema__wrapper" data-youtube-id="61h_QIuvs50">
-        <div class="home-cinema__click-capture"></div>
-        <div class="home-cinema__cover">
-          <img src="https://img.youtube.com/vi/61h_QIuvs50/maxresdefault.jpg" alt="Cinema Showcase Cover 1" class="home-cinema__thumb" />
-          <div class="home-cinema__overlay"></div>
-        </div>
-        <button class="home-cinema__play-btn" aria-label="Play Film">
-          <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor">
-            <polygon points="6 3 20 12 6 21 6 3"></polygon>
-          </svg>
-          <svg class="icon-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
-            <line x1="18" y1="4" x2="18" y2="20"></line>
-            <line x1="6" y1="4" x2="6" y2="20"></line>
-          </svg>
-        </button>
-        <div class="home-cinema__player"></div>
-      </div>
-
-      <!-- Video 2 -->
-      <div class="home-cinema__wrapper" data-youtube-id="61h_QIuvs50">
-        <div class="home-cinema__click-capture"></div>
-        <div class="home-cinema__cover">
-          <img src="https://img.youtube.com/vi/61h_QIuvs50/maxresdefault.jpg" alt="Cinema Showcase Cover 2" class="home-cinema__thumb" />
-          <div class="home-cinema__overlay"></div>
-        </div>
-        <button class="home-cinema__play-btn" aria-label="Play Film">
-          <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor">
-            <polygon points="6 3 20 12 6 21 6 3"></polygon>
-          </svg>
-          <svg class="icon-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
-            <line x1="18" y1="4" x2="18" y2="20"></line>
-            <line x1="6" y1="4" x2="6" y2="20"></line>
-          </svg>
-        </button>
-        <div class="home-cinema__player"></div>
-      </div>
-
-      <!-- Video 3 -->
-      <div class="home-cinema__wrapper" data-youtube-id="61h_QIuvs50">
-        <div class="home-cinema__click-capture"></div>
-        <div class="home-cinema__cover">
-          <img src="https://img.youtube.com/vi/61h_QIuvs50/maxresdefault.jpg" alt="Cinema Showcase Cover 3" class="home-cinema__thumb" />
-          <div class="home-cinema__overlay"></div>
-        </div>
-        <button class="home-cinema__play-btn" aria-label="Play Film">
-          <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor">
-            <polygon points="6 3 20 12 6 21 6 3"></polygon>
-          </svg>
-          <svg class="icon-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
-            <line x1="18" y1="4" x2="18" y2="20"></line>
-            <line x1="6" y1="4" x2="6" y2="20"></line>
-          </svg>
-        </button>
-        <div class="home-cinema__player"></div>
-      </div>
+      <!-- YouTube Iframe Container -->
+      <div class="home-cinema__player" id="cinemaPlayerDiv"></div>
     </div>
 
-      <button class="home-cinema__nav home-cinema__nav--next" aria-label="Next Video">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-      </button>
+    <!-- Interactive Video Playlist Cards -->
+    <div class="home-cinema__playlist-wrap">
+      <div class="home-cinema__playlist">
+        
+        <!-- Video 1 -->
+        <button class="home-cinema__card is-active" data-youtube-id="61h_QIuvs50" data-title="Cinematic Wedding Story — Antwerp" data-thumb="https://img.youtube.com/vi/61h_QIuvs50/maxresdefault.jpg">
+          <div class="home-cinema__card-media">
+            <img src="https://img.youtube.com/vi/61h_QIuvs50/hqdefault.jpg" alt="Video 1" class="home-cinema__card-img" />
+            <span class="home-cinema__card-badge">NOW PLAYING</span>
+          </div>
+          <div class="home-cinema__card-body">
+            <span class="home-cinema__card-num">FILM 01</span>
+            <h4 class="home-cinema__card-heading">Cinematic Wedding Story</h4>
+            <p class="home-cinema__card-loc">Antwerp, Belgium</p>
+          </div>
+        </button>
+
+        <!-- Video 2 -->
+        <button class="home-cinema__card" data-youtube-id="61h_QIuvs50" data-title="Intimate E-Shoot Session — Bruges" data-thumb="https://img.youtube.com/vi/61h_QIuvs50/maxresdefault.jpg">
+          <div class="home-cinema__card-media">
+            <img src="https://img.youtube.com/vi/61h_QIuvs50/hqdefault.jpg" alt="Video 2" class="home-cinema__card-img" />
+            <span class="home-cinema__card-badge">SELECT FILM</span>
+          </div>
+          <div class="home-cinema__card-body">
+            <span class="home-cinema__card-num">FILM 02</span>
+            <h4 class="home-cinema__card-heading">Intimate E-Shoot Session</h4>
+            <p class="home-cinema__card-loc">Bruges, Belgium</p>
+          </div>
+        </button>
+
+        <!-- Video 3 -->
+        <button class="home-cinema__card" data-youtube-id="61h_QIuvs50" data-title="Fine Art Ceremony — Brussels" data-thumb="https://img.youtube.com/vi/61h_QIuvs50/maxresdefault.jpg">
+          <div class="home-cinema__card-media">
+            <img src="https://img.youtube.com/vi/61h_QIuvs50/hqdefault.jpg" alt="Video 3" class="home-cinema__card-img" />
+            <span class="home-cinema__card-badge">SELECT FILM</span>
+          </div>
+          <div class="home-cinema__card-body">
+            <span class="home-cinema__card-num">FILM 03</span>
+            <h4 class="home-cinema__card-heading">Fine Art Ceremony</h4>
+            <p class="home-cinema__card-loc">Brussels, Belgium</p>
+          </div>
+        </button>
+
+      </div>
     </div>
   </section>
 
