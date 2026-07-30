@@ -124,8 +124,8 @@ if (overlayMenu) {
 (function initCustomCursor() {
   // Only skip on small touch-only mobile devices (<768px with coarse pointer)
   if (window.innerWidth <= 768 && window.matchMedia('(pointer: coarse)').matches) return;
-  // Proper classic pointer cursor — sharp tip at (0,0), tapered body with notch
-  const ARROW_SVG = `<svg class="custom-cursor__arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 24" fill="none">
+  // Classic pointer cursor — SAME shape, tail removed
+  const ARROW_SVG = `<svg class="custom-cursor__arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 22" fill="none">
     <defs>
       <linearGradient id="arrowGold" x1="0" y1="0" x2="0.6" y2="1">
         <stop offset="0%"   stop-color="#f7e28b"/>
@@ -133,11 +133,8 @@ if (overlayMenu) {
         <stop offset="100%" stop-color="#a87820"/>
       </linearGradient>
     </defs>
-    <!--
-      Classic pointer shape:
-      tip at (1,1) → left edge down → bottom-left notch → bottom tail → right notch → right edge up → close
-    -->
-    <path d="M1 1 L1 19 L5 15 L8.5 23 L11 22 L7.5 14 L14 14 Z"
+    <!-- Classic pointer, no tail: tip → left edge → inner notch → right edge → back to tip -->
+    <path d="M1 1 L1 20 L6 14 L15 14 Z"
           fill="url(#arrowGold)"
           stroke="#5c3d0a"
           stroke-width="1.2"
