@@ -119,61 +119,61 @@ if (overlayMenu) {
 }
 
 // -----------------------------------------------
-// CUSTOM DUAL-ELEMENT CURSOR (desktop & fine pointer)
+// GOLDEN ARROW CURSOR (desktop & fine pointer)
 // -----------------------------------------------
 (function initCustomCursor() {
   // Only skip on small touch-only mobile devices (<768px with coarse pointer)
   if (window.innerWidth <= 768 && window.matchMedia('(pointer: coarse)').matches) return;
 
+  // Golden arrow SVG — tip at top-left origin (0,0)
+  const ARROW_SVG = `<svg class="custom-cursor__arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 34" fill="none">
+    <defs>
+      <linearGradient id="arrowGold" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#f7e28b"/>
+        <stop offset="50%" stop-color="#dfb142"/>
+        <stop offset="100%" stop-color="#b88a28"/>
+      </linearGradient>
+    </defs>
+    <!-- Main arrow body -->
+    <path d="M2 2 L2 26 L10 18 L16 32 L20 30 L14 16 L24 16 Z"
+          fill="url(#arrowGold)"
+          stroke="#7a5a10"
+          stroke-width="1"
+          stroke-linejoin="round"
+          stroke-linecap="round"/>
+  </svg>`;
+
   function setupCursor() {
+    // Hide native cursor globally
+    document.documentElement.style.cursor = 'none';
+
     let cursorContainer = document.querySelector('.custom-cursor');
     if (!cursorContainer) {
       cursorContainer = document.createElement('div');
       cursorContainer.className = 'custom-cursor is-hidden';
       cursorContainer.setAttribute('aria-hidden', 'true');
-      cursorContainer.innerHTML = `
-        <div class="custom-cursor__dot"></div>
-        <div class="custom-cursor__ring"></div>
-      `;
       document.body.appendChild(cursorContainer);
     }
+    // Always ensure arrow SVG is inside
+    if (!cursorContainer.querySelector('.custom-cursor__arrow')) {
+      cursorContainer.innerHTML = ARROW_SVG;
+    }
 
-    const dot = cursorContainer.querySelector('.custom-cursor__dot');
-    const ring = cursorContainer.querySelector('.custom-cursor__ring');
-    if (!dot || !ring) return;
-
-    let mouseX = -100, mouseY = -100;
-    let ringX = -100, ringY = -100;
+    let mouseX = -200, mouseY = -200;
     let isInitialized = false;
 
-    // Mouse movement listener
+    // Track mouse — move entire container so tip (0,0 of SVG) is the hotspot
     window.addEventListener('mousemove', e => {
       mouseX = e.clientX;
       mouseY = e.clientY;
 
       if (!isInitialized) {
-        ringX = mouseX;
-        ringY = mouseY;
         isInitialized = true;
         cursorContainer.classList.remove('is-hidden');
       }
 
-      // Update dot instantly at exact pointer location
-      dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+      cursorContainer.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
     }, { passive: true });
-
-    // Smooth lerp loop for trailing ring
-    const lerp = (start, end, factor) => start + (end - start) * factor;
-
-    function renderCursor() {
-      if (isInitialized) {
-        ringX = lerp(ringX, mouseX, 0.2);
-        ringY = lerp(ringY, mouseY, 0.2);
-        ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
-      }
-      requestAnimationFrame(renderCursor);
-    }
-    requestAnimationFrame(renderCursor);
 
     // Hover effect delegation
     const interactiveTargets = 'a, button, input, select, textarea, [role="button"], .gallery-item, .hero__arrow, .eshoot-item, .story-item, .home-featured__item, .form-submit, .nav__brand-logo, .hero__slide-overlay';
@@ -181,6 +181,8 @@ if (overlayMenu) {
     document.addEventListener('mouseover', e => {
       if (e.target && e.target.closest && e.target.closest(interactiveTargets)) {
         cursorContainer.classList.add('is-hovered');
+        // Also hide native cursor on interactive targets
+        e.target.style.cursor = 'none';
       }
     });
 
