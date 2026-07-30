@@ -124,22 +124,25 @@ if (overlayMenu) {
 (function initCustomCursor() {
   // Only skip on small touch-only mobile devices (<768px with coarse pointer)
   if (window.innerWidth <= 768 && window.matchMedia('(pointer: coarse)').matches) return;
-
-  // Golden arrowhead SVG — clean triangle, no tail, no glow, tip at top-left (0,0)
-  const ARROW_SVG = `<svg class="custom-cursor__arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22" fill="none">
+  // Proper classic pointer cursor — sharp tip at (0,0), tapered body with notch
+  const ARROW_SVG = `<svg class="custom-cursor__arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 24" fill="none">
     <defs>
-      <linearGradient id="arrowGold" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#f7e28b"/>
-        <stop offset="55%" stop-color="#dfb142"/>
-        <stop offset="100%" stop-color="#b88a28"/>
+      <linearGradient id="arrowGold" x1="0" y1="0" x2="0.6" y2="1">
+        <stop offset="0%"   stop-color="#f7e28b"/>
+        <stop offset="45%"  stop-color="#dfb142"/>
+        <stop offset="100%" stop-color="#a87820"/>
       </linearGradient>
     </defs>
-    <!-- Clean triangle arrowhead — tip at top-left corner -->
-    <polygon points="1,1 21,1 1,21"
-             fill="url(#arrowGold)"
-             stroke="#7a5a10"
-             stroke-width="1"
-             stroke-linejoin="round"/>
+    <!--
+      Classic pointer shape:
+      tip at (1,1) → left edge down → bottom-left notch → bottom tail → right notch → right edge up → close
+    -->
+    <path d="M1 1 L1 19 L5 15 L8.5 23 L11 22 L7.5 14 L14 14 Z"
+          fill="url(#arrowGold)"
+          stroke="#5c3d0a"
+          stroke-width="1.2"
+          stroke-linejoin="round"
+          stroke-linecap="round"/>
   </svg>`;
 
   function setupCursor() {
