@@ -830,4 +830,21 @@ if (document.readyState === 'loading') {
     if (cover) cover.addEventListener('click', startInstantPlayback);
     if (clickCapture) clickCapture.addEventListener('click', startInstantPlayback);
   });
+
+  // Desktop Navigation Buttons
+  const track = document.querySelector('.home-cinema__track');
+  const prevBtn = document.querySelector('.home-cinema__nav--prev');
+  const nextBtn = document.querySelector('.home-cinema__nav--next');
+
+  if (track && prevBtn && nextBtn) {
+    prevBtn.addEventListener('click', () => {
+      const itemWidth = track.querySelector('.home-cinema__wrapper').offsetWidth + 24; // width + gap
+      track.scrollBy({ left: -itemWidth, behavior: 'smooth' });
+    });
+
+    nextBtn.addEventListener('click', () => {
+      const itemWidth = track.querySelector('.home-cinema__wrapper').offsetWidth + 24;
+      track.scrollBy({ left: itemWidth, behavior: 'smooth' });
+    });
+  }
 })();

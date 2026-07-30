@@ -355,8 +355,14 @@
       <p class="section-label">Stories in Motion</p>
       <h2>Cinema Showcase</h2>
     </div>
-    
-    <div class="home-cinema__track">
+    <div class="home-cinema__carousel">
+      <button class="home-cinema__nav home-cinema__nav--prev" aria-label="Previous Video">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+
+      <div class="home-cinema__track">
       <!-- Video 1 -->
       <div class="home-cinema__wrapper" data-youtube-id="61h_QIuvs50">
         <div class="home-cinema__click-capture"></div>
@@ -413,6 +419,13 @@
         </button>
         <div class="home-cinema__player"></div>
       </div>
+    </div>
+
+      <button class="home-cinema__nav home-cinema__nav--next" aria-label="Next Video">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
     </div>
   </section>
 
