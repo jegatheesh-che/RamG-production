@@ -1678,7 +1678,7 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   .hero__arrow--prev { left: 14px; }
   .hero__arrow--next { right: 14px; }
   .hero__dots { bottom: 18px; gap: 8px; }
-  .hero__slide-overlay { padding: 16px 12px; bottom: 60px; }
+  .hero__slide-overlay { padding: 16px 12px; bottom: 30px; }
   .hero__slide-brand { 
     font-size: clamp(11px, 3.5vw, 15px) !important; 
     text-align: center !important; 
