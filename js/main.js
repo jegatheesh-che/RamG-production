@@ -800,32 +800,34 @@ if (document.readyState === 'loading') {
 // CINEMA SHOWCASE (YOUTUBE INTERACTIVE PLAYER)
 // ===============================================
 (function initCinemaShowcase() {
-  const cinemaWrapper = document.querySelector('.home-cinema__wrapper');
-  if (!cinemaWrapper) return;
+  const cinemaWrappers = document.querySelectorAll('.home-cinema__wrapper');
+  if (!cinemaWrappers.length) return;
 
-  const playBtn = cinemaWrapper.querySelector('.home-cinema__play-btn');
-  const cover = cinemaWrapper.querySelector('.home-cinema__cover');
-  const clickCapture = cinemaWrapper.querySelector('.home-cinema__click-capture');
-  const youtubeId = cinemaWrapper.getAttribute('data-youtube-id') || '61h_QIuvs50';
-  const playerDiv = document.getElementById('youtubePlayerHome');
+  cinemaWrappers.forEach(cinemaWrapper => {
+    const playBtn = cinemaWrapper.querySelector('.home-cinema__play-btn');
+    const cover = cinemaWrapper.querySelector('.home-cinema__cover');
+    const clickCapture = cinemaWrapper.querySelector('.home-cinema__click-capture');
+    const youtubeId = cinemaWrapper.getAttribute('data-youtube-id') || '61h_QIuvs50';
+    const playerDiv = cinemaWrapper.querySelector('.home-cinema__player');
 
-  function startInstantPlayback() {
-    if (cover) {
-      cover.classList.add('is-hidden');
-      setTimeout(() => { cover.style.display = 'none'; }, 450);
+    function startInstantPlayback() {
+      if (cover) {
+        cover.classList.add('is-hidden');
+        setTimeout(() => { cover.style.display = 'none'; }, 450);
+      }
+      if (clickCapture) {
+        clickCapture.style.display = 'none';
+      }
+      cinemaWrapper.classList.add('is-initialized', 'is-playing');
+
+      if (playerDiv && !playerDiv.querySelector('iframe')) {
+        playerDiv.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=0&enablejsapi=1&rel=0&playsinline=1&controls=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="position: absolute; top:0; left:0; width:100%; height:100%; border:0;"></iframe>`;
+      }
+      if (playBtn) playBtn.style.display = 'none';
     }
-    if (clickCapture) {
-      clickCapture.style.display = 'none';
-    }
-    cinemaWrapper.classList.add('is-initialized', 'is-playing');
 
-    if (playerDiv && !playerDiv.querySelector('iframe')) {
-      playerDiv.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=0&enablejsapi=1&rel=0&playsinline=1&controls=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="position: absolute; top:0; left:0; width:100%; height:100%; border:0;"></iframe>`;
-    }
-    if (playBtn) playBtn.style.display = 'none';
-  }
-
-  if (playBtn) playBtn.addEventListener('click', (e) => { e.stopPropagation(); startInstantPlayback(); });
-  if (cover) cover.addEventListener('click', startInstantPlayback);
-  if (clickCapture) clickCapture.addEventListener('click', startInstantPlayback);
+    if (playBtn) playBtn.addEventListener('click', (e) => { e.stopPropagation(); startInstantPlayback(); });
+    if (cover) cover.addEventListener('click', startInstantPlayback);
+    if (clickCapture) clickCapture.addEventListener('click', startInstantPlayback);
+  });
 })();

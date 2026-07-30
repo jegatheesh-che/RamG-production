@@ -1354,9 +1354,24 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
   margin-bottom: 40px;
 }
 
+.home-cinema__track {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 24px;
+  /* Hide scrollbar for a cleaner look */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.home-cinema__track::-webkit-scrollbar {
+  display: none;
+}
+
 .home-cinema__wrapper {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
   position: relative;
-  width: 100%;
   aspect-ratio: 16/9;
   background: #000000;
   overflow: hidden;
@@ -1490,7 +1505,18 @@ em, .section-title em, .home-intro__title em, .home-about__content h2 em {
 /* Mobile responsive padding for Cinema Showcase */
 @media (max-width: 768px) {
   .home-cinema {
-    padding: 60px 16px;
+    padding: 60px 0; /* Remove side padding to let track span full width */
+  }
+  .home-cinema__header {
+    padding: 0 16px; /* Keep header padded */
+  }
+  .home-cinema__track {
+    padding: 0 16px 24px 16px;
+    gap: 16px;
+    scroll-padding: 0 16px; /* Aligns snapped items properly */
+  }
+  .home-cinema__wrapper {
+    flex: 0 0 85%; /* Make wrapper 85% width so next video peeks in */
   }
   .home-cinema__play-btn {
     width: 60px;
